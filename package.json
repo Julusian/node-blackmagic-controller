@@ -56,9 +56,7 @@
   },
   "workspaces": [
     "packages/core",
-    "packages/node",
-    "packages/webhid",
-    "packages/webhid-demo"
+    "packages/node"
   ],
   "packageManager": "yarn@4.4.1"
 }

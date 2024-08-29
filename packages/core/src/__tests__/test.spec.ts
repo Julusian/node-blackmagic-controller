@@ -3,14 +3,18 @@
 import { readFixtureJSON } from './helpers.js'
 import type { StreamDeck } from '../index.js'
 import { DeviceModelId, DEVICE_MODELS } from '../index.js'
-import type { OpenStreamDeckOptions, EncodeJPEGHelper } from '../models/base.js'
+import type { OpenBlackmagicPanelOptions, EncodeJPEGHelper } from '../models/base.js'
 import { DummyHID } from './hid.js'
 
-function openStreamDeck(path: string, deviceModel: DeviceModelId, userOptions?: OpenStreamDeckOptions): StreamDeck {
+function openStreamDeck(
+	path: string,
+	deviceModel: DeviceModelId,
+	userOptions?: OpenBlackmagicPanelOptions,
+): StreamDeck {
 	const encodeJpegMock: jest.MockedFunction<EncodeJPEGHelper> = jest.fn((_b: Uint8Array, _w: number, _h: number) => {
 		throw new Error('Not implemented')
 	})
-	const options: Required<OpenStreamDeckOptions> = {
+	const options: Required<OpenBlackmagicPanelOptions> = {
 		encodeJPEG: encodeJpegMock,
 		...userOptions,
 	}

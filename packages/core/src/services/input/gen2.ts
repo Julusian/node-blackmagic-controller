@@ -1,5 +1,5 @@
 import type { StreamDeckProperties } from '../../models/base.js'
-import type { LcdPosition, StreamDeckEvents } from '../../types.js'
+import type { LcdPosition, BlackmagicPanelEvents } from '../../types.js'
 import type { CallbackHook } from '../callback-hook.js'
 import type {
 	StreamDeckEncoderControlDefinition,
@@ -9,12 +9,12 @@ import { ButtonOnlyInputService } from './gen1.js'
 import { uint8ArrayToDataView } from '../../util.js'
 
 export class Gen2InputService extends ButtonOnlyInputService {
-	readonly #eventSource: CallbackHook<StreamDeckEvents>
+	readonly #eventSource: CallbackHook<BlackmagicPanelEvents>
 	readonly #encoderControls: Readonly<StreamDeckEncoderControlDefinition[]>
 	readonly #encoderState: boolean[]
 	readonly #lcdSegmentControls: Readonly<StreamDeckLcdSegmentControlDefinition[]>
 
-	constructor(deviceProperties: Readonly<StreamDeckProperties>, eventSource: CallbackHook<StreamDeckEvents>) {
+	constructor(deviceProperties: Readonly<StreamDeckProperties>, eventSource: CallbackHook<BlackmagicPanelEvents>) {
 		super(deviceProperties, eventSource)
 
 		this.#eventSource = eventSource

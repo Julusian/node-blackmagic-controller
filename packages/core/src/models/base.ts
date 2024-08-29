@@ -1,66 +1,36 @@
-import * as EventEmitter from 'eventemitter3'
+import { EventEmitter } from 'eventemitter3'
 import type { HIDDevice, HIDDeviceInfo } from '../hid-device.js'
-import type { DeviceModelId, Dimension, KeyIndex } from '../id.js'
-import type {
-	FillImageOptions,
-	FillPanelDimensionsOptions,
-	FillPanelOptions,
-	StreamDeck,
-	StreamDeckEvents,
-} from '../types.js'
-import type { ButtonsLcdDisplayService } from '../services/buttonsLcdDisplay/interface.js'
-import type { StreamDeckButtonControlDefinition, StreamDeckControlDefinition } from '../controlDefinition.js'
-import type { LcdSegmentDisplayService } from '../services/lcdSegmentDisplay/interface.js'
+import type { DeviceModelId, KeyIndex } from '../id.js'
+import type { BlackmagicPanel, BlackmagicPanelEvents } from '../types.js'
+import type { BlackmagicPanelButtonControlDefinition, BlackmagicPanelControlDefinition } from '../controlDefinition.js'
 import type { PropertiesService } from '../services/properties/interface.js'
 import type { CallbackHook } from '../services/callback-hook.js'
 import type { StreamDeckInputService } from '../services/input/interface.js'
 
 export type EncodeJPEGHelper = (buffer: Uint8Array, width: number, height: number) => Promise<Uint8Array>
 
-export interface OpenStreamDeckOptions {
-	encodeJPEG?: EncodeJPEGHelper
+export interface OpenBlackmagicPanelOptions {
+	// For future use
 }
 
 export type StreamDeckProperties = Readonly<{
 	MODEL: DeviceModelId
 	PRODUCT_NAME: string
-	KEY_DATA_OFFSET: number
-	SUPPORTS_RGB_KEY_FILL: boolean
 
-	CONTROLS: Readonly<StreamDeckControlDefinition[]>
-
-	/**
-	 * TODO - rework this
-	 * @deprecated
-	 */
-	KEY_SPACING_HORIZONTAL: number
-	/**
-	 * TODO - rework this
-	 * @deprecated
-	 */
-	KEY_SPACING_VERTICAL: number
+	CONTROLS: Readonly<BlackmagicPanelControlDefinition[]>
 }>
 
 export interface StreamDeckServicesDefinition {
 	deviceProperties: StreamDeckProperties
-	events: CallbackHook<StreamDeckEvents>
+	events: CallbackHook<BlackmagicPanelEvents>
 	properties: PropertiesService
-	buttonsLcd: ButtonsLcdDisplayService
 	inputService: StreamDeckInputService
-	lcdSegmentDisplay: LcdSegmentDisplayService | null
 }
 
-export class StreamDeckBase extends EventEmitter<StreamDeckEvents> implements StreamDeck {
-	get CONTROLS(): Readonly<StreamDeckControlDefinition[]> {
+export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> implements BlackmagicPanel {
+	get CONTROLS(): Readonly<BlackmagicPanelControlDefinition[]> {
 		return this.deviceProperties.CONTROLS
 	}
-
-	// get KEY_SPACING_HORIZONTAL(): number {
-	// 	return this.deviceProperties.KEY_SPACING_HORIZONTAL
-	// }
-	// get KEY_SPACING_VERTICAL(): number {
-	// 	return this.deviceProperties.KEY_SPACING_VERTICAL
-	// }
 
 	get MODEL(): DeviceModelId {
 		return this.deviceProperties.MODEL
@@ -72,19 +42,15 @@ export class StreamDeckBase extends EventEmitter<StreamDeckEvents> implements St
 	protected readonly device: HIDDevice
 	protected readonly deviceProperties: Readonly<StreamDeckProperties>
 	readonly #propertiesService: PropertiesService
-	readonly #buttonsLcdService: ButtonsLcdDisplayService
-	readonly #lcdSegmentDisplayService: LcdSegmentDisplayService | null
 	readonly #inputService: StreamDeckInputService
 	// private readonly options: Readonly<OpenStreamDeckOptions>
 
-	constructor(device: HIDDevice, _options: OpenStreamDeckOptions, services: StreamDeckServicesDefinition) {
+	constructor(device: HIDDevice, _options: OpenBlackmagicPanelOptions, services: StreamDeckServicesDefinition) {
 		super()
 
 		this.device = device
 		this.deviceProperties = services.deviceProperties
 		this.#propertiesService = services.properties
-		this.#buttonsLcdService = services.buttonsLcd
-		this.#lcdSegmentDisplayService = services.lcdSegmentDisplay
 		this.#inputService = services.inputService
 
 		// propogate events
@@ -99,10 +65,10 @@ export class StreamDeckBase extends EventEmitter<StreamDeckEvents> implements St
 
 	protected checkValidKeyIndex(
 		keyIndex: KeyIndex,
-		feedbackType: StreamDeckButtonControlDefinition['feedbackType'] | null,
+		feedbackType: BlackmagicPanelButtonControlDefinition['feedbackType'] | null,
 	): void {
 		const buttonControl = this.deviceProperties.CONTROLS.find(
-			(control): control is StreamDeckButtonControlDefinition =>
+			(control): control is BlackmagicPanelButtonControlDefinition =>
 				control.type === 'button' && control.index === keyIndex,
 		)
 
@@ -115,10 +81,6 @@ export class StreamDeckBase extends EventEmitter<StreamDeckEvents> implements St
 		}
 	}
 
-	public calculateFillPanelDimensions(options?: FillPanelDimensionsOptions): Dimension | null {
-		return this.#buttonsLcdService.calculateFillPanelDimensions(options)
-	}
-
 	public async close(): Promise<void> {
 		return this.device.close()
 	}
@@ -127,13 +89,9 @@ export class StreamDeckBase extends EventEmitter<StreamDeckEvents> implements St
 		return this.device.getDeviceInfo()
 	}
 
-	public async setBrightness(percentage: number): Promise<void> {
-		return this.#propertiesService.setBrightness(percentage)
-	}
-
-	public async resetToLogo(): Promise<void> {
-		return this.#propertiesService.resetToLogo()
-	}
+	// public async setBrightness(percentage: number): Promise<void> {
+	// 	return this.#propertiesService.setBrightness(percentage)
+	// }
 
 	public async getFirmwareVersion(): Promise<string> {
 		return this.#propertiesService.getFirmwareVersion()
@@ -142,20 +100,10 @@ export class StreamDeckBase extends EventEmitter<StreamDeckEvents> implements St
 		return this.#propertiesService.getSerialNumber()
 	}
 
-	public async fillKeyColor(keyIndex: KeyIndex, r: number, g: number, b: number): Promise<void> {
+	public async setKeyColor(keyIndex: KeyIndex, r: number, g: number, b: number): Promise<void> {
 		this.checkValidKeyIndex(keyIndex, null)
 
 		await this.#buttonsLcdService.fillKeyColor(keyIndex, r, g, b)
-	}
-
-	public async fillKeyBuffer(keyIndex: KeyIndex, imageBuffer: Uint8Array, options?: FillImageOptions): Promise<void> {
-		this.checkValidKeyIndex(keyIndex, 'lcd')
-
-		await this.#buttonsLcdService.fillKeyBuffer(keyIndex, imageBuffer, options)
-	}
-
-	public async fillPanelBuffer(imageBuffer: Uint8Array, options?: FillPanelOptions): Promise<void> {
-		await this.#buttonsLcdService.fillPanelBuffer(imageBuffer, options)
 	}
 
 	public async clearKey(keyIndex: KeyIndex): Promise<void> {
@@ -172,27 +120,5 @@ export class StreamDeckBase extends EventEmitter<StreamDeckEvents> implements St
 		if (this.#lcdSegmentDisplayService) ps.push(this.#lcdSegmentDisplayService.clearAllLcdSegments())
 
 		await Promise.all(ps)
-	}
-
-	public async fillLcd(...args: Parameters<StreamDeck['fillLcd']>): ReturnType<StreamDeck['fillLcd']> {
-		if (!this.#lcdSegmentDisplayService) throw new Error('Not supported for this model')
-
-		return this.#lcdSegmentDisplayService.fillLcd(...args)
-	}
-
-	public async fillLcdRegion(
-		...args: Parameters<StreamDeck['fillLcdRegion']>
-	): ReturnType<StreamDeck['fillLcdRegion']> {
-		if (!this.#lcdSegmentDisplayService) throw new Error('Not supported for this model')
-
-		return this.#lcdSegmentDisplayService.fillLcdRegion(...args)
-	}
-
-	public async clearLcdSegment(
-		...args: Parameters<StreamDeck['clearLcdSegment']>
-	): ReturnType<StreamDeck['clearLcdSegment']> {
-		if (!this.#lcdSegmentDisplayService) throw new Error('Not supported for this model')
-
-		return this.#lcdSegmentDisplayService.clearLcdSegment(...args)
 	}
 }

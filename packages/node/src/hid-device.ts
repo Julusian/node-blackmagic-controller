@@ -1,11 +1,11 @@
 import type { DeviceModelId, HIDDevice, HIDDeviceEvents, HIDDeviceInfo } from '@elgato-stream-deck/core'
-import * as EventEmitter from 'eventemitter3'
+import { EventEmitter } from 'eventemitter3'
 import type { HIDAsync, Device as NodeHIDDeviceInfo } from 'node-hid'
 
 /**
  * Information about a found streamdeck
  */
-export interface StreamDeckDeviceInfo {
+export interface BlackmagicPanelDeviceInfo {
 	/** The model of the device */
 	model: DeviceModelId
 	/** The connected path of the device in the usb tree */
@@ -28,11 +28,12 @@ export class NodeHIDDevice extends EventEmitter<HIDDeviceEvents> implements HIDD
 		this.device.on('error', (error) => this.emit('error', error))
 
 		this.device.on('data', (data: Buffer) => {
-			// Button press
-			if (data[0] === 0x01) {
-				const keyData = data.subarray(1)
-				this.emit('input', keyData)
-			}
+			// // Button press
+			// if (data[0] === 0x01) {
+			// 	const keyData = data.subarray(1)
+			// 	this.emit('input', keyData)
+			// }
+			this.emit('input', data)
 		})
 	}
 

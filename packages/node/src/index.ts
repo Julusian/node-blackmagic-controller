@@ -1,9 +1,8 @@
-import type { OpenStreamDeckOptions, StreamDeck } from '@elgato-stream-deck/core'
+import type { OpenBlackmagicPanelOptions, BlackmagicPanel } from '@elgato-stream-deck/core'
 import { DEVICE_MODELS, VENDOR_ID } from '@elgato-stream-deck/core'
 import * as HID from 'node-hid'
-import { NodeHIDDevice, StreamDeckDeviceInfo } from './hid-device.js'
-import { encodeJPEG, JPEGEncodeOptions } from './jpeg.js'
-import { StreamDeckNode } from './wrapper.js'
+import { NodeHIDDevice, BlackmagicPanelDeviceInfo } from './hid-device.js'
+import { BlackmagicPanelNode } from './wrapper.js'
 
 export {
 	VENDOR_ID,
@@ -14,40 +13,39 @@ export {
 	Dimension,
 	StreamDeckControlDefinitionBase,
 	StreamDeckButtonControlDefinition,
-	StreamDeckButtonControlDefinitionNoFeedback,
+	BlackmagicPanelTBarControlDefinition,
 	StreamDeckButtonControlDefinitionRgbFeedback,
-	StreamDeckButtonControlDefinitionLcdFeedback,
+	BlackmagicPanelControlDefinition,
 	StreamDeckEncoderControlDefinition,
 	StreamDeckLcdSegmentControlDefinition,
 	StreamDeckControlDefinition,
 	OpenStreamDeckOptions,
 } from '@elgato-stream-deck/core'
 
-export { StreamDeckDeviceInfo, JPEGEncodeOptions }
+export { BlackmagicPanelDeviceInfo }
 
-export interface OpenStreamDeckOptionsNode extends OpenStreamDeckOptions {
-	jpegOptions?: JPEGEncodeOptions
-	resetToLogoOnClose?: boolean
+export interface OpenBlackmagicPanelOptionsNode extends OpenBlackmagicPanelOptions {
+	clearOnClose?: boolean // nocommit - implement this
 }
 
 /**
  * Scan for and list detected devices
  */
-export async function listStreamDecks(): Promise<StreamDeckDeviceInfo[]> {
-	const devices: Record<string, StreamDeckDeviceInfo> = {}
+export async function listBlackmagicPanels(): Promise<BlackmagicPanelDeviceInfo[]> {
+	const devices: Record<string, BlackmagicPanelDeviceInfo> = {}
 	for (const dev of await HID.devicesAsync()) {
 		if (dev.path && !devices[dev.path]) {
-			const info = getStreamDeckDeviceInfo(dev)
+			const info = getBlackmagicPanelDeviceInfo(dev)
 			if (info) devices[dev.path] = info
 		}
 	}
-	return Object.values<StreamDeckDeviceInfo>(devices)
+	return Object.values<BlackmagicPanelDeviceInfo>(devices)
 }
 
 /**
  * If the provided device is a streamdeck, get the info about it
  */
-export function getStreamDeckDeviceInfo(dev: HID.Device): StreamDeckDeviceInfo | null {
+export function getBlackmagicPanelDeviceInfo(dev: HID.Device): BlackmagicPanelDeviceInfo | null {
 	const model = DEVICE_MODELS.find((m) => m.productIds.includes(dev.productId))
 
 	if (model && dev.vendorId === VENDOR_ID && dev.path) {
@@ -64,8 +62,8 @@ export function getStreamDeckDeviceInfo(dev: HID.Device): StreamDeckDeviceInfo |
 /**
  * Get the info of a device if the given path is a streamdeck
  */
-export async function getStreamDeckInfo(path: string): Promise<StreamDeckDeviceInfo | undefined> {
-	const allDevices = await listStreamDecks()
+export async function getBlackmagicPanelInfo(path: string): Promise<BlackmagicPanelDeviceInfo | undefined> {
+	const allDevices = await listBlackmagicPanels()
 	return allDevices.find((dev) => dev.path === path)
 }
 
@@ -74,15 +72,11 @@ export async function getStreamDeckInfo(path: string): Promise<StreamDeckDeviceI
  * @param devicePath The path of the device to open.
  * @param userOptions Options to customise the device behvaiour
  */
-export async function openStreamDeck(devicePath: string, userOptions?: OpenStreamDeckOptionsNode): Promise<StreamDeck> {
-	// Clone the options, to ensure they dont get changed
-	const jpegOptions: JPEGEncodeOptions | undefined = userOptions?.jpegOptions
-		? { ...userOptions.jpegOptions }
-		: undefined
-
-	const options: Required<OpenStreamDeckOptions> = {
-		encodeJPEG: async (buffer: Uint8Array, width: number, height: number) =>
-			encodeJPEG(buffer, width, height, jpegOptions),
+export async function openBlackmagicPanel(
+	devicePath: string,
+	userOptions?: OpenBlackmagicPanelOptionsNode,
+): Promise<BlackmagicPanel> {
+	const options: Required<OpenBlackmagicPanelOptions> = {
 		...userOptions,
 	}
 
@@ -101,7 +95,7 @@ export async function openStreamDeck(devicePath: string, userOptions?: OpenStrea
 		}
 
 		const rawSteamdeck = model.factory(device, options)
-		return new StreamDeckNode(rawSteamdeck, userOptions?.resetToLogoOnClose ?? false)
+		return new BlackmagicPanelNode(rawSteamdeck, userOptions?.clearOnClose ?? false)
 	} catch (e) {
 		if (device) await device.close().catch(() => null) // Suppress error
 		throw e

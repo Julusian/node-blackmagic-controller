@@ -1,29 +1,24 @@
-import type * as EventEmitter from 'eventemitter3'
+import type { EventEmitter } from 'eventemitter3'
 import type { DeviceModelId } from './id.js'
-import type { StreamDeck, StreamDeckEvents } from './types.js'
-import type { StreamDeckControlDefinition } from './controlDefinition.js'
+import type { BlackmagicPanel, BlackmagicPanelEvents } from './types.js'
+import type { BlackmagicPanelControlDefinition } from './controlDefinition.js'
 
 /**
- * A minimal proxy around a StreamDeck instance.
- * This is intended to be used by libraries wrapping this that want to add more methods to the StreamDeck
+ * A minimal proxy around a BlackmagicPanel instance.
+ * This is intended to be used by libraries wrapping this that want to add more methods to the BlackmagicPanel
  */
 
-export class StreamDeckProxy implements StreamDeck {
-	protected device: StreamDeck
+export class BlackmagicPanelProxy implements BlackmagicPanel {
+	protected device: BlackmagicPanel
 
-	constructor(device: StreamDeck) {
+	constructor(device: BlackmagicPanel) {
 		this.device = device
 	}
 
-	public get CONTROLS(): Readonly<StreamDeckControlDefinition[]> {
+	public get CONTROLS(): Readonly<BlackmagicPanelControlDefinition[]> {
 		return this.device.CONTROLS
 	}
-	// public get KEY_SPACING_VERTICAL(): number {
-	// 	return this.device.KEY_SPACING_VERTICAL
-	// }
-	// public get KEY_SPACING_HORIZONTAL(): number {
-	// 	return this.device.KEY_SPACING_HORIZONTAL
-	// }
+
 	public get MODEL(): DeviceModelId {
 		return this.device.MODEL
 	}
@@ -31,47 +26,32 @@ export class StreamDeckProxy implements StreamDeck {
 		return this.device.PRODUCT_NAME
 	}
 
-	public calculateFillPanelDimensions(
-		...args: Parameters<StreamDeck['calculateFillPanelDimensions']>
-	): ReturnType<StreamDeck['calculateFillPanelDimensions']> {
-		return this.device.calculateFillPanelDimensions(...args)
-	}
-
 	public async close(): Promise<void> {
 		return this.device.close()
 	}
 	public async getHidDeviceInfo(
-		...args: Parameters<StreamDeck['getHidDeviceInfo']>
-	): ReturnType<StreamDeck['getHidDeviceInfo']> {
+		...args: Parameters<BlackmagicPanel['getHidDeviceInfo']>
+	): ReturnType<BlackmagicPanel['getHidDeviceInfo']> {
 		return this.device.getHidDeviceInfo(...args)
 	}
-	public async fillKeyColor(...args: Parameters<StreamDeck['fillKeyColor']>): ReturnType<StreamDeck['fillKeyColor']> {
-		return this.device.fillKeyColor(...args)
+	public async setKeyColor(
+		...args: Parameters<BlackmagicPanel['setKeyColor']>
+	): ReturnType<BlackmagicPanel['setKeyColor']> {
+		return this.device.setKeyColor(...args)
 	}
-	public async fillKeyBuffer(
-		...args: Parameters<StreamDeck['fillKeyBuffer']>
-	): ReturnType<StreamDeck['fillKeyBuffer']> {
-		return this.device.fillKeyBuffer(...args)
-	}
-	public async fillPanelBuffer(
-		...args: Parameters<StreamDeck['fillPanelBuffer']>
-	): ReturnType<StreamDeck['fillPanelBuffer']> {
-		return this.device.fillPanelBuffer(...args)
-	}
-	public async clearKey(...args: Parameters<StreamDeck['clearKey']>): ReturnType<StreamDeck['clearKey']> {
+	public async clearKey(...args: Parameters<BlackmagicPanel['clearKey']>): ReturnType<BlackmagicPanel['clearKey']> {
 		return this.device.clearKey(...args)
 	}
-	public async clearPanel(...args: Parameters<StreamDeck['clearPanel']>): ReturnType<StreamDeck['clearPanel']> {
+	public async clearPanel(
+		...args: Parameters<BlackmagicPanel['clearPanel']>
+	): ReturnType<BlackmagicPanel['clearPanel']> {
 		return this.device.clearPanel(...args)
 	}
-	public async setBrightness(
-		...args: Parameters<StreamDeck['setBrightness']>
-	): ReturnType<StreamDeck['setBrightness']> {
-		return this.device.setBrightness(...args)
-	}
-	public async resetToLogo(...args: Parameters<StreamDeck['resetToLogo']>): ReturnType<StreamDeck['resetToLogo']> {
-		return this.device.resetToLogo(...args)
-	}
+	// public async setBrightness(
+	// 	...args: Parameters<BlackmagicPanel['setBrightness']>
+	// ): ReturnType<BlackmagicPanel['setBrightness']> {
+	// 	return this.device.setBrightness(...args)
+	// }
 	public async getFirmwareVersion(): Promise<string> {
 		return this.device.getFirmwareVersion()
 	}
@@ -79,43 +59,27 @@ export class StreamDeckProxy implements StreamDeck {
 		return this.device.getSerialNumber()
 	}
 
-	public async fillLcd(...args: Parameters<StreamDeck['fillLcd']>): ReturnType<StreamDeck['fillLcd']> {
-		return this.device.fillLcd(...args)
-	}
-
-	public async fillLcdRegion(
-		...args: Parameters<StreamDeck['fillLcdRegion']>
-	): ReturnType<StreamDeck['fillLcdRegion']> {
-		return this.device.fillLcdRegion(...args)
-	}
-
-	public async clearLcdSegment(
-		...args: Parameters<StreamDeck['clearLcdSegment']>
-	): ReturnType<StreamDeck['clearLcdSegment']> {
-		return this.device.clearLcdSegment(...args)
-	}
-
 	/**
 	 * EventEmitter
 	 */
 
-	public eventNames(): Array<EventEmitter.EventNames<StreamDeckEvents>> {
+	public eventNames(): Array<EventEmitter.EventNames<BlackmagicPanelEvents>> {
 		return this.device.eventNames()
 	}
 
-	public listeners<T extends EventEmitter.EventNames<StreamDeckEvents>>(
+	public listeners<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
 		event: T,
-	): Array<EventEmitter.EventListener<StreamDeckEvents, T>> {
+	): Array<EventEmitter.EventListener<BlackmagicPanelEvents, T>> {
 		return this.device.listeners(event)
 	}
 
-	public listenerCount(event: EventEmitter.EventNames<StreamDeckEvents>): number {
+	public listenerCount(event: EventEmitter.EventNames<BlackmagicPanelEvents>): number {
 		return this.device.listenerCount(event)
 	}
 
-	public emit<T extends EventEmitter.EventNames<StreamDeckEvents>>(
+	public emit<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
 		event: T,
-		...args: EventEmitter.EventArgs<StreamDeckEvents, T>
+		...args: EventEmitter.EventArgs<BlackmagicPanelEvents, T>
 	): boolean {
 		return this.device.emit(event, ...args)
 	}
@@ -123,17 +87,17 @@ export class StreamDeckProxy implements StreamDeck {
 	/**
 	 * Add a listener for a given event.
 	 */
-	public on<T extends EventEmitter.EventNames<StreamDeckEvents>>(
+	public on<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
 		event: T,
-		fn: EventEmitter.EventListener<StreamDeckEvents, T>,
+		fn: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
 		context?: unknown,
 	): this {
 		this.device.on(event, fn, context)
 		return this
 	}
-	public addListener<T extends EventEmitter.EventNames<StreamDeckEvents>>(
+	public addListener<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
 		event: T,
-		fn: EventEmitter.EventListener<StreamDeckEvents, T>,
+		fn: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
 		context?: unknown,
 	): this {
 		this.device.addListener(event, fn, context)
@@ -143,9 +107,9 @@ export class StreamDeckProxy implements StreamDeck {
 	/**
 	 * Add a one-time listener for a given event.
 	 */
-	public once<T extends EventEmitter.EventNames<StreamDeckEvents>>(
+	public once<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
 		event: T,
-		fn: EventEmitter.EventListener<StreamDeckEvents, T>,
+		fn: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
 		context?: unknown,
 	): this {
 		this.device.once(event, fn, context)
@@ -155,18 +119,18 @@ export class StreamDeckProxy implements StreamDeck {
 	/**
 	 * Remove the listeners of a given event.
 	 */
-	public removeListener<T extends EventEmitter.EventNames<StreamDeckEvents>>(
+	public removeListener<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
 		event: T,
-		fn?: EventEmitter.EventListener<StreamDeckEvents, T>,
+		fn?: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
 		context?: unknown,
 		once?: boolean,
 	): this {
 		this.device.removeListener(event, fn, context, once)
 		return this
 	}
-	public off<T extends EventEmitter.EventNames<StreamDeckEvents>>(
+	public off<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
 		event: T,
-		fn?: EventEmitter.EventListener<StreamDeckEvents, T>,
+		fn?: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
 		context?: unknown,
 		once?: boolean,
 	): this {
@@ -174,7 +138,7 @@ export class StreamDeckProxy implements StreamDeck {
 		return this
 	}
 
-	public removeAllListeners(event?: EventEmitter.EventNames<StreamDeckEvents>): this {
+	public removeAllListeners(event?: EventEmitter.EventNames<BlackmagicPanelEvents>): this {
 		this.device.removeAllListeners(event)
 		return this
 	}

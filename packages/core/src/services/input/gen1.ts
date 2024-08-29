@@ -1,20 +1,20 @@
 import type { StreamDeckProperties } from '../../models/base.js'
 import type { StreamDeckInputService } from './interface.js'
-import type { StreamDeckEvents } from '../../types.js'
+import type { BlackmagicPanelEvents } from '../../types.js'
 import type { CallbackHook } from '../callback-hook.js'
-import type { StreamDeckButtonControlDefinition } from '../../controlDefinition.js'
+import type { BlackmagicPanelButtonControlDefinition } from '../../controlDefinition.js'
 
 export class ButtonOnlyInputService implements StreamDeckInputService {
 	readonly #deviceProperties: Readonly<StreamDeckProperties>
 	readonly #keyState: boolean[]
-	readonly #eventSource: CallbackHook<StreamDeckEvents>
+	readonly #eventSource: CallbackHook<BlackmagicPanelEvents>
 
-	constructor(deviceProperties: Readonly<StreamDeckProperties>, eventSource: CallbackHook<StreamDeckEvents>) {
+	constructor(deviceProperties: Readonly<StreamDeckProperties>, eventSource: CallbackHook<BlackmagicPanelEvents>) {
 		this.#deviceProperties = deviceProperties
 		this.#eventSource = eventSource
 
 		const maxButtonIndex = this.#deviceProperties.CONTROLS.filter(
-			(control): control is StreamDeckButtonControlDefinition => control.type === 'button',
+			(control): control is BlackmagicPanelButtonControlDefinition => control.type === 'button',
 		).map((control) => control.index)
 		this.#keyState = new Array<boolean>(Math.max(-1, ...maxButtonIndex) + 1).fill(false)
 	}
