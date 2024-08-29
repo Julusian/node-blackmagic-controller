@@ -1,6 +1,6 @@
 /* eslint-disable n/no-unsupported-features/node-builtins */
 
-import type { OpenStreamDeckOptions, StreamDeck } from '@elgato-stream-deck/core'
+import type { OpenStreamDeckOptions, BlackmagicPanel } from '@elgato-stream-deck/core'
 import { DEVICE_MODELS, VENDOR_ID } from '@elgato-stream-deck/core'
 import { WebHIDDevice } from './hid-device.js'
 import { encodeJPEG } from './jpeg.js'
@@ -9,18 +9,12 @@ import { StreamDeckWeb } from './wrapper.js'
 export {
 	VENDOR_ID,
 	DeviceModelId,
-	KeyIndex,
-	StreamDeck,
-	LcdPosition,
-	Dimension,
-	StreamDeckControlDefinitionBase,
-	StreamDeckButtonControlDefinition,
-	BlackmagicPanelTBarControlDefinition as StreamDeckButtonControlDefinitionNoFeedback,
-	StreamDeckButtonControlDefinitionRgbFeedback,
-	BlackmagicPanelControlDefinition as StreamDeckButtonControlDefinitionLcdFeedback,
-	StreamDeckEncoderControlDefinition,
-	StreamDeckLcdSegmentControlDefinition,
-	StreamDeckControlDefinition,
+	KeyId,
+	BlackmagicPanel,
+	BlackmagicPanelControlDefinitionBase,
+	BlackmagicPanelButtonControlDefinition,
+	BlackmagicPanelTBarControlDefinition,
+	BlackmagicPanelControlDefinition,
 	OpenStreamDeckOptions,
 } from '@elgato-stream-deck/core'
 export { StreamDeckWeb } from './wrapper.js'
@@ -83,7 +77,7 @@ export async function openDevice(
 		}
 
 		const browserHid = new WebHIDDevice(browserDevice)
-		const device: StreamDeck = model.factory(browserHid, options || {})
+		const device: BlackmagicPanel = model.factory(browserHid, options || {})
 		return new StreamDeckWeb(device, browserHid)
 	} catch (e) {
 		await browserDevice.close().catch(() => null) // Suppress error

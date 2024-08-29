@@ -25,8 +25,8 @@ const { listStreamDecks, openStreamDeck } = require('../dist/index')
 	})
 
 	const lcdPress = (
-		/** @type {import('@elgato-stream-deck/core').StreamDeckLcdSegmentControlDefinition} */ control,
-		/** @type {import('@elgato-stream-deck/core').LcdPosition} */ position,
+		/** @type {import('@blackmagic-panel/core').StreamDeckLcdSegmentControlDefinition} */ control,
+		/** @type {import('@blackmagic-panel/core').LcdPosition} */ position,
 	) => {
 		if (control.type !== 'lcd-segment') return
 

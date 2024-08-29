@@ -1,5 +1,5 @@
-import type { OpenBlackmagicPanelOptions, BlackmagicPanel } from '@elgato-stream-deck/core'
-import { DEVICE_MODELS, VENDOR_ID } from '@elgato-stream-deck/core'
+import type { OpenBlackmagicPanelOptions, BlackmagicPanel } from '@blackmagic-panel/core'
+import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-panel/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice, BlackmagicPanelDeviceInfo } from './hid-device.js'
 import { BlackmagicPanelNode } from './wrapper.js'
@@ -7,20 +7,14 @@ import { BlackmagicPanelNode } from './wrapper.js'
 export {
 	VENDOR_ID,
 	DeviceModelId,
-	KeyIndex,
-	StreamDeck,
-	LcdPosition,
-	Dimension,
-	StreamDeckControlDefinitionBase,
-	StreamDeckButtonControlDefinition,
+	KeyId,
+	BlackmagicPanel,
+	BlackmagicPanelControlDefinitionBase,
+	BlackmagicPanelButtonControlDefinition,
 	BlackmagicPanelTBarControlDefinition,
-	StreamDeckButtonControlDefinitionRgbFeedback,
 	BlackmagicPanelControlDefinition,
-	StreamDeckEncoderControlDefinition,
-	StreamDeckLcdSegmentControlDefinition,
-	StreamDeckControlDefinition,
-	OpenStreamDeckOptions,
-} from '@elgato-stream-deck/core'
+	OpenBlackmagicPanelOptions,
+} from '@blackmagic-panel/core'
 
 export { BlackmagicPanelDeviceInfo }
 
@@ -43,7 +37,7 @@ export async function listBlackmagicPanels(): Promise<BlackmagicPanelDeviceInfo[
 }
 
 /**
- * If the provided device is a streamdeck, get the info about it
+ * If the provided device is a supported blackmagic panel, get the info about it
  */
 export function getBlackmagicPanelDeviceInfo(dev: HID.Device): BlackmagicPanelDeviceInfo | null {
 	const model = DEVICE_MODELS.find((m) => m.productIds.includes(dev.productId))
@@ -60,7 +54,7 @@ export function getBlackmagicPanelDeviceInfo(dev: HID.Device): BlackmagicPanelDe
 }
 
 /**
- * Get the info of a device if the given path is a streamdeck
+ * Get the info of a device if the given path is a supported blackmagic panel
  */
 export async function getBlackmagicPanelInfo(path: string): Promise<BlackmagicPanelDeviceInfo | undefined> {
 	const allDevices = await listBlackmagicPanels()
@@ -68,7 +62,7 @@ export async function getBlackmagicPanelInfo(path: string): Promise<BlackmagicPa
 }
 
 /**
- * Open a streamdeck
+ * Open a supported blackmagic panel
  * @param devicePath The path of the device to open.
  * @param userOptions Options to customise the device behvaiour
  */

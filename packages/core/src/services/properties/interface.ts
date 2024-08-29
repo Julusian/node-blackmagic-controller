@@ -1,7 +1,5 @@
 export interface PropertiesService {
-	setBrightness(percentage: number): Promise<void>
-
-	resetToLogo(): Promise<void>
+	// setBrightness(percentage: number): Promise<void>
 
 	getFirmwareVersion(): Promise<string>
 

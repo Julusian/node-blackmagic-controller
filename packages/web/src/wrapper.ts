@@ -1,4 +1,4 @@
-import type { KeyIndex, StreamDeck, StreamDeckButtonControlDefinition } from '@elgato-stream-deck/core'
+import type { KeyId, StreamDeck, StreamDeckButtonControlDefinition } from '@elgato-stream-deck/core'
 import { StreamDeckProxy } from '@elgato-stream-deck/core'
 import type { WebHIDDevice } from './hid-device.js'
 
@@ -21,7 +21,7 @@ export class StreamDeckWeb extends StreamDeckProxy {
 		await this.hid.forget()
 	}
 
-	public async fillKeyCanvas(keyIndex: KeyIndex, canvas: HTMLCanvasElement): Promise<void> {
+	public async fillKeyCanvas(keyIndex: KeyId, canvas: HTMLCanvasElement): Promise<void> {
 		// this.checkValidKeyIndex(keyIndex)
 
 		const ctx = canvas.getContext('2d')

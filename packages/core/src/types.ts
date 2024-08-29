@@ -1,5 +1,5 @@
 import type { EventEmitter } from 'eventemitter3'
-import type { DeviceModelId, KeyIndex } from './id.js'
+import type { DeviceModelId, KeyId } from './id.js'
 import type { HIDDeviceInfo } from './hid-device.js'
 import type { BlackmagicPanelButtonControlDefinition, BlackmagicPanelControlDefinition } from './controlDefinition.js'
 
@@ -12,7 +12,7 @@ export type BlackmagicPanelEvents = {
 }
 
 export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
-	/** List of the controls on this streamdeck */
+	/** List of the controls on this panel */
 	readonly CONTROLS: Readonly<BlackmagicPanelControlDefinition[]>
 
 	/** The model of this device */
@@ -38,14 +38,14 @@ export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
 	 * @param {number} g The color's green value. 0 - 255
 	 * @param {number} b The color's blue value. 0 -255
 	 */
-	setKeyColor(keyIndex: KeyIndex, r: number, g: number, b: number): Promise<void>
+	setKeyColor(keyIndex: KeyId, r: boolean, g: boolean, b: boolean): Promise<void>
 
 	/**
 	 * Clears the given key.
 	 *
 	 * @param {number} keyIndex The key to clear
 	 */
-	clearKey(keyIndex: KeyIndex): Promise<void>
+	clearKey(keyIndex: KeyId): Promise<void>
 
 	/**
 	 * Clears all keys.

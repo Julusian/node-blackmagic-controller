@@ -1,9 +1,9 @@
-import type { BlackmagicPanel } from '@elgato-stream-deck/core'
-import { BlackmagicPanelProxy } from '@elgato-stream-deck/core'
+import type { BlackmagicPanel } from '@blackmagic-panel/core'
+import { BlackmagicPanelProxy } from '@blackmagic-panel/core'
 
 export class BlackmagicPanelNode extends BlackmagicPanelProxy {
 	constructor(
-		device: StreamDeck,
+		device: BlackmagicPanel,
 		private readonly clearOnClose: boolean,
 	) {
 		super(device)

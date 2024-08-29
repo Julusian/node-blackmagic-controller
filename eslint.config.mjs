@@ -28,7 +28,7 @@ const customConfig = [
 		},
 	},
 	{
-		files: ['packages/webhid-demo/src/**/*'],
+		files: ['packages/web-demo/src/**/*'],
 		rules: {
 			'@typescript-eslint/no-require-imports': 'off',
 			'n/no-missing-import': 'off',

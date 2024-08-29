@@ -10,7 +10,7 @@ async function addDepsForRoot(root, subdir) {
 		subdir ? `packages/${subdir}/package.json` : 'package.json',
 		'yarn.lock',
 		true,
-		false
+		false,
 	)
 
 	function flattenAndAddDeps(node) {
@@ -41,7 +41,7 @@ for (const dirname of await fs.readdir(new URL('../packages', import.meta.url)))
 
 const allowPackages = []
 for (const [name, versions] of allDepVersions) {
-	if (name.startsWith('@img/sharp') || name === '@elgato-stream-deck/webhid-demo') {
+	if (name.startsWith('@img/sharp') || name === '@blackmagic-panel/web-demo') {
 		for (const version of versions) {
 			allowPackages.push(`${name}@${version}`)
 		}

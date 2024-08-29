@@ -1,4 +1,4 @@
-export type KeyIndex = number
+export type KeyId = string
 
 export enum DeviceModelId {
 	AtemMicroPanel = 'atem-micro-panel',

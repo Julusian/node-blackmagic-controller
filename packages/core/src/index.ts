@@ -8,7 +8,7 @@ export * from './types.js'
 export * from './id.js'
 export * from './controlDefinition.js'
 export { HIDDevice, HIDDeviceInfo, HIDDeviceEvents } from './hid-device.js'
-export { OpenBlackmagicPanelOptions as OpenStreamDeckOptions } from './models/base.js'
+export { OpenBlackmagicPanelOptions } from './models/base.js'
 export { BlackmagicPanelProxy } from './proxy.js'
 
 /** Blackmagic vendor id */

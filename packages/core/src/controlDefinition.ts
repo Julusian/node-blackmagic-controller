@@ -1,3 +1,5 @@
+import { KeyId } from './id'
+
 export interface BlackmagicPanelControlDefinitionBase {
 	type: 'button' | 'tbar'
 
@@ -8,8 +10,8 @@ export interface BlackmagicPanelControlDefinitionBase {
 export interface BlackmagicPanelButtonControlDefinition extends BlackmagicPanelControlDefinitionBase {
 	type: 'button'
 
-	index: number
-	hidIndex: number
+	id: KeyId
+	encodedIndex: number
 
 	feedbackType: 'rgb'
 }
@@ -20,6 +22,9 @@ export interface BlackmagicPanelTBarControlDefinition extends BlackmagicPanelCon
 
 	columnSpan: number
 	rowSpan: number
+
+	ledSegments: number
+	ledEncodedIndex: number
 }
 
 export type BlackmagicPanelControlDefinition =

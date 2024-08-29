@@ -1,12 +1,12 @@
-# @elgato-stream-deck/node
+# @blackmagic-panel/node
 
-![Node CI](https://github.com/Julusian/node-elgato-stream-deck/workflows/Node%20CI/badge.svg)
-[![codecov](https://codecov.io/gh/Julusian/node-elgato-stream-deck/branch/master/graph/badge.svg?token=Hl4QXGZJMF)](https://codecov.io/gh/Julusian/node-elgato-stream-deck)
+![Node CI](https://github.com/Julusian/node-blackmagic-panel/workflows/Node%20CI/badge.svg)
+[![codecov](https://codecov.io/gh/Julusian/node-blackmagic-panel/branch/master/graph/badge.svg?token=Hl4QXGZJMF)](https://codecov.io/gh/Julusian/node-blackmagic-panel)
 
-[![npm version](https://img.shields.io/npm/v/@elgato-stream-deck/node.svg)](https://npm.im/@elgato-stream-deck/node)
-[![license](https://img.shields.io/npm/l/@elgato-stream-deck/node.svg)](https://npm.im/@elgato-stream-deck/node)
+[![npm version](https://img.shields.io/npm/v/@blackmagic-panel/node.svg)](https://npm.im/@blackmagic-panel/node)
+[![license](https://img.shields.io/npm/l/@blackmagic-panel/node.svg)](https://npm.im/@blackmagic-panel/node)
 
-[`@elgato-stream-deck/node`](https://github.com/julusian/node-elgato-stream-deck) is a shared library for interfacing
+[`@blackmagic-panel/node`](https://github.com/julusian/node-blackmagic-panel) is a shared library for interfacing
 with the various models of the [Elgato Stream Deck](https://www.elgato.com/en/gaming/stream-deck).
 
 ## Intended use
@@ -15,7 +15,7 @@ This library has nothing to do with the streamdeck software produced by Elgato. 
 
 ## Install
 
-`$ npm install --save @elgato-stream-deck/node`
+`$ npm install --save @blackmagic-panel/node`
 
 `$ npm install --save @julusian/jpeg-turbo@^2.0.0` (Optional)
 
@@ -23,9 +23,9 @@ It is recommended to install `@julusian/jpeg-turbo` to greatly improve performan
 
 ### Native dependencies
 
-All of this library's native dependencies ship with prebuilt binaries, so having a full compiler toolchain should not be necessary to install `@elgato-stream-deck/node`.
+All of this library's native dependencies ship with prebuilt binaries, so having a full compiler toolchain should not be necessary to install `@blackmagic-panel/node`.
 
-However, in the event that installation _does_ fail (**or if you are on a platform that our dependencies don't provide prebuilt binaries for, such as a Raspberry Pi**), you will need to install a compiler toolchain to enable npm to build some of `@elgato-stream-deck/node`'s dependencies from source. Expand the details block below for full instructions on how to do so.
+However, in the event that installation _does_ fail (**or if you are on a platform that our dependencies don't provide prebuilt binaries for, such as a Raspberry Pi**), you will need to install a compiler toolchain to enable npm to build some of `@blackmagic-panel/node`'s dependencies from source. Expand the details block below for full instructions on how to do so.
 
 <details>
 	<summary>Compiling dependencies from source</summary>
@@ -42,7 +42,7 @@ However, in the event that installation _does_ fail (**or if you are on a platfo
   ```
 * Linux (**including Raspberry Pi**)
   * Follow the instructions for Linux in the ["Compiling from source"](https://github.com/node-hid/node-hid#compiling-from-source) steps for 
-  * Try installing `@elgato-stream-deck/node`
+  * Try installing `@blackmagic-panel/node`
   * If you still have issues, ensure everything is updated and try again:
 	```bash
 	sudo apt-get update && sudo apt-get upgrade
@@ -97,7 +97,7 @@ The StreamDeck type can be found [here](/packages/core/src/models/types.ts#L15)
 ## Example
 
 ```typescript
-import { openStreamDeck, listStreamDecks } from '@elgato-stream-deck/node'
+import { openStreamDeck, listStreamDecks } from '@blackmagic-panel/node'
 
 // List the connected streamdecks
 const devices = await listStreamDecks()

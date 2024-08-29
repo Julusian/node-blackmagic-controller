@@ -1,7 +1,7 @@
 # @elgato-stream-deck
 
-![Node CI](https://github.com/Julusian/node-elgato-stream-deck/workflows/Node%20CI/badge.svg)
-[![codecov](https://codecov.io/gh/Julusian/node-elgato-stream-deck/branch/master/graph/badge.svg?token=Hl4QXGZJMF)](https://codecov.io/gh/Julusian/node-elgato-stream-deck)
+![Node CI](https://github.com/Julusian/node-blackmagic-panel/workflows/Node%20CI/badge.svg)
+[![codecov](https://codecov.io/gh/Julusian/node-blackmagic-panel/branch/master/graph/badge.svg?token=Hl4QXGZJMF)](https://codecov.io/gh/Julusian/node-blackmagic-panel)
 
 [@elgato-stream-deck](https://www.npmjs.com/org/elgato-stream-deck) is a collection of libraries for interfacing with the various models of the [Elgato Stream Deck](https://www.elgato.com/en/gaming/).  
 With WebHID being made publicly available it is now possible to use the Steam Deck directly in the browser.
@@ -14,16 +14,16 @@ This library has nothing to do with the streamdeck software produced by Elgato. 
 
 Check one of the installable packages for installation and usage instructions:
 
--   [`@elgato-stream-deck/node`](https://npm.im/@elgato-stream-deck/node)
--   [`@elgato-stream-deck/webhid`](https://npm.im/@elgato-stream-deck/webhid)
+-   [`@blackmagic-panel/node`](https://npm.im/@blackmagic-panel/node)
+-   [`@blackmagic-panel/web`](https://npm.im/@blackmagic-panel/web)
 
 ### Have another hid target you wish to use?
 
-The existing implementations are a light wrapper around the platform agnostic [`@elgato-stream-deck/core`](https://npm.im/@elgato-stream-deck/core). You can use your own HID implementation and device scanning/opening logic and reuse all the streamdeck bits.
+The existing implementations are a light wrapper around the platform agnostic [`@blackmagic-panel/core`](https://npm.im/@blackmagic-panel/core). You can use your own HID implementation and device scanning/opening logic and reuse all the streamdeck bits.
 
 ## Demo
 
-If you are using a Chromium v89+ based browser, you can try out the [webhid demo](https://julusian.github.io/node-elgato-stream-deck/)
+If you are using a Chromium v89+ based browser, you can try out the [webhid demo](https://julusian.github.io/node-blackmagic-panel/)
 
 ## Linux
 

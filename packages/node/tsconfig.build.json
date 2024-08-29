@@ -7,7 +7,7 @@
 		"baseUrl": "./",
 		"paths": {
 			"*": ["./node_modules/*"],
-			"@elgato-stream-deck/node": ["./src/index.ts"]
+			"@blackmagic-panel/node": ["./src/index.ts"]
 		},
 		"types": ["node"]
 	}

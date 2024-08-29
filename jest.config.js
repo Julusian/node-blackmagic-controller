@@ -25,7 +25,7 @@ module.exports = {
 		'!**/src/__tests__/**',
 		'!**/node_modules/**',
 		'!**/dist/**',
-		'!packages/webhid-demo/**',
+		'!packages/web-demo/**',
 	],
 	collectCoverage: true,
 	projects: ['<rootDir>'],
@@ -34,7 +34,7 @@ module.exports = {
 	preset: 'ts-jest',
 
 	moduleNameMapper: {
-		'@elgato-stream-deck/(.+)': '<rootDir>/packages/$1/src',
+		'@blackmagic-panel/(.+)': '<rootDir>/packages/$1/src',
 		'^(..?/.+).js?$': '$1',
 	},
 }

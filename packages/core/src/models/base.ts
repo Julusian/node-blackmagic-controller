@@ -1,11 +1,12 @@
 import { EventEmitter } from 'eventemitter3'
 import type { HIDDevice, HIDDeviceInfo } from '../hid-device.js'
-import type { DeviceModelId, KeyIndex } from '../id.js'
+import type { DeviceModelId, KeyId } from '../id.js'
 import type { BlackmagicPanel, BlackmagicPanelEvents } from '../types.js'
 import type { BlackmagicPanelButtonControlDefinition, BlackmagicPanelControlDefinition } from '../controlDefinition.js'
 import type { PropertiesService } from '../services/properties/interface.js'
 import type { CallbackHook } from '../services/callback-hook.js'
-import type { StreamDeckInputService } from '../services/input/interface.js'
+import type { BlackmagicPanelInputService } from '../services/input/interface.js'
+import { BlackmagicPanelLedService } from '../services/led/interface.js'
 
 export type EncodeJPEGHelper = (buffer: Uint8Array, width: number, height: number) => Promise<Uint8Array>
 
@@ -13,18 +14,19 @@ export interface OpenBlackmagicPanelOptions {
 	// For future use
 }
 
-export type StreamDeckProperties = Readonly<{
+export type BlackmagicPanelProperties = Readonly<{
 	MODEL: DeviceModelId
 	PRODUCT_NAME: string
 
 	CONTROLS: Readonly<BlackmagicPanelControlDefinition[]>
 }>
 
-export interface StreamDeckServicesDefinition {
-	deviceProperties: StreamDeckProperties
+export interface BlackmagicPanelServicesDefinition {
+	deviceProperties: BlackmagicPanelProperties
 	events: CallbackHook<BlackmagicPanelEvents>
 	properties: PropertiesService
-	inputService: StreamDeckInputService
+	inputService: BlackmagicPanelInputService
+	led: BlackmagicPanelLedService
 }
 
 export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> implements BlackmagicPanel {
@@ -40,18 +42,20 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 	}
 
 	protected readonly device: HIDDevice
-	protected readonly deviceProperties: Readonly<StreamDeckProperties>
+	protected readonly deviceProperties: Readonly<BlackmagicPanelProperties>
 	readonly #propertiesService: PropertiesService
-	readonly #inputService: StreamDeckInputService
-	// private readonly options: Readonly<OpenStreamDeckOptions>
+	readonly #inputService: BlackmagicPanelInputService
+	readonly #ledService: BlackmagicPanelLedService
+	// private readonly options: Readonly<OpenBlackmagicPanelOptions>
 
-	constructor(device: HIDDevice, _options: OpenBlackmagicPanelOptions, services: StreamDeckServicesDefinition) {
+	constructor(device: HIDDevice, _options: OpenBlackmagicPanelOptions, services: BlackmagicPanelServicesDefinition) {
 		super()
 
 		this.device = device
 		this.deviceProperties = services.deviceProperties
 		this.#propertiesService = services.properties
 		this.#inputService = services.inputService
+		this.#ledService = services.led
 
 		// propogate events
 		services.events?.listen((key, ...args) => this.emit(key, ...args))
@@ -63,13 +67,13 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		})
 	}
 
-	protected checkValidKeyIndex(
-		keyIndex: KeyIndex,
+	protected checkValidKeyId(
+		keyId: KeyId,
 		feedbackType: BlackmagicPanelButtonControlDefinition['feedbackType'] | null,
-	): void {
+	): BlackmagicPanelButtonControlDefinition {
 		const buttonControl = this.deviceProperties.CONTROLS.find(
 			(control): control is BlackmagicPanelButtonControlDefinition =>
-				control.type === 'button' && control.index === keyIndex,
+				control.type === 'button' && control.id === keyId,
 		)
 
 		if (!buttonControl) {
@@ -79,6 +83,8 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		if (feedbackType && buttonControl.feedbackType !== feedbackType) {
 			throw new TypeError(`Expected a keyIndex with expected feedbackType`)
 		}
+
+		return buttonControl
 	}
 
 	public async close(): Promise<void> {
@@ -100,25 +106,19 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		return this.#propertiesService.getSerialNumber()
 	}
 
-	public async setKeyColor(keyIndex: KeyIndex, r: number, g: number, b: number): Promise<void> {
-		this.checkValidKeyIndex(keyIndex, null)
+	public async setKeyColor(keyId: KeyId, r: boolean, g: boolean, b: boolean): Promise<void> {
+		const control = this.checkValidKeyId(keyId, 'rgb')
 
-		await this.#buttonsLcdService.fillKeyColor(keyIndex, r, g, b)
+		await this.#ledService.setButtonColor(control, r, g, b)
 	}
 
-	public async clearKey(keyIndex: KeyIndex): Promise<void> {
-		this.checkValidKeyIndex(keyIndex, null)
+	public async clearKey(keyId: KeyId): Promise<void> {
+		const control = this.checkValidKeyId(keyId, 'rgb')
 
-		await this.#buttonsLcdService.clearKey(keyIndex)
+		await this.#ledService.setButtonColor(control, false, false, false)
 	}
 
 	public async clearPanel(): Promise<void> {
-		const ps: Array<Promise<void>> = []
-
-		ps.push(this.#buttonsLcdService.clearPanel())
-
-		if (this.#lcdSegmentDisplayService) ps.push(this.#lcdSegmentDisplayService.clearAllLcdSegments())
-
-		await Promise.all(ps)
+		await this.#ledService.clearPanel()
 	}
 }

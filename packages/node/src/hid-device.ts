@@ -1,9 +1,9 @@
-import type { DeviceModelId, HIDDevice, HIDDeviceEvents, HIDDeviceInfo } from '@elgato-stream-deck/core'
+import type { DeviceModelId, HIDDevice, HIDDeviceEvents, HIDDeviceInfo } from '@blackmagic-panel/core'
 import { EventEmitter } from 'eventemitter3'
 import type { HIDAsync, Device as NodeHIDDeviceInfo } from 'node-hid'
 
 /**
- * Information about a found streamdeck
+ * Information about a found panel
  */
 export interface BlackmagicPanelDeviceInfo {
 	/** The model of the device */
@@ -16,7 +16,7 @@ export interface BlackmagicPanelDeviceInfo {
 
 /**
  * The wrapped node-hid HIDDevice.
- * This translates it into the common format expected by @elgato-stream-deck/core
+ * This translates it into the common format expected by @blackmagic-panel/core
  */
 export class NodeHIDDevice extends EventEmitter<HIDDeviceEvents> implements HIDDevice {
 	private device: HIDAsync
