@@ -39,6 +39,16 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 	): ReturnType<BlackmagicPanel['setButtonColor']> {
 		return this.device.setButtonColor(...args)
 	}
+	public async setButtonColors(
+		...args: Parameters<BlackmagicPanel['setButtonColors']>
+	): ReturnType<BlackmagicPanel['setButtonColors']> {
+		return this.device.setButtonColors(...args)
+	}
+	public async setTbarLeds(
+		...args: Parameters<BlackmagicPanel['setTbarLeds']>
+	): ReturnType<BlackmagicPanel['setTbarLeds']> {
+		return this.device.setTbarLeds(...args)
+	}
 	public async clearKey(...args: Parameters<BlackmagicPanel['clearKey']>): ReturnType<BlackmagicPanel['clearKey']> {
 		return this.device.clearKey(...args)
 	}

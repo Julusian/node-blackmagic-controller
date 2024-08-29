@@ -16,21 +16,18 @@ listBlackmagicPanels().then(async (devices) => {
 
 			Promise.resolve().then(async () => {
 				try {
-					const red = Math.random() >= 0.5
-					const green = Math.random() >= 0.5
-					const blue = Math.random() >= 0.5
-					console.log('Filling with rgb(%d, %d, %d)', red, green, blue)
-
 					const values = []
 
 					for (const control of panel.CONTROLS) {
 						if (control.type === 'button') {
+							const red = Math.random() >= 0.5
+							const green = Math.random() >= 0.5
+							const blue = Math.random() >= 0.5
 							values.push({ keyId: control.id, red, green, blue })
 						} else if (control.type === 'tbar' && control.ledSegments > 0) {
-							const target = Math.random() * (control.ledSegments + 1)
 							const values = []
-							for (let i = 1; i <= control.ledSegments; i++) {
-								values.unshift(target >= i)
+							for (let i = 0; i < control.ledSegments; i++) {
+								values.push(Math.random() >= 0.5)
 							}
 							// TODO: it would be better to batch this, but this is good enough
 							await panel.setTbarLeds(values)
@@ -44,12 +41,6 @@ listBlackmagicPanels().then(async (devices) => {
 					isFilling = false
 				}
 			})
-		}, 1000 / 5)
-
-		function getRandomIntInclusive(min, max) {
-			min = Math.ceil(min)
-			max = Math.floor(max)
-			return Math.floor(Math.random() * (max - min + 1)) + min
-		}
+		}, 1000 / 10)
 	})
 })

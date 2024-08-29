@@ -1,6 +1,10 @@
 import type { HIDDevice } from '../../hid-device'
-import type { BlackmagicPanelButtonControlDefinition, BlackmagicPanelControlDefinition } from '../../controlDefinition'
-import type { BlackmagicPanelLedService } from './interface'
+import type {
+	BlackmagicPanelButtonControlDefinition,
+	BlackmagicPanelControlDefinition,
+	BlackmagicPanelTBarControlDefinition,
+} from '../../controlDefinition'
+import type { BlackmagicPanelLedService, BlackmagicPanelLedServiceValue } from './interface'
 import { uint8ArrayToDataView } from '../../util'
 
 export class DefaultLedService implements BlackmagicPanelLedService {
@@ -31,16 +35,26 @@ export class DefaultLedService implements BlackmagicPanelLedService {
 		return buffer
 	}
 
-	// nocommit - set tbar
+	async setControlColors(values: BlackmagicPanelLedServiceValue[]): Promise<void> {
+		this.#lastPrimaryBuffer = this.#createBuffer(this.#lastPrimaryBuffer)
 
-	async setButtonColor(
+		for (const value of values) {
+			if (value.type === 'button') {
+				this.#setButtonValue(value.control, value.red, value.green, value.blue)
+			} else {
+				this.#setTBarValue(value.control, value.leds)
+			}
+		}
+
+		await this.#device.sendReports([this.#lastPrimaryBuffer])
+	}
+
+	#setButtonValue(
 		control: BlackmagicPanelButtonControlDefinition,
 		red: boolean,
 		green: boolean,
 		blue: boolean,
-	): Promise<void> {
-		this.#lastPrimaryBuffer = this.#createBuffer(this.#lastPrimaryBuffer)
-
+	): void {
 		const buttonOffset = 3
 		const firstBitIndex = (control.encodedIndex - 1) * 3
 		const firstByteIndex = Math.floor(firstBitIndex / 8)
@@ -54,8 +68,16 @@ export class DefaultLedService implements BlackmagicPanelLedService {
 		uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 2), blue)
 
 		view.setUint16(buttonOffset + firstByteIndex, uint16Value, true)
+	}
 
-		await this.#device.sendReports([this.#lastPrimaryBuffer])
+	#setTBarValue(control: BlackmagicPanelTBarControlDefinition, values: boolean[]) {
+		let value = 0
+		values.forEach((v, i) => {
+			if (v) value |= 1 << i
+		})
+
+		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
+		view.setUint16(1, value, true)
 	}
 
 	async clearPanel(): Promise<void> {

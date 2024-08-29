@@ -1,14 +1,18 @@
 import type { EventEmitter } from 'eventemitter3'
 import type { DeviceModelId, KeyId } from './id.js'
 import type { HIDDeviceInfo } from './hid-device.js'
-import type { BlackmagicPanelButtonControlDefinition, BlackmagicPanelControlDefinition } from './controlDefinition.js'
+import type {
+	BlackmagicPanelButtonControlDefinition,
+	BlackmagicPanelControlDefinition,
+	BlackmagicPanelTBarControlDefinition,
+} from './controlDefinition.js'
 
 export type BlackmagicPanelEvents = {
-	tbar: [control: BlackmagicPanelButtonControlDefinition, percent: number]
 	down: [control: BlackmagicPanelButtonControlDefinition]
 	up: [control: BlackmagicPanelButtonControlDefinition]
-	error: [err: unknown]
+	tbar: [control: BlackmagicPanelTBarControlDefinition, percent: number]
 	batteryLevel: [percent: number]
+	error: [err: unknown]
 }
 
 export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
@@ -41,6 +45,18 @@ export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
 	setButtonColor(keyIndex: KeyId, r: boolean, g: boolean, b: boolean): Promise<void>
 
 	/**
+	 * Fill multiple keys with colors.
+	 * @param values Keys and colors to set
+	 */
+	setButtonColors(values: BlackmagicPanelSetButtonColorValue[]): Promise<void>
+
+	/**
+	 * Set the state of the T-Bar LEDs
+	 * @param leds Led states
+	 */
+	setTbarLeds(leds: boolean[]): Promise<void>
+
+	/**
 	 * Clears the given key.
 	 *
 	 * @param {number} keyIndex The key to clear
@@ -68,4 +84,11 @@ export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
 	 * Get serial number of the Panel
 	 */
 	getSerialNumber(): Promise<string>
+}
+
+export interface BlackmagicPanelSetButtonColorValue {
+	keyId: KeyId
+	red: boolean
+	green: boolean
+	blue: boolean
 }

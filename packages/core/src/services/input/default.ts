@@ -2,7 +2,10 @@ import type { BlackmagicPanelProperties } from '../../models/base.js'
 import type { BlackmagicPanelInputService } from './interface.js'
 import type { BlackmagicPanelEvents } from '../../types.js'
 import type { CallbackHook } from '../callback-hook.js'
-import type { BlackmagicPanelButtonControlDefinition } from '../../controlDefinition.js'
+import type {
+	BlackmagicPanelButtonControlDefinition,
+	BlackmagicPanelTBarControlDefinition,
+} from '../../controlDefinition.js'
 import { uint8ArrayToDataView } from '../../util.js'
 
 export class DefaultInputService implements BlackmagicPanelInputService {
@@ -13,6 +16,7 @@ export class DefaultInputService implements BlackmagicPanelInputService {
 
 	readonly #buttonControlsByEncoded: Record<number, BlackmagicPanelButtonControlDefinition | undefined>
 	readonly #buttonControlsById: Record<string, BlackmagicPanelButtonControlDefinition | undefined>
+	readonly #tbarControl: BlackmagicPanelTBarControlDefinition | undefined
 
 	constructor(
 		deviceProperties: Readonly<BlackmagicPanelProperties>,
@@ -24,9 +28,13 @@ export class DefaultInputService implements BlackmagicPanelInputService {
 		this.#buttonControlsByEncoded = {}
 		this.#buttonControlsById = {}
 		for (const control of deviceProperties.CONTROLS) {
-			if (control.type !== 'button') continue
-			this.#buttonControlsByEncoded[control.encodedIndex] = control
-			this.#buttonControlsById[control.id] = control
+			if (control.type === 'tbar' && !this.#tbarControl) {
+				this.#tbarControl = control
+			}
+			if (control.type === 'button') {
+				this.#buttonControlsByEncoded[control.encodedIndex] = control
+				this.#buttonControlsById[control.id] = control
+			}
 		}
 	}
 
@@ -37,9 +45,12 @@ export class DefaultInputService implements BlackmagicPanelInputService {
 			case 0x03:
 				this.#handleButtonInput(view)
 				break
-			// TODO - tbar
-
-			// TODO - battery
+			case 0x08:
+				this.#handleTBarInput(view)
+				break
+			case 0x06:
+				// TODO - battery?
+				break
 		}
 	}
 
@@ -76,5 +87,12 @@ export class DefaultInputService implements BlackmagicPanelInputService {
 			this.#pushedButtons.add(control.id)
 			this.#eventSource.emit('down', control)
 		}
+	}
+
+	#handleTBarInput(view: DataView): void {
+		if (!this.#tbarControl) return
+		const value = view.getUint16(1, true)
+
+		this.#eventSource.emit('tbar', this.#tbarControl, value / 4096)
 	}
 }

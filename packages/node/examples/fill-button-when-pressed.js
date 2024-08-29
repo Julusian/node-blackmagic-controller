@@ -33,6 +33,14 @@ const { listBlackmagicPanels, openBlackmagicPanel } = require('../dist/index')
 		panel.clearKey(control.id).catch((e) => console.error('Clear failed:', e))
 	})
 
+	panel.on('tbar', (control, percent) => {
+		console.log(`T-bar "${control.id}" moved to ${percent * 100}%`)
+	})
+
+	panel.on('batteryLevel', (percent) => {
+		console.log(`Battery level ${percent * 100}%`)
+	})
+
 	panel.on('error', (error) => {
 		console.error(error)
 	})

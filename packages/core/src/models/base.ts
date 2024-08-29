@@ -1,12 +1,16 @@
 import { EventEmitter } from 'eventemitter3'
 import type { HIDDevice, HIDDeviceInfo } from '../hid-device.js'
 import type { DeviceModelId, KeyId } from '../id.js'
-import type { BlackmagicPanel, BlackmagicPanelEvents } from '../types.js'
-import type { BlackmagicPanelButtonControlDefinition, BlackmagicPanelControlDefinition } from '../controlDefinition.js'
+import type { BlackmagicPanel, BlackmagicPanelEvents, BlackmagicPanelSetButtonColorValue } from '../types.js'
+import type {
+	BlackmagicPanelButtonControlDefinition,
+	BlackmagicPanelControlDefinition,
+	BlackmagicPanelTBarControlDefinition,
+} from '../controlDefinition.js'
 import type { PropertiesService } from '../services/properties/interface.js'
 import type { CallbackHook } from '../services/callback-hook.js'
 import type { BlackmagicPanelInputService } from '../services/input/interface.js'
-import { BlackmagicPanelLedService } from '../services/led/interface.js'
+import { BlackmagicPanelLedService, BlackmagicPanelLedServiceValue } from '../services/led/interface.js'
 
 export type EncodeJPEGHelper = (buffer: Uint8Array, width: number, height: number) => Promise<Uint8Array>
 
@@ -87,6 +91,18 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		return buttonControl
 	}
 
+	protected checkValidTbarIndex(id: number): BlackmagicPanelTBarControlDefinition {
+		const tbarControl = this.deviceProperties.CONTROLS.find(
+			(control): control is BlackmagicPanelTBarControlDefinition => control.type === 'tbar' && control.id === id,
+		)
+
+		if (!tbarControl) {
+			throw new TypeError(`Expected a valid keyIndex`)
+		}
+
+		return tbarControl
+	}
+
 	public async close(): Promise<void> {
 		return this.device.close()
 	}
@@ -106,16 +122,40 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		return this.#propertiesService.getSerialNumber()
 	}
 
-	public async setButtonColor(keyId: KeyId, r: boolean, g: boolean, b: boolean): Promise<void> {
+	public async setButtonColor(keyId: KeyId, red: boolean, green: boolean, blue: boolean): Promise<void> {
 		const control = this.checkValidKeyId(keyId, 'rgb')
 
-		await this.#ledService.setButtonColor(control, r, g, b)
+		await this.#ledService.setControlColors([{ type: 'button', control, red, green, blue }])
+	}
+
+	public async setButtonColors(values: BlackmagicPanelSetButtonColorValue[]): Promise<void> {
+		const translated: BlackmagicPanelLedServiceValue[] = values.map((value) => {
+			// TODO - avoid iterating over all controls inside `checkValidKeyId`
+
+			return {
+				...value,
+				type: 'button',
+				control: this.checkValidKeyId(value.keyId, 'rgb'),
+			}
+		})
+
+		await this.#ledService.setControlColors(translated)
+	}
+
+	public async setTbarLeds(leds: boolean[]): Promise<void> {
+		const control = this.checkValidTbarIndex(0)
+
+		if (control.ledSegments <= 0) throw new Error(`TBar does not have leds`)
+
+		if (leds.length !== control.ledSegments) throw new Error(`Expected ${control.ledSegments} led values`)
+
+		await this.#ledService.setControlColors([{ type: 'tbar', control, leds }])
 	}
 
 	public async clearKey(keyId: KeyId): Promise<void> {
 		const control = this.checkValidKeyId(keyId, 'rgb')
 
-		await this.#ledService.setButtonColor(control, false, false, false)
+		await this.#ledService.setControlColors([{ type: 'button', control, red: false, green: false, blue: false }])
 	}
 
 	public async clearPanel(): Promise<void> {
