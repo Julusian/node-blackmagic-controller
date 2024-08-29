@@ -85,7 +85,7 @@ export async function openBlackmagicPanel(
 			(m) => deviceInfo.vendorId === VENDOR_ID && m.productIds.includes(deviceInfo.productId),
 		)
 		if (!model) {
-			throw new Error('Stream Deck is of unexpected type.')
+			throw new Error(`Device path at "${devicePath}" is not a supported Blackmagic Panel.`)
 		}
 
 		const rawSteamdeck = model.factory(device, options)

@@ -60,12 +60,12 @@ export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
 	// setBrightness(percentage: number): Promise<void>
 
 	/**
-	 * Get firmware version from Stream Deck
+	 * Get firmware version of the Panel
 	 */
 	getFirmwareVersion(): Promise<string>
 
 	/**
-	 * Get serial number from Stream Deck
+	 * Get serial number of the Panel
 	 */
 	getSerialNumber(): Promise<string>
 }

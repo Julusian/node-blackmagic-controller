@@ -17,51 +17,23 @@ This library has nothing to do with the streamdeck software produced by Elgato. 
 
 `$ npm install --save @blackmagic-panel/node`
 
-`$ npm install --save @julusian/jpeg-turbo@^2.0.0` (Optional)
-
-It is recommended to install `@julusian/jpeg-turbo` to greatly improve performance for writing images to the StreamDeck XL or the Original-v2. Without doing so `jpeg-js` will be used instead, but image transfers will be noticably more cpu intensive and slower. `jpeg-turbo` has prebuilt binaries, but is not installed by default to ensure installation is easy for users who do not need the performance for the XL or the Original-v2.
-
 ### Native dependencies
 
 All of this library's native dependencies ship with prebuilt binaries, so having a full compiler toolchain should not be necessary to install `@blackmagic-panel/node`.
-
-However, in the event that installation _does_ fail (**or if you are on a platform that our dependencies don't provide prebuilt binaries for, such as a Raspberry Pi**), you will need to install a compiler toolchain to enable npm to build some of `@blackmagic-panel/node`'s dependencies from source. Expand the details block below for full instructions on how to do so.
-
-<details>
-	<summary>Compiling dependencies from source</summary>
-	
-* Windows
-  * Install [`windows-build-tools`](https://github.com/felixrieseberg/windows-build-tools):
-  ```bash
-  npm install --global windows-build-tools
-  ```
-* MacOS
-  * Install the Xcode Command Line Tools:
-  ```bash
-  xcode-select --install
-  ```
-* Linux (**including Raspberry Pi**)
-  * Follow the instructions for Linux in the ["Compiling from source"](https://github.com/node-hid/node-hid#compiling-from-source) steps for 
-  * Try installing `@blackmagic-panel/node`
-  * If you still have issues, ensure everything is updated and try again:
-	```bash
-	sudo apt-get update && sudo apt-get upgrade
-	```
-</details>
 
 ## Linux
 
 On linux, the udev subsystem blocks access to the StreamDeck without some special configuration.
 Copy one of the following files into `/etc/udev/rules.d/` and reload the rules with `sudo udevadm control --reload-rules`
 
--   Use the [headless server](./udev/50-elgato-stream-deck-headless.rules) version when your software will be running as a system service, and is not related to a logged in user
--   Use the [desktop user](./udev/50-elgato-stream-deck-user.rules) version when your software is run by a user session on a distribution using systemd
+-   Use the [headless server](./udev/50-blackmagic-panel-headless.rules) version when your software will be running as a system service, and is not related to a logged in user
+-   Use the [desktop user](./udev/50-blackmagic-panel-user.rules) version when your software is run by a user session on a distribution using systemd
 
 Unplug and replug the device and it should be usable
 
 ## Features
 
--   Multiplatform support: Windows 7-10, MacOS, Linux, and even Raspberry Pi!
+-   Multiplatform support: Windows, MacOS, Linux, and even Raspberry Pi!
 -   Support for every StreamDeck model (Original, Mini & XL)
 -   Key `down` and key `up` events
 -   Fill keys with images or solid RGB colors
