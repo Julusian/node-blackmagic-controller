@@ -1,4 +1,4 @@
-import type { OpenBlackmagicPanelOptions, BlackmagicPanel } from '@blackmagic-panel/core'
+import type { OpenBlackmagicPanelOptions, BlackmagicPanel, DeviceModelSpec } from '@blackmagic-panel/core'
 import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-panel/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice, BlackmagicPanelDeviceInfo } from './hid-device.js'
@@ -74,21 +74,34 @@ export async function openBlackmagicPanel(
 		...userOptions,
 	}
 
-	let device: NodeHIDDevice | undefined
+	let hidDevice: HID.HIDAsync | undefined
+	let model: DeviceModelSpec | undefined
 	try {
-		const hidDevice = await HID.HIDAsync.open(devicePath)
-		device = new NodeHIDDevice(hidDevice)
+		hidDevice = await HID.HIDAsync.open(devicePath)
 
-		const deviceInfo = await device.getDeviceInfo()
-
-		const model = DEVICE_MODELS.find(
+		const deviceInfo = await hidDevice.getDeviceInfo()
+		model = DEVICE_MODELS.find(
 			(m) => deviceInfo.vendorId === VENDOR_ID && m.productIds.includes(deviceInfo.productId),
 		)
 		if (!model) {
 			throw new Error(`Device path at "${devicePath}" is not a supported Blackmagic Panel.`)
 		}
+	} catch (e) {
+		if (hidDevice) await hidDevice.close().catch(() => null) // Suppress error
+		throw e
+	}
+
+	let device: NodeHIDDevice | undefined
+	try {
+		device = new NodeHIDDevice(hidDevice)
+
+		// Perform authentication if requried by the model
+		if (model.authenticate) {
+			await model.authenticate(device)
+		}
 
 		const rawSteamdeck = model.factory(device, options)
+
 		return new BlackmagicPanelNode(rawSteamdeck, userOptions?.clearOnClose ?? false)
 	} catch (e) {
 		if (device) await device.close().catch(() => null) // Suppress error

@@ -34,10 +34,10 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 	): ReturnType<BlackmagicPanel['getHidDeviceInfo']> {
 		return this.device.getHidDeviceInfo(...args)
 	}
-	public async setKeyColor(
-		...args: Parameters<BlackmagicPanel['setKeyColor']>
-	): ReturnType<BlackmagicPanel['setKeyColor']> {
-		return this.device.setKeyColor(...args)
+	public async setButtonColor(
+		...args: Parameters<BlackmagicPanel['setButtonColor']>
+	): ReturnType<BlackmagicPanel['setButtonColor']> {
+		return this.device.setButtonColor(...args)
 	}
 	public async clearKey(...args: Parameters<BlackmagicPanel['clearKey']>): ReturnType<BlackmagicPanel['clearKey']> {
 		return this.device.clearKey(...args)

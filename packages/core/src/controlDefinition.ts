@@ -24,7 +24,6 @@ export interface BlackmagicPanelTBarControlDefinition extends BlackmagicPanelCon
 	rowSpan: number
 
 	ledSegments: number
-	ledEncodedIndex: number
 }
 
 export type BlackmagicPanelControlDefinition =

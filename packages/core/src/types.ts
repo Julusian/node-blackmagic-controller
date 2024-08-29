@@ -38,7 +38,7 @@ export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
 	 * @param {number} g The color's green value. 0 - 255
 	 * @param {number} b The color's blue value. 0 -255
 	 */
-	setKeyColor(keyIndex: KeyId, r: boolean, g: boolean, b: boolean): Promise<void>
+	setButtonColor(keyIndex: KeyId, r: boolean, g: boolean, b: boolean): Promise<void>
 
 	/**
 	 * Clears the given key.

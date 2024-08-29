@@ -3,6 +3,7 @@ import { DeviceModelId } from './id.js'
 import type { BlackmagicPanel } from './types.js'
 import type { OpenBlackmagicPanelOptions } from './models/base.js'
 import { AtemMicroPanelFactory } from './models/atem-micro-panel.js'
+import { authenticate } from './authenticate.js'
 
 export * from './types.js'
 export * from './id.js'
@@ -18,6 +19,8 @@ export interface DeviceModelSpec {
 	id: DeviceModelId
 	productIds: number[]
 	factory: (device: HIDDevice, options: Required<OpenBlackmagicPanelOptions>) => BlackmagicPanel
+
+	authenticate?: (device: HIDDevice) => Promise<number>
 }
 
 /** List of all the known models, and the classes to use them */
@@ -25,6 +28,7 @@ export const DEVICE_MODELS2: { [key in DeviceModelId]: Omit<DeviceModelSpec, 'id
 	[DeviceModelId.AtemMicroPanel]: {
 		productIds: [0xbef0],
 		factory: AtemMicroPanelFactory,
+		authenticate: (device) => authenticate(device, 5),
 	},
 }
 

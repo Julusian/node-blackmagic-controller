@@ -2840,6 +2840,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"blackmagic-panel-packages@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "blackmagic-panel-packages@workspace:."
+  dependencies:
+    "@companion-module/tools": "npm:^2.0.0"
+    "@tsconfig/node18": "npm:^18.2.4"
+    "@types/jest": "npm:^29.5.12"
+    "@types/node": "npm:^18.19.46"
+    eslint: "npm:^9.9.1"
+    eslint-plugin-n: "npm:^17.10.2"
+    eslint-plugin-prettier: "npm:^5.2.1"
+    husky: "npm:^9.1.5"
+    jest: "npm:^29.7.0"
+    jest-mock: "npm:^29.7.0"
+    lerna: "npm:^8.1.8"
+    lint-staged: "npm:^15.2.9"
+    prettier: "npm:^3.3.3"
+    rimraf: "npm:^5.0.10"
+    snyk-nodejs-lockfile-parser: "npm:^1.58.10"
+    ts-jest: "npm:^29.2.5"
+    ts-node: "npm:^10.9.2"
+    typescript: "npm:~5.5.4"
+    typescript-eslint: "npm:^8.2.0"
+    usb: "npm:^2.13.0"
+  languageName: unknown
+  linkType: soft
+
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
   resolution: "brace-expansion@npm:1.1.11"
@@ -3808,33 +3835,6 @@ __metadata:
   checksum: 10c0/2dd1842e0ee84f88e78ee6e81dbd9dd554a589cf612ab2e5920d8be837aaea78b4c00cf189e545ee25d36777514fed80c11c9a867b2194f94f173d063873ec18
   languageName: node
   linkType: hard
-
-"elgato-stream-deck-packages@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "elgato-stream-deck-packages@workspace:."
-  dependencies:
-    "@companion-module/tools": "npm:^2.0.0"
-    "@tsconfig/node18": "npm:^18.2.4"
-    "@types/jest": "npm:^29.5.12"
-    "@types/node": "npm:^18.19.46"
-    eslint: "npm:^9.9.1"
-    eslint-plugin-n: "npm:^17.10.2"
-    eslint-plugin-prettier: "npm:^5.2.1"
-    husky: "npm:^9.1.5"
-    jest: "npm:^29.7.0"
-    jest-mock: "npm:^29.7.0"
-    lerna: "npm:^8.1.8"
-    lint-staged: "npm:^15.2.9"
-    prettier: "npm:^3.3.3"
-    rimraf: "npm:^5.0.10"
-    snyk-nodejs-lockfile-parser: "npm:^1.58.10"
-    ts-jest: "npm:^29.2.5"
-    ts-node: "npm:^10.9.2"
-    typescript: "npm:~5.5.4"
-    typescript-eslint: "npm:^8.2.0"
-    usb: "npm:^2.13.0"
-  languageName: unknown
-  linkType: soft
 
 "emittery@npm:^0.13.1":
   version: 0.13.1

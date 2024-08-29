@@ -106,7 +106,7 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		return this.#propertiesService.getSerialNumber()
 	}
 
-	public async setKeyColor(keyId: KeyId, r: boolean, g: boolean, b: boolean): Promise<void> {
+	public async setButtonColor(keyId: KeyId, r: boolean, g: boolean, b: boolean): Promise<void> {
 		const control = this.checkValidKeyId(keyId, 'rgb')
 
 		await this.#ledService.setButtonColor(control, r, g, b)
