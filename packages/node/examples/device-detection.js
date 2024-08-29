@@ -1,35 +1,37 @@
+// @ts-check
 const { usb } = require('usb')
-const { listStreamDecks, openStreamDeck } = require('../dist/index')
-const streamDecks = {}
+const { listBlackmagicPanels, openBlackmagicPanel } = require('../dist/index')
+const panels = {}
 
 async function addDevice(info) {
 	const path = info.path
-	streamDecks[path] = await openStreamDeck(path)
+	const panel = await openBlackmagicPanel(path)
+	panels[path] = panel
 
 	console.log(info)
-	console.log('Serial:', await streamDecks[path].getSerialNumber())
-	console.log('Firmware:', await streamDecks[path].getFirmwareVersion())
+	console.log('Serial:', await panels[path].getSerialNumber())
+	console.log('Firmware:', await panels[path].getFirmwareVersion())
 
 	// Clear all keys
-	await streamDecks[path].clearPanel()
+	await panels[path].clearPanel()
 	// Fill one key in red
-	await streamDecks[path].fillKeyColor(0, 255, 0, 0)
+	await panels[path].fillKeyColor(0, 255, 0, 0)
 
-	await streamDecks[path].resetToLogo()
+	await panels[path].resetToLogo()
 
-	streamDecks[path].on('error', (e) => {
+	panels[path].on('error', (e) => {
 		console.log(e)
 		// assuming any error means we lost connection
-		streamDecks[path].removeAllListeners()
-		delete streamDecks[path]
+		panels[path].removeAllListeners()
+		delete panels[path]
 	})
 	//  add any other event listeners
 }
 
 async function refresh() {
-	const streamdecks = await listStreamDecks()
-	streamdecks.forEach((device) => {
-		if (!streamDecks[device.path]) {
+	const panelList = await listBlackmagicPanels()
+	panelList.forEach((device) => {
+		if (!panels[device.path]) {
 			addDevice(device).catch((e) => console.error('Add failed:', e))
 		}
 	})

@@ -35,6 +35,11 @@ export interface BlackmagicPanel extends EventEmitter<BlackmagicPanelEvents> {
 	getHidDeviceInfo(): Promise<HIDDeviceInfo>
 
 	/**
+	 * Get the current battery level of the panel, if supported
+	 */
+	getBatteryLevel(): Promise<number | null>
+
+	/**
 	 * Fills the given key with a solid color.
 	 *
 	 * @param {number} keyIndex The key to fill

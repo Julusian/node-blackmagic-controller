@@ -49,7 +49,7 @@ export class DefaultInputService implements BlackmagicPanelInputService {
 				this.#handleTBarInput(view)
 				break
 			case 0x06:
-				// TODO - battery?
+				this.#handleBatteryLevel(view)
 				break
 		}
 	}
@@ -94,5 +94,11 @@ export class DefaultInputService implements BlackmagicPanelInputService {
 		const value = view.getUint16(1, true)
 
 		this.#eventSource.emit('tbar', this.#tbarControl, value / 4096)
+	}
+
+	#handleBatteryLevel(view: DataView): void {
+		const value = view.getUint8(2) // TODO - test this
+
+		this.#eventSource.emit('batteryLevel', value / 100)
 	}
 }

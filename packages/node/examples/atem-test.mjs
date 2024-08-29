@@ -8,9 +8,9 @@ const atem = await HIDAsync.open(0x1edb, 0xbef0)
 
 const atem2 = new NodeHIDDevice(atem)
 
-atem.on('data', (data) => {
-	console.log(data)
-})
+// atem.on('data', (data) => {
+// 	console.log(data)
+// })
 
 // only needed when over usb
 const info = await atem.getDeviceInfo()
@@ -21,6 +21,7 @@ if (info.interface !== -1) {
 	console.log('authenticate', res)
 }
 
+console.log('battery?', await atem.getFeatureReport(6, 3))
 // {
 // 	const w = Buffer.alloc(32)
 // 	w[0] = 0x02

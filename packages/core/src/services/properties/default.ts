@@ -8,6 +8,11 @@ export class DefaultPropertiesService implements PropertiesService {
 		this.#device = device
 	}
 
+	public async getBatteryLevel(): Promise<number | null> {
+		const val = await this.#device.getFeatureReport(6, 3)
+		return val[2] / 100
+	}
+
 	// public async setBrightness(percentage: number): Promise<void> {
 	// 	if (percentage < 0 || percentage > 100) {
 	// 		throw new RangeError('Expected brightness percentage to be between 0 and 100')

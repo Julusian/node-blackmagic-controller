@@ -9,6 +9,7 @@ const { listBlackmagicPanels, openBlackmagicPanel } = require('../dist/index')
 	await panel.clearPanel()
 
 	console.log(`opened panel ${panel.MODEL}`)
+	console.log('battery level', await panel.getBatteryLevel())
 
 	let nextColor = 0
 

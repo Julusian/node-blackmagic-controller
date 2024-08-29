@@ -62,6 +62,9 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 	// ): ReturnType<BlackmagicPanel['setBrightness']> {
 	// 	return this.device.setBrightness(...args)
 	// }
+	public async getBatteryLevel(): Promise<number | null> {
+		return this.device.getBatteryLevel()
+	}
 	public async getFirmwareVersion(): Promise<string> {
 		return this.device.getFirmwareVersion()
 	}

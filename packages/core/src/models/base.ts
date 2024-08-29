@@ -111,6 +111,10 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		return this.device.getDeviceInfo()
 	}
 
+	public async getBatteryLevel(): Promise<number | null> {
+		return this.#propertiesService.getBatteryLevel()
+	}
+
 	// public async setBrightness(percentage: number): Promise<void> {
 	// 	return this.#propertiesService.setBrightness(percentage)
 	// }
