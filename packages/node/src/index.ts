@@ -1,45 +1,49 @@
-import type { OpenBlackmagicPanelOptions, BlackmagicPanel, DeviceModelSpec } from '@blackmagic-panel/core'
-import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-panel/core'
+import type {
+	OpenBlackmagicControllerOptions,
+	BlackmagicController,
+	DeviceModelSpec,
+} from '@blackmagic-controller/core'
+import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-controller/core'
 import * as HID from 'node-hid'
-import { NodeHIDDevice, BlackmagicPanelDeviceInfo } from './hid-device.js'
-import { BlackmagicPanelNode } from './wrapper.js'
+import { NodeHIDDevice, BlackmagicControllerDeviceInfo } from './hid-device.js'
+import { BlackmagicControllerNode } from './wrapper.js'
 
 export {
 	VENDOR_ID,
 	DeviceModelId,
 	KeyId,
-	BlackmagicPanel,
-	BlackmagicPanelControlDefinitionBase,
-	BlackmagicPanelButtonControlDefinition,
-	BlackmagicPanelTBarControlDefinition,
-	BlackmagicPanelControlDefinition,
-	OpenBlackmagicPanelOptions,
-} from '@blackmagic-panel/core'
+	BlackmagicController,
+	BlackmagicControllerControlDefinitionBase,
+	BlackmagicControllerButtonControlDefinition,
+	BlackmagicControllerTBarControlDefinition,
+	BlackmagicControllerControlDefinition,
+	OpenBlackmagicControllerOptions,
+} from '@blackmagic-controller/core'
 
-export { BlackmagicPanelDeviceInfo }
+export { BlackmagicControllerDeviceInfo }
 
-export interface OpenBlackmagicPanelOptionsNode extends OpenBlackmagicPanelOptions {
+export interface OpenBlackmagicControllerOptionsNode extends OpenBlackmagicControllerOptions {
 	clearOnClose?: boolean // nocommit - implement this
 }
 
 /**
  * Scan for and list detected devices
  */
-export async function listBlackmagicPanels(): Promise<BlackmagicPanelDeviceInfo[]> {
-	const devices: Record<string, BlackmagicPanelDeviceInfo> = {}
+export async function listBlackmagicControllers(): Promise<BlackmagicControllerDeviceInfo[]> {
+	const devices: Record<string, BlackmagicControllerDeviceInfo> = {}
 	for (const dev of await HID.devicesAsync()) {
 		if (dev.path && !devices[dev.path]) {
-			const info = getBlackmagicPanelDeviceInfo(dev)
+			const info = getBlackmagicControllerDeviceInfo(dev)
 			if (info) devices[dev.path] = info
 		}
 	}
-	return Object.values<BlackmagicPanelDeviceInfo>(devices)
+	return Object.values<BlackmagicControllerDeviceInfo>(devices)
 }
 
 /**
- * If the provided device is a supported blackmagic panel, get the info about it
+ * If the provided device is a supported blackmagic controller, get the info about it
  */
-export function getBlackmagicPanelDeviceInfo(dev: HID.Device): BlackmagicPanelDeviceInfo | null {
+export function getBlackmagicControllerDeviceInfo(dev: HID.Device): BlackmagicControllerDeviceInfo | null {
 	const model = DEVICE_MODELS.find((m) => m.productIds.includes(dev.productId))
 
 	if (model && dev.vendorId === VENDOR_ID && dev.path) {
@@ -54,23 +58,23 @@ export function getBlackmagicPanelDeviceInfo(dev: HID.Device): BlackmagicPanelDe
 }
 
 /**
- * Get the info of a device if the given path is a supported blackmagic panel
+ * Get the info of a device if the given path is a supported blackmagic controller
  */
-export async function getBlackmagicPanelInfo(path: string): Promise<BlackmagicPanelDeviceInfo | undefined> {
-	const allDevices = await listBlackmagicPanels()
+export async function getBlackmagicControllerInfo(path: string): Promise<BlackmagicControllerDeviceInfo | undefined> {
+	const allDevices = await listBlackmagicControllers()
 	return allDevices.find((dev) => dev.path === path)
 }
 
 /**
- * Open a supported blackmagic panel
+ * Open a supported blackmagic controller
  * @param devicePath The path of the device to open.
  * @param userOptions Options to customise the device behvaiour
  */
-export async function openBlackmagicPanel(
+export async function openBlackmagicController(
 	devicePath: string,
-	userOptions?: OpenBlackmagicPanelOptionsNode,
-): Promise<BlackmagicPanel> {
-	const options: Required<OpenBlackmagicPanelOptions> = {
+	userOptions?: OpenBlackmagicControllerOptionsNode,
+): Promise<BlackmagicController> {
+	const options: Required<OpenBlackmagicControllerOptions> = {
 		...userOptions,
 	}
 
@@ -84,7 +88,7 @@ export async function openBlackmagicPanel(
 			(m) => deviceInfo.vendorId === VENDOR_ID && m.productIds.includes(deviceInfo.productId),
 		)
 		if (!model) {
-			throw new Error(`Device path at "${devicePath}" is not a supported Blackmagic Panel.`)
+			throw new Error(`Device path at "${devicePath}" is not a supported Blackmagic controller.`)
 		}
 	} catch (e) {
 		if (hidDevice) await hidDevice.close().catch(() => null) // Suppress error
@@ -102,7 +106,7 @@ export async function openBlackmagicPanel(
 
 		const rawSteamdeck = model.factory(device, options)
 
-		return new BlackmagicPanelNode(rawSteamdeck, userOptions?.clearOnClose ?? false)
+		return new BlackmagicControllerNode(rawSteamdeck, userOptions?.clearOnClose ?? false)
 	} catch (e) {
 		if (device) await device.close().catch(() => null) // Suppress error
 		throw e

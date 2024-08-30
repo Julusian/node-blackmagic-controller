@@ -1,8 +1,8 @@
-import type { BlackmagicPanelControlDefinition } from './controlDefinition.js'
+import type { BlackmagicControllerControlDefinition } from './controlDefinition.js'
 
 export function freezeDefinitions(
-	controls: BlackmagicPanelControlDefinition[],
-): Readonly<BlackmagicPanelControlDefinition[]> {
+	controls: BlackmagicControllerControlDefinition[],
+): Readonly<BlackmagicControllerControlDefinition[]> {
 	return Object.freeze(controls.map((control) => Object.freeze(control)))
 }
 
@@ -11,7 +11,7 @@ export function createRgbButtonDefinition(
 	column: number,
 	id: string,
 	encodedIndex: number,
-): BlackmagicPanelControlDefinition {
+): BlackmagicControllerControlDefinition {
 	return {
 		type: 'button',
 		row,

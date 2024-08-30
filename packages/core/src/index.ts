@@ -1,7 +1,7 @@
 import type { HIDDevice } from './hid-device.js'
 import { DeviceModelId } from './id.js'
-import type { BlackmagicPanel } from './types.js'
-import type { OpenBlackmagicPanelOptions } from './models/base.js'
+import type { BlackmagicController } from './types.js'
+import type { OpenBlackmagicControllerOptions } from './models/base.js'
 import { AtemMicroPanelFactory } from './models/atem-micro-panel.js'
 import { authenticate } from './authenticate.js'
 
@@ -9,8 +9,8 @@ export * from './types.js'
 export * from './id.js'
 export * from './controlDefinition.js'
 export { HIDDevice, HIDDeviceInfo, HIDDeviceEvents } from './hid-device.js'
-export { OpenBlackmagicPanelOptions } from './models/base.js'
-export { BlackmagicPanelProxy } from './proxy.js'
+export { OpenBlackmagicControllerOptions } from './models/base.js'
+export { BlackmagicControllerProxy } from './proxy.js'
 
 /** Blackmagic vendor id */
 export const VENDOR_ID = 0x1edb
@@ -18,7 +18,7 @@ export const VENDOR_ID = 0x1edb
 export interface DeviceModelSpec {
 	id: DeviceModelId
 	productIds: number[]
-	factory: (device: HIDDevice, options: Required<OpenBlackmagicPanelOptions>) => BlackmagicPanel
+	factory: (device: HIDDevice, options: Required<OpenBlackmagicControllerOptions>) => BlackmagicController
 
 	authenticate?: (device: HIDDevice) => Promise<number>
 }

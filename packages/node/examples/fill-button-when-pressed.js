@@ -1,11 +1,11 @@
 // @ts-check
-const { listBlackmagicPanels, openBlackmagicPanel } = require('../dist/index')
+const { listBlackmagicControllers, openBlackmagicController } = require('../dist/index')
 
 ;(async () => {
-	const devices = await listBlackmagicPanels()
+	const devices = await listBlackmagicControllers()
 	if (!devices[0]) throw new Error('No device found')
 
-	const panel = await openBlackmagicPanel(devices[0].path)
+	const panel = await openBlackmagicController(devices[0].path)
 	await panel.clearPanel()
 
 	console.log(`opened panel ${panel.MODEL}`)

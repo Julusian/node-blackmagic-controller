@@ -30,7 +30,7 @@ export async function authenticate(device: HIDDevice, featureReport: number): Pr
 	// Read the keyboard challenge (for keyboard to authenticate app)
 	const challenge = await device.getFeatureReport(featureReport, 10)
 
-	// Send our challenge (to authenticate the panel)
+	// Send our challenge (to authenticate the controller)
 	// We don't care ... so just send 0x0000000000000000
 	await device.sendFeatureReport(generatePacket(featureReport, 1, 0n))
 

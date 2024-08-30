@@ -1,21 +1,21 @@
 import type { HIDDevice } from '../../hid-device'
 import type {
-	BlackmagicPanelButtonControlDefinition,
-	BlackmagicPanelControlDefinition,
-	BlackmagicPanelTBarControlDefinition,
+	BlackmagicControllerButtonControlDefinition,
+	BlackmagicControllerControlDefinition,
+	BlackmagicControllerTBarControlDefinition,
 } from '../../controlDefinition'
-import type { BlackmagicPanelLedService, BlackmagicPanelLedServiceValue } from './interface'
+import type { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from './interface'
 import { uint8ArrayToDataView } from '../../util'
 
-export class DefaultLedService implements BlackmagicPanelLedService {
+export class DefaultLedService implements BlackmagicControllerLedService {
 	readonly #device: HIDDevice
-	readonly #controls: readonly BlackmagicPanelControlDefinition[]
+	readonly #controls: readonly BlackmagicControllerControlDefinition[]
 
 	readonly #bufferSize: number = 32 // Future: this may need to vary
 
 	#lastPrimaryBuffer: Uint8Array
 
-	constructor(device: HIDDevice, controls: readonly BlackmagicPanelControlDefinition[]) {
+	constructor(device: HIDDevice, controls: readonly BlackmagicControllerControlDefinition[]) {
 		this.#device = device
 		this.#controls = controls
 
@@ -35,7 +35,7 @@ export class DefaultLedService implements BlackmagicPanelLedService {
 		return buffer
 	}
 
-	async setControlColors(values: BlackmagicPanelLedServiceValue[]): Promise<void> {
+	async setControlColors(values: BlackmagicControllerLedServiceValue[]): Promise<void> {
 		this.#lastPrimaryBuffer = this.#createBuffer(this.#lastPrimaryBuffer)
 
 		for (const value of values) {
@@ -50,7 +50,7 @@ export class DefaultLedService implements BlackmagicPanelLedService {
 	}
 
 	#setButtonValue(
-		control: BlackmagicPanelButtonControlDefinition,
+		control: BlackmagicControllerButtonControlDefinition,
 		red: boolean,
 		green: boolean,
 		blue: boolean,
@@ -70,7 +70,7 @@ export class DefaultLedService implements BlackmagicPanelLedService {
 		view.setUint16(buttonOffset + firstByteIndex, uint16Value, true)
 	}
 
-	#setTBarValue(control: BlackmagicPanelTBarControlDefinition, values: boolean[]) {
+	#setTBarValue(control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {
 		let value = 0
 		values.forEach((v, i) => {
 			if (v) value |= 1 << i

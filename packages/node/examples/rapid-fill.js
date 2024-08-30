@@ -1,10 +1,10 @@
 // @ts-check
-const { openBlackmagicPanel, listBlackmagicPanels } = require('../dist/index')
+const { openBlackmagicController, listBlackmagicControllers } = require('../dist/index')
 
-listBlackmagicPanels().then(async (devices) => {
+listBlackmagicControllers().then(async (devices) => {
 	if (!devices[0]) throw new Error('No device found')
 
-	openBlackmagicPanel(devices[0].path).then((panel) => {
+	openBlackmagicController(devices[0].path).then((panel) => {
 		panel.on('error', (error) => {
 			console.error(error)
 		})

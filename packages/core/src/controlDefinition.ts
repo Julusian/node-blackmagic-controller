@@ -1,13 +1,13 @@
 import { KeyId } from './id'
 
-export interface BlackmagicPanelControlDefinitionBase {
+export interface BlackmagicControllerControlDefinitionBase {
 	type: 'button' | 'tbar'
 
 	row: number
 	column: number
 }
 
-export interface BlackmagicPanelButtonControlDefinition extends BlackmagicPanelControlDefinitionBase {
+export interface BlackmagicControllerButtonControlDefinition extends BlackmagicControllerControlDefinitionBase {
 	type: 'button'
 
 	id: KeyId
@@ -16,7 +16,7 @@ export interface BlackmagicPanelButtonControlDefinition extends BlackmagicPanelC
 	feedbackType: 'rgb'
 }
 
-export interface BlackmagicPanelTBarControlDefinition extends BlackmagicPanelControlDefinitionBase {
+export interface BlackmagicControllerTBarControlDefinition extends BlackmagicControllerControlDefinitionBase {
 	type: 'tbar'
 	id: 0 // Future: Maybe there will be more than one LCD segment
 
@@ -26,6 +26,6 @@ export interface BlackmagicPanelTBarControlDefinition extends BlackmagicPanelCon
 	ledSegments: number
 }
 
-export type BlackmagicPanelControlDefinition =
-	| BlackmagicPanelButtonControlDefinition
-	| BlackmagicPanelTBarControlDefinition
+export type BlackmagicControllerControlDefinition =
+	| BlackmagicControllerButtonControlDefinition
+	| BlackmagicControllerTBarControlDefinition

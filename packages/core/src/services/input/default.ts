@@ -1,26 +1,26 @@
-import type { BlackmagicPanelProperties } from '../../models/base.js'
-import type { BlackmagicPanelInputService } from './interface.js'
-import type { BlackmagicPanelEvents } from '../../types.js'
+import type { BlackmagicControllerProperties } from '../../models/base.js'
+import type { BlackmagicControllerInputService } from './interface.js'
+import type { BlackmagicControllerEvents } from '../../types.js'
 import type { CallbackHook } from '../callback-hook.js'
 import type {
-	BlackmagicPanelButtonControlDefinition,
-	BlackmagicPanelTBarControlDefinition,
+	BlackmagicControllerButtonControlDefinition,
+	BlackmagicControllerTBarControlDefinition,
 } from '../../controlDefinition.js'
 import { uint8ArrayToDataView } from '../../util.js'
 
-export class DefaultInputService implements BlackmagicPanelInputService {
-	// readonly #deviceProperties: Readonly<BlackmagicPanelProperties>
-	readonly #eventSource: CallbackHook<BlackmagicPanelEvents>
+export class DefaultInputService implements BlackmagicControllerInputService {
+	// readonly #deviceProperties: Readonly<BlackmagicControllerProperties>
+	readonly #eventSource: CallbackHook<BlackmagicControllerEvents>
 
 	readonly #pushedButtons = new Set<string>()
 
-	readonly #buttonControlsByEncoded: Record<number, BlackmagicPanelButtonControlDefinition | undefined>
-	readonly #buttonControlsById: Record<string, BlackmagicPanelButtonControlDefinition | undefined>
-	readonly #tbarControl: BlackmagicPanelTBarControlDefinition | undefined
+	readonly #buttonControlsByEncoded: Record<number, BlackmagicControllerButtonControlDefinition | undefined>
+	readonly #buttonControlsById: Record<string, BlackmagicControllerButtonControlDefinition | undefined>
+	readonly #tbarControl: BlackmagicControllerTBarControlDefinition | undefined
 
 	constructor(
-		deviceProperties: Readonly<BlackmagicPanelProperties>,
-		eventSource: CallbackHook<BlackmagicPanelEvents>,
+		deviceProperties: Readonly<BlackmagicControllerProperties>,
+		eventSource: CallbackHook<BlackmagicControllerEvents>,
 	) {
 		// this.#deviceProperties = deviceProperties
 		this.#eventSource = eventSource
@@ -55,7 +55,7 @@ export class DefaultInputService implements BlackmagicPanelInputService {
 	}
 
 	#handleButtonInput(view: DataView): void {
-		const pushedControls: BlackmagicPanelButtonControlDefinition[] = []
+		const pushedControls: BlackmagicControllerButtonControlDefinition[] = []
 		const pushedControlIds = new Set<string>()
 
 		for (let i = 1; i < view.byteLength; i += 2) {

@@ -34,7 +34,7 @@ module.exports = {
 	preset: 'ts-jest',
 
 	moduleNameMapper: {
-		'@blackmagic-panel/(.+)': '<rootDir>/packages/$1/src',
+		'@blackmagic-controller/(.+)': '<rootDir>/packages/$1/src',
 		'^(..?/.+).js?$': '$1',
 	},
 }

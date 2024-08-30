@@ -1,27 +1,29 @@
 import type {
-	BlackmagicPanelButtonControlDefinition,
-	BlackmagicPanelTBarControlDefinition,
+	BlackmagicControllerButtonControlDefinition,
+	BlackmagicControllerTBarControlDefinition,
 } from '../../controlDefinition'
 
-export interface BlackmagicPanelLedService {
-	setControlColors(values: BlackmagicPanelLedServiceValue[]): Promise<void>
+export interface BlackmagicControllerLedService {
+	setControlColors(values: BlackmagicControllerLedServiceValue[]): Promise<void>
 
 	clearPanel(): Promise<void>
 }
 
-export interface BlackmagicPanelLedServiceValueButton {
+export interface BlackmagicControllerLedServiceValueButton {
 	type: 'button'
-	control: BlackmagicPanelButtonControlDefinition
+	control: BlackmagicControllerButtonControlDefinition
 
 	red: boolean
 	green: boolean
 	blue: boolean
 }
-export interface BlackmagicPanelLedServiceValueTBar {
+export interface BlackmagicControllerLedServiceValueTBar {
 	type: 'tbar'
-	control: BlackmagicPanelTBarControlDefinition
+	control: BlackmagicControllerTBarControlDefinition
 
 	leds: boolean[]
 }
 
-export type BlackmagicPanelLedServiceValue = BlackmagicPanelLedServiceValueButton | BlackmagicPanelLedServiceValueTBar
+export type BlackmagicControllerLedServiceValue =
+	| BlackmagicControllerLedServiceValueButton
+	| BlackmagicControllerLedServiceValueTBar

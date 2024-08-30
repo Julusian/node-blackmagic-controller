@@ -1,11 +1,11 @@
-import type { DeviceModelId, HIDDevice, HIDDeviceEvents, HIDDeviceInfo } from '@blackmagic-panel/core'
+import type { DeviceModelId, HIDDevice, HIDDeviceEvents, HIDDeviceInfo } from '@blackmagic-controller/core'
 import { EventEmitter } from 'eventemitter3'
 import type { HIDAsync, Device as NodeHIDDeviceInfo } from 'node-hid'
 
 /**
- * Information about a found panel
+ * Information about a found controller
  */
-export interface BlackmagicPanelDeviceInfo {
+export interface BlackmagicControllerDeviceInfo {
 	/** The model of the device */
 	model: DeviceModelId
 	/** The connected path of the device in the usb tree */
@@ -16,7 +16,7 @@ export interface BlackmagicPanelDeviceInfo {
 
 /**
  * The wrapped node-hid HIDDevice.
- * This translates it into the common format expected by @blackmagic-panel/core
+ * This translates it into the common format expected by @blackmagic-controller/core
  */
 export class NodeHIDDevice extends EventEmitter<HIDDeviceEvents> implements HIDDevice {
 	private device: HIDAsync
@@ -26,15 +26,7 @@ export class NodeHIDDevice extends EventEmitter<HIDDeviceEvents> implements HIDD
 
 		this.device = device
 		this.device.on('error', (error) => this.emit('error', error))
-
-		this.device.on('data', (data: Buffer) => {
-			// // Button press
-			// if (data[0] === 0x01) {
-			// 	const keyData = data.subarray(1)
-			// 	this.emit('input', keyData)
-			// }
-			this.emit('input', data)
-		})
+		this.device.on('data', (data: Buffer) => this.emit('input', data))
 	}
 
 	public async close(): Promise<void> {

@@ -1,40 +1,44 @@
 import { EventEmitter } from 'eventemitter3'
 import type { HIDDevice, HIDDeviceInfo } from '../hid-device.js'
 import type { DeviceModelId, KeyId } from '../id.js'
-import type { BlackmagicPanel, BlackmagicPanelEvents, BlackmagicPanelSetButtonColorValue } from '../types.js'
 import type {
-	BlackmagicPanelButtonControlDefinition,
-	BlackmagicPanelControlDefinition,
-	BlackmagicPanelTBarControlDefinition,
+	BlackmagicController,
+	BlackmagicControllerEvents,
+	BlackmagicControllerSetButtonColorValue,
+} from '../types.js'
+import type {
+	BlackmagicControllerButtonControlDefinition,
+	BlackmagicControllerControlDefinition,
+	BlackmagicControllerTBarControlDefinition,
 } from '../controlDefinition.js'
 import type { PropertiesService } from '../services/properties/interface.js'
 import type { CallbackHook } from '../services/callback-hook.js'
-import type { BlackmagicPanelInputService } from '../services/input/interface.js'
-import { BlackmagicPanelLedService, BlackmagicPanelLedServiceValue } from '../services/led/interface.js'
+import type { BlackmagicControllerInputService } from '../services/input/interface.js'
+import { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from '../services/led/interface.js'
 
 export type EncodeJPEGHelper = (buffer: Uint8Array, width: number, height: number) => Promise<Uint8Array>
 
-export interface OpenBlackmagicPanelOptions {
+export interface OpenBlackmagicControllerOptions {
 	// For future use
 }
 
-export type BlackmagicPanelProperties = Readonly<{
+export type BlackmagicControllerProperties = Readonly<{
 	MODEL: DeviceModelId
 	PRODUCT_NAME: string
 
-	CONTROLS: Readonly<BlackmagicPanelControlDefinition[]>
+	CONTROLS: Readonly<BlackmagicControllerControlDefinition[]>
 }>
 
-export interface BlackmagicPanelServicesDefinition {
-	deviceProperties: BlackmagicPanelProperties
-	events: CallbackHook<BlackmagicPanelEvents>
+export interface BlackmagicControllerServicesDefinition {
+	deviceProperties: BlackmagicControllerProperties
+	events: CallbackHook<BlackmagicControllerEvents>
 	properties: PropertiesService
-	inputService: BlackmagicPanelInputService
-	led: BlackmagicPanelLedService
+	inputService: BlackmagicControllerInputService
+	led: BlackmagicControllerLedService
 }
 
-export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> implements BlackmagicPanel {
-	get CONTROLS(): Readonly<BlackmagicPanelControlDefinition[]> {
+export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerEvents> implements BlackmagicController {
+	get CONTROLS(): Readonly<BlackmagicControllerControlDefinition[]> {
 		return this.deviceProperties.CONTROLS
 	}
 
@@ -46,13 +50,17 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 	}
 
 	protected readonly device: HIDDevice
-	protected readonly deviceProperties: Readonly<BlackmagicPanelProperties>
+	protected readonly deviceProperties: Readonly<BlackmagicControllerProperties>
 	readonly #propertiesService: PropertiesService
-	readonly #inputService: BlackmagicPanelInputService
-	readonly #ledService: BlackmagicPanelLedService
-	// private readonly options: Readonly<OpenBlackmagicPanelOptions>
+	readonly #inputService: BlackmagicControllerInputService
+	readonly #ledService: BlackmagicControllerLedService
+	// private readonly options: Readonly<OpenBlackmagicControllerOptions>
 
-	constructor(device: HIDDevice, _options: OpenBlackmagicPanelOptions, services: BlackmagicPanelServicesDefinition) {
+	constructor(
+		device: HIDDevice,
+		_options: OpenBlackmagicControllerOptions,
+		services: BlackmagicControllerServicesDefinition,
+	) {
 		super()
 
 		this.device = device
@@ -73,10 +81,10 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 
 	protected checkValidKeyId(
 		keyId: KeyId,
-		feedbackType: BlackmagicPanelButtonControlDefinition['feedbackType'] | null,
-	): BlackmagicPanelButtonControlDefinition {
+		feedbackType: BlackmagicControllerButtonControlDefinition['feedbackType'] | null,
+	): BlackmagicControllerButtonControlDefinition {
 		const buttonControl = this.deviceProperties.CONTROLS.find(
-			(control): control is BlackmagicPanelButtonControlDefinition =>
+			(control): control is BlackmagicControllerButtonControlDefinition =>
 				control.type === 'button' && control.id === keyId,
 		)
 
@@ -91,9 +99,10 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		return buttonControl
 	}
 
-	protected checkValidTbarIndex(id: number): BlackmagicPanelTBarControlDefinition {
+	protected checkValidTbarIndex(id: number): BlackmagicControllerTBarControlDefinition {
 		const tbarControl = this.deviceProperties.CONTROLS.find(
-			(control): control is BlackmagicPanelTBarControlDefinition => control.type === 'tbar' && control.id === id,
+			(control): control is BlackmagicControllerTBarControlDefinition =>
+				control.type === 'tbar' && control.id === id,
 		)
 
 		if (!tbarControl) {
@@ -132,8 +141,8 @@ export class BlackmagicPanelBase extends EventEmitter<BlackmagicPanelEvents> imp
 		await this.#ledService.setControlColors([{ type: 'button', control, red, green, blue }])
 	}
 
-	public async setButtonColors(values: BlackmagicPanelSetButtonColorValue[]): Promise<void> {
-		const translated: BlackmagicPanelLedServiceValue[] = values.map((value) => {
+	public async setButtonColors(values: BlackmagicControllerSetButtonColorValue[]): Promise<void> {
+		const translated: BlackmagicControllerLedServiceValue[] = values.map((value) => {
 			// TODO - avoid iterating over all controls inside `checkValidKeyId`
 
 			return {

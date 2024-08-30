@@ -1,6 +1,6 @@
 import { HIDAsync, devices } from 'node-hid'
 import { NodeHIDDevice } from '../dist/hid-device.js'
-import { authenticate } from '@blackmagic-panel/core/dist/authenticate.js'
+import { authenticate } from '@blackmagic-controller/core/dist/authenticate.js'
 
 console.log(devices().filter((d) => d.vendorId === 0x1edb && d.productId === 0xbef0))
 
@@ -8,9 +8,9 @@ const atem = await HIDAsync.open(0x1edb, 0xbef0)
 
 const atem2 = new NodeHIDDevice(atem)
 
-// atem.on('data', (data) => {
-// 	console.log(data)
-// })
+atem2.on('input', (data) => {
+	console.log(data)
+})
 
 // only needed when over usb
 const info = await atem.getDeviceInfo()

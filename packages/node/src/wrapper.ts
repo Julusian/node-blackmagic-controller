@@ -1,9 +1,9 @@
-import type { BlackmagicPanel } from '@blackmagic-panel/core'
-import { BlackmagicPanelProxy } from '@blackmagic-panel/core'
+import type { BlackmagicController } from '@blackmagic-controller/core'
+import { BlackmagicControllerProxy } from '@blackmagic-controller/core'
 
-export class BlackmagicPanelNode extends BlackmagicPanelProxy {
+export class BlackmagicControllerNode extends BlackmagicControllerProxy {
 	constructor(
-		device: BlackmagicPanel,
+		device: BlackmagicController,
 		private readonly clearOnClose: boolean,
 	) {
 		super(device)

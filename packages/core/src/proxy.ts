@@ -1,21 +1,21 @@
 import type { EventEmitter } from 'eventemitter3'
 import type { DeviceModelId } from './id.js'
-import type { BlackmagicPanel, BlackmagicPanelEvents } from './types.js'
-import type { BlackmagicPanelControlDefinition } from './controlDefinition.js'
+import type { BlackmagicController, BlackmagicControllerEvents } from './types.js'
+import type { BlackmagicControllerControlDefinition } from './controlDefinition.js'
 
 /**
- * A minimal proxy around a BlackmagicPanel instance.
- * This is intended to be used by libraries wrapping this that want to add more methods to the BlackmagicPanel
+ * A minimal proxy around a BlackmagicController instance.
+ * This is intended to be used by libraries wrapping this that want to add more methods to the BlackmagicController
  */
 
-export class BlackmagicPanelProxy implements BlackmagicPanel {
-	protected device: BlackmagicPanel
+export class BlackmagicControllerProxy implements BlackmagicController {
+	protected device: BlackmagicController
 
-	constructor(device: BlackmagicPanel) {
+	constructor(device: BlackmagicController) {
 		this.device = device
 	}
 
-	public get CONTROLS(): Readonly<BlackmagicPanelControlDefinition[]> {
+	public get CONTROLS(): Readonly<BlackmagicControllerControlDefinition[]> {
 		return this.device.CONTROLS
 	}
 
@@ -30,36 +30,38 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 		return this.device.close()
 	}
 	public async getHidDeviceInfo(
-		...args: Parameters<BlackmagicPanel['getHidDeviceInfo']>
-	): ReturnType<BlackmagicPanel['getHidDeviceInfo']> {
+		...args: Parameters<BlackmagicController['getHidDeviceInfo']>
+	): ReturnType<BlackmagicController['getHidDeviceInfo']> {
 		return this.device.getHidDeviceInfo(...args)
 	}
 	public async setButtonColor(
-		...args: Parameters<BlackmagicPanel['setButtonColor']>
-	): ReturnType<BlackmagicPanel['setButtonColor']> {
+		...args: Parameters<BlackmagicController['setButtonColor']>
+	): ReturnType<BlackmagicController['setButtonColor']> {
 		return this.device.setButtonColor(...args)
 	}
 	public async setButtonColors(
-		...args: Parameters<BlackmagicPanel['setButtonColors']>
-	): ReturnType<BlackmagicPanel['setButtonColors']> {
+		...args: Parameters<BlackmagicController['setButtonColors']>
+	): ReturnType<BlackmagicController['setButtonColors']> {
 		return this.device.setButtonColors(...args)
 	}
 	public async setTbarLeds(
-		...args: Parameters<BlackmagicPanel['setTbarLeds']>
-	): ReturnType<BlackmagicPanel['setTbarLeds']> {
+		...args: Parameters<BlackmagicController['setTbarLeds']>
+	): ReturnType<BlackmagicController['setTbarLeds']> {
 		return this.device.setTbarLeds(...args)
 	}
-	public async clearKey(...args: Parameters<BlackmagicPanel['clearKey']>): ReturnType<BlackmagicPanel['clearKey']> {
+	public async clearKey(
+		...args: Parameters<BlackmagicController['clearKey']>
+	): ReturnType<BlackmagicController['clearKey']> {
 		return this.device.clearKey(...args)
 	}
 	public async clearPanel(
-		...args: Parameters<BlackmagicPanel['clearPanel']>
-	): ReturnType<BlackmagicPanel['clearPanel']> {
+		...args: Parameters<BlackmagicController['clearPanel']>
+	): ReturnType<BlackmagicController['clearPanel']> {
 		return this.device.clearPanel(...args)
 	}
 	// public async setBrightness(
-	// 	...args: Parameters<BlackmagicPanel['setBrightness']>
-	// ): ReturnType<BlackmagicPanel['setBrightness']> {
+	// 	...args: Parameters<BlackmagicController['setBrightness']>
+	// ): ReturnType<BlackmagicController['setBrightness']> {
 	// 	return this.device.setBrightness(...args)
 	// }
 	public async getBatteryLevel(): Promise<number | null> {
@@ -76,23 +78,23 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 	 * EventEmitter
 	 */
 
-	public eventNames(): Array<EventEmitter.EventNames<BlackmagicPanelEvents>> {
+	public eventNames(): Array<EventEmitter.EventNames<BlackmagicControllerEvents>> {
 		return this.device.eventNames()
 	}
 
-	public listeners<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
+	public listeners<T extends EventEmitter.EventNames<BlackmagicControllerEvents>>(
 		event: T,
-	): Array<EventEmitter.EventListener<BlackmagicPanelEvents, T>> {
+	): Array<EventEmitter.EventListener<BlackmagicControllerEvents, T>> {
 		return this.device.listeners(event)
 	}
 
-	public listenerCount(event: EventEmitter.EventNames<BlackmagicPanelEvents>): number {
+	public listenerCount(event: EventEmitter.EventNames<BlackmagicControllerEvents>): number {
 		return this.device.listenerCount(event)
 	}
 
-	public emit<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
+	public emit<T extends EventEmitter.EventNames<BlackmagicControllerEvents>>(
 		event: T,
-		...args: EventEmitter.EventArgs<BlackmagicPanelEvents, T>
+		...args: EventEmitter.EventArgs<BlackmagicControllerEvents, T>
 	): boolean {
 		return this.device.emit(event, ...args)
 	}
@@ -100,17 +102,17 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 	/**
 	 * Add a listener for a given event.
 	 */
-	public on<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
+	public on<T extends EventEmitter.EventNames<BlackmagicControllerEvents>>(
 		event: T,
-		fn: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
+		fn: EventEmitter.EventListener<BlackmagicControllerEvents, T>,
 		context?: unknown,
 	): this {
 		this.device.on(event, fn, context)
 		return this
 	}
-	public addListener<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
+	public addListener<T extends EventEmitter.EventNames<BlackmagicControllerEvents>>(
 		event: T,
-		fn: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
+		fn: EventEmitter.EventListener<BlackmagicControllerEvents, T>,
 		context?: unknown,
 	): this {
 		this.device.addListener(event, fn, context)
@@ -120,9 +122,9 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 	/**
 	 * Add a one-time listener for a given event.
 	 */
-	public once<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
+	public once<T extends EventEmitter.EventNames<BlackmagicControllerEvents>>(
 		event: T,
-		fn: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
+		fn: EventEmitter.EventListener<BlackmagicControllerEvents, T>,
 		context?: unknown,
 	): this {
 		this.device.once(event, fn, context)
@@ -132,18 +134,18 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 	/**
 	 * Remove the listeners of a given event.
 	 */
-	public removeListener<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
+	public removeListener<T extends EventEmitter.EventNames<BlackmagicControllerEvents>>(
 		event: T,
-		fn?: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
+		fn?: EventEmitter.EventListener<BlackmagicControllerEvents, T>,
 		context?: unknown,
 		once?: boolean,
 	): this {
 		this.device.removeListener(event, fn, context, once)
 		return this
 	}
-	public off<T extends EventEmitter.EventNames<BlackmagicPanelEvents>>(
+	public off<T extends EventEmitter.EventNames<BlackmagicControllerEvents>>(
 		event: T,
-		fn?: EventEmitter.EventListener<BlackmagicPanelEvents, T>,
+		fn?: EventEmitter.EventListener<BlackmagicControllerEvents, T>,
 		context?: unknown,
 		once?: boolean,
 	): this {
@@ -151,7 +153,7 @@ export class BlackmagicPanelProxy implements BlackmagicPanel {
 		return this
 	}
 
-	public removeAllListeners(event?: EventEmitter.EventNames<BlackmagicPanelEvents>): this {
+	public removeAllListeners(event?: EventEmitter.EventNames<BlackmagicControllerEvents>): this {
 		this.device.removeAllListeners(event)
 		return this
 	}

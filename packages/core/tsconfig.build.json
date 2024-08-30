@@ -7,7 +7,7 @@
 		"baseUrl": "./",
 		"paths": {
 			"*": ["./node_modules/*"],
-			"@blackmagic-panel/core": ["./src/index.ts"]
+			"@blackmagic-controller/core": ["./src/index.ts"]
 		},
 		"types": ["node"]
 	}

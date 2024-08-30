@@ -1,12 +1,12 @@
-# @blackmagic-panel/node
+# @blackmagic-controller/node
 
-![Node CI](https://github.com/Julusian/node-blackmagic-panel/workflows/Node%20CI/badge.svg)
-[![codecov](https://codecov.io/gh/Julusian/node-blackmagic-panel/branch/master/graph/badge.svg?token=Hl4QXGZJMF)](https://codecov.io/gh/Julusian/node-blackmagic-panel)
+![Node CI](https://github.com/Julusian/node-blackmagic-controller/workflows/Node%20CI/badge.svg)
+[![codecov](https://codecov.io/gh/Julusian/node-blackmagic-controller/branch/master/graph/badge.svg?token=Hl4QXGZJMF)](https://codecov.io/gh/Julusian/node-blackmagic-controller)
 
-[![npm version](https://img.shields.io/npm/v/@blackmagic-panel/node.svg)](https://npm.im/@blackmagic-panel/node)
-[![license](https://img.shields.io/npm/l/@blackmagic-panel/node.svg)](https://npm.im/@blackmagic-panel/node)
+[![npm version](https://img.shields.io/npm/v/@blackmagic-controller/node.svg)](https://npm.im/@blackmagic-controller/node)
+[![license](https://img.shields.io/npm/l/@blackmagic-controller/node.svg)](https://npm.im/@blackmagic-controller/node)
 
-[`@blackmagic-panel/node`](https://github.com/julusian/node-blackmagic-panel) is a shared library for interfacing
+[`@blackmagic-controller/node`](https://github.com/julusian/node-blackmagic-controller) is a shared library for interfacing
 with the various models of the [Elgato Stream Deck](https://www.elgato.com/en/gaming/stream-deck).
 
 ## Intended use
@@ -15,19 +15,19 @@ This library has nothing to do with the streamdeck software produced by Elgato. 
 
 ## Install
 
-`$ npm install --save @blackmagic-panel/node`
+`$ npm install --save @blackmagic-controller/node`
 
 ### Native dependencies
 
-All of this library's native dependencies ship with prebuilt binaries, so having a full compiler toolchain should not be necessary to install `@blackmagic-panel/node`.
+All of this library's native dependencies ship with prebuilt binaries, so having a full compiler toolchain should not be necessary to install `@blackmagic-controller/node`.
 
 ## Linux
 
 On linux, the udev subsystem blocks access to the StreamDeck without some special configuration.
 Copy one of the following files into `/etc/udev/rules.d/` and reload the rules with `sudo udevadm control --reload-rules`
 
--   Use the [headless server](./udev/50-blackmagic-panel-headless.rules) version when your software will be running as a system service, and is not related to a logged in user
--   Use the [desktop user](./udev/50-blackmagic-panel-user.rules) version when your software is run by a user session on a distribution using systemd
+-   Use the [headless server](./udev/50-blackmagic-controller-headless.rules) version when your software will be running as a system service, and is not related to a logged in user
+-   Use the [desktop user](./udev/50-blackmagic-controller-user.rules) version when your software is run by a user session on a distribution using systemd
 
 Unplug and replug the device and it should be usable
 
@@ -69,7 +69,7 @@ The StreamDeck type can be found [here](/packages/core/src/models/types.ts#L15)
 ## Example
 
 ```typescript
-import { openStreamDeck, listStreamDecks } from '@blackmagic-panel/node'
+import { openStreamDeck, listStreamDecks } from '@blackmagic-controller/node'
 
 // List the connected streamdecks
 const devices = await listStreamDecks()

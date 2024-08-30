@@ -1,16 +1,16 @@
 import type { HIDDevice } from '../hid-device.js'
-import type { OpenBlackmagicPanelOptions, BlackmagicPanelProperties } from './base.js'
-import { BlackmagicPanelBase } from './base.js'
+import type { OpenBlackmagicControllerOptions, BlackmagicControllerProperties } from './base.js'
+import { BlackmagicControllerBase } from './base.js'
 import { DeviceModelId } from '../id.js'
 import { createRgbButtonDefinition, freezeDefinitions } from '../controlsGenerator.js'
-import type { BlackmagicPanelControlDefinition } from '../controlDefinition.js'
+import type { BlackmagicControllerControlDefinition } from '../controlDefinition.js'
 import { CallbackHook } from '../services/callback-hook.js'
-import { BlackmagicPanelEvents } from '../types.js'
+import { BlackmagicControllerEvents } from '../types.js'
 import { DefaultPropertiesService } from '../services/properties/default.js'
 import { DefaultInputService } from '../services/input/default.js'
 import { DefaultLedService } from '../services/led/default.js'
 
-const microPanelControls: BlackmagicPanelControlDefinition[] = [
+const microPanelControls: BlackmagicControllerControlDefinition[] = [
 	createRgbButtonDefinition(0, 5, 'macro', 0x01),
 
 	createRgbButtonDefinition(0, 6, 'key1-on', 0x02),
@@ -86,7 +86,7 @@ const microPanelControls: BlackmagicPanelControlDefinition[] = [
 	createRgbButtonDefinition(3, 16, 'dsk2-auto', 0x32),
 ]
 
-const atemMicroPanelProperties: BlackmagicPanelProperties = {
+const atemMicroPanelProperties: BlackmagicControllerProperties = {
 	MODEL: DeviceModelId.AtemMicroPanel,
 	PRODUCT_NAME: 'Atem Micro Panel',
 
@@ -95,11 +95,11 @@ const atemMicroPanelProperties: BlackmagicPanelProperties = {
 
 export function AtemMicroPanelFactory(
 	device: HIDDevice,
-	options: Required<OpenBlackmagicPanelOptions>,
-): BlackmagicPanelBase {
-	const events = new CallbackHook<BlackmagicPanelEvents>()
+	options: Required<OpenBlackmagicControllerOptions>,
+): BlackmagicControllerBase {
+	const events = new CallbackHook<BlackmagicControllerEvents>()
 
-	return new BlackmagicPanelBase(device, options, {
+	return new BlackmagicControllerBase(device, options, {
 		deviceProperties: atemMicroPanelProperties,
 		events,
 		properties: new DefaultPropertiesService(device),
