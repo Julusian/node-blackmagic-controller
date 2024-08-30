@@ -1,5 +1,9 @@
 import type { HIDDevice } from '../hid-device.js'
-import type { OpenBlackmagicControllerOptions, BlackmagicControllerProperties } from './base.js'
+import type {
+	OpenBlackmagicControllerOptions,
+	BlackmagicControllerProperties,
+	OpenBlackmagicControllerOptionsInternal,
+} from './base.js'
 import { BlackmagicControllerBase } from './base.js'
 import { DeviceModelId } from '../id.js'
 import { createRgbButtonDefinition, freezeDefinitions } from '../controlsGenerator.js'
@@ -95,7 +99,7 @@ const atemMicroPanelProperties: BlackmagicControllerProperties = {
 
 export function AtemMicroPanelFactory(
 	device: HIDDevice,
-	options: Required<OpenBlackmagicControllerOptions>,
+	options: Required<OpenBlackmagicControllerOptionsInternal>,
 ): BlackmagicControllerBase {
 	const events = new CallbackHook<BlackmagicControllerEvents>()
 

@@ -22,6 +22,11 @@ export interface OpenBlackmagicControllerOptions {
 	// For future use
 }
 
+export interface OpenBlackmagicControllerOptionsInternal extends OpenBlackmagicControllerOptions {
+	nextAuthMaxDelay: number | null
+	authenticate: ((device: HIDDevice) => Promise<number>) | null
+}
+
 export type BlackmagicControllerProperties = Readonly<{
 	MODEL: DeviceModelId
 	PRODUCT_NAME: string
@@ -51,20 +56,23 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 
 	protected readonly device: HIDDevice
 	protected readonly deviceProperties: Readonly<BlackmagicControllerProperties>
+	readonly #options: Readonly<OpenBlackmagicControllerOptionsInternal>
 	readonly #propertiesService: PropertiesService
 	readonly #inputService: BlackmagicControllerInputService
 	readonly #ledService: BlackmagicControllerLedService
-	// private readonly options: Readonly<OpenBlackmagicControllerOptions>
+
+	#authTimeout: NodeJS.Timeout | null = null
 
 	constructor(
 		device: HIDDevice,
-		_options: OpenBlackmagicControllerOptions,
+		options: OpenBlackmagicControllerOptionsInternal,
 		services: BlackmagicControllerServicesDefinition,
 	) {
 		super()
 
 		this.device = device
 		this.deviceProperties = services.deviceProperties
+		this.#options = options
 		this.#propertiesService = services.properties
 		this.#inputService = services.inputService
 		this.#ledService = services.led
@@ -75,8 +83,36 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 		this.device.on('input', (data: Uint8Array) => this.#inputService.handleInput(data))
 
 		this.device.on('error', (err) => {
+			// This means the device has failed, and can be treated as 'closed'
+			if (this.#authTimeout) clearTimeout(this.#authTimeout)
+
 			this.emit('error', err)
 		})
+
+		this.#scheduleNextAuthenticate(this.#options.nextAuthMaxDelay || 600, 1)
+	}
+
+	#scheduleNextAuthenticate(maxDelay: number, attempt: number): void {
+		const authenticateFn = this.#options.authenticate
+		if (!authenticateFn) return
+
+		if (this.#authTimeout) clearTimeout(this.#authTimeout)
+
+		const targetWait = maxDelay * 0.5 * 1000 // Do it halfway through the timeout
+
+		this.#authTimeout = setTimeout(() => {
+			authenticateFn(this.device)
+				.then((nextDelay) => {
+					this.#scheduleNextAuthenticate(nextDelay, 1)
+				})
+				.catch((err) => {
+					if (attempt < 3) {
+						this.#scheduleNextAuthenticate(15, attempt + 1) // Retry soon, in case it was a temporary failure
+					} else {
+						this.emit('error', new Error('Failed to authenticate', { cause: err }))
+					}
+				})
+		}, targetWait)
 	}
 
 	protected checkValidKeyId(
@@ -113,6 +149,8 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 	}
 
 	public async close(): Promise<void> {
+		if (this.#authTimeout) clearTimeout(this.#authTimeout)
+
 		return this.device.close()
 	}
 

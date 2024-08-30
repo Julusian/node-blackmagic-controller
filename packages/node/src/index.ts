@@ -7,6 +7,7 @@ import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-controller/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice, BlackmagicControllerDeviceInfo } from './hid-device.js'
 import { BlackmagicControllerNode } from './wrapper.js'
+import { OpenBlackmagicControllerOptionsInternal } from '@blackmagic-controller/core/dist/models/base.js'
 
 export {
 	VENDOR_ID,
@@ -100,11 +101,18 @@ export async function openBlackmagicController(
 		device = new NodeHIDDevice(hidDevice)
 
 		// Perform authentication if requried by the model
+		let nextAuthMaxDelay: number | null = null
 		if (model.authenticate) {
-			await model.authenticate(device)
+			nextAuthMaxDelay = await model.authenticate(device)
 		}
 
-		const rawSteamdeck = model.factory(device, options)
+		const fullOptions: Required<OpenBlackmagicControllerOptionsInternal> = {
+			...options,
+			nextAuthMaxDelay,
+			authenticate: model.authenticate ?? null,
+		}
+
+		const rawSteamdeck = model.factory(device, fullOptions)
 
 		return new BlackmagicControllerNode(rawSteamdeck, userOptions?.clearOnClose ?? false)
 	} catch (e) {
