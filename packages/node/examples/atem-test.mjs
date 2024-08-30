@@ -12,6 +12,8 @@ atem2.on('input', (data) => {
 	console.log(data)
 })
 
+console.log('brightness?', await atem.getFeatureReport(0, 3))
+
 console.log('battery?', await atem.getFeatureReport(6, 3))
 
 // only needed when over usb

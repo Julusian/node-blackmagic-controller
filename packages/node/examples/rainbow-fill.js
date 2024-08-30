@@ -19,6 +19,8 @@ listBlackmagicControllers().then(async (devices) => {
 			console.error(error)
 		})
 
+		panel.setBrightness(100)
+
 		let offset = 0
 		let tbarProgress = 0
 

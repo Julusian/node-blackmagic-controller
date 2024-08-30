@@ -1,5 +1,5 @@
 export interface PropertiesService {
-	// setBrightness(percentage: number): Promise<void>
+	setBrightness(percentage: number): Promise<void>
 
 	getBatteryLevel(): Promise<number | null>
 
