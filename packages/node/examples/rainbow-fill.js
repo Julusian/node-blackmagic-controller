@@ -1,6 +1,16 @@
 // @ts-check
 const { openBlackmagicController, listBlackmagicControllers } = require('../dist/index')
 
+const colors = [
+	{ red: true, green: false, blue: false },
+	{ red: true, green: true, blue: false },
+	{ red: false, green: true, blue: false },
+	{ red: false, green: true, blue: true },
+	{ red: false, green: false, blue: true },
+	{ red: false, green: false, blue: false },
+	{ red: true, green: true, blue: true },
+]
+
 listBlackmagicControllers().then(async (devices) => {
 	if (!devices[0]) throw new Error('No device found')
 
@@ -9,6 +19,9 @@ listBlackmagicControllers().then(async (devices) => {
 			console.error(error)
 		})
 
+		let offset = 0
+		let tbarProgress = 0
+
 		let isFilling = false
 		setInterval(() => {
 			if (isFilling) return
@@ -16,24 +29,23 @@ listBlackmagicControllers().then(async (devices) => {
 
 			Promise.resolve().then(async () => {
 				try {
-					const red = Math.random() >= 0.5
-					const green = Math.random() >= 0.5
-					const blue = Math.random() >= 0.5
-					console.log('Filling with rgb(%d, %d, %d)', red, green, blue)
-
 					const values = []
 
 					for (const control of panel.CONTROLS) {
 						if (control.type === 'button') {
-							values.push({ keyId: control.id, red, green, blue })
+							const colorIndex = (colors.length + control.column + control.row - offset) % colors.length
+							const color = colors[colorIndex]
+
+							values.push({ keyId: control.id, ...color })
 						} else if (control.type === 'tbar' && control.ledSegments > 0) {
-							const target = Math.random() * (control.ledSegments + 1)
-							const values = []
-							for (let i = 1; i <= control.ledSegments; i++) {
-								values.unshift(target >= i)
-							}
+							const values = new Array(control.ledSegments).fill(false)
+							values[tbarProgress] = true
+
 							// TODO: it would be better to batch this, but this is good enough
 							await panel.setTbarLeds(values)
+
+							tbarProgress++
+							if (tbarProgress >= control.ledSegments) tbarProgress = 0
 						}
 					}
 
@@ -42,6 +54,9 @@ listBlackmagicControllers().then(async (devices) => {
 					console.error('Fill failed:', e)
 				} finally {
 					isFilling = false
+
+					offset++
+					if (offset >= colors.length) offset = 0
 				}
 			})
 		}, 1000 / 5)

@@ -12,15 +12,18 @@ atem2.on('input', (data) => {
 	console.log(data)
 })
 
+console.log('battery?', await atem.getFeatureReport(6, 3))
+
 // only needed when over usb
 const info = await atem.getDeviceInfo()
 console.log('info', info)
-if (info.interface !== -1) {
-	// HACK: this is -1 when bluetooth
-	const res = await authenticate(atem2, 5)
-	console.log('authenticate', res)
-}
+// if (info.interface !== -1) {
+// HACK: this is -1 when bluetooth
+const res = await authenticate(atem2, 5)
+console.log('authenticate', res)
+// }
 
+console.log('pre bat')
 console.log('battery?', await atem.getFeatureReport(6, 3))
 // {
 // 	const w = Buffer.alloc(32)
