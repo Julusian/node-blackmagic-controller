@@ -14,13 +14,11 @@ import type {
 import type { PropertiesService } from '../services/properties/interface.js'
 import type { CallbackHook } from '../services/callback-hook.js'
 import type { BlackmagicControllerInputService } from '../services/input/interface.js'
-import { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from '../services/led/interface.js'
+import type { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from '../services/led/interface.js'
 
 export type EncodeJPEGHelper = (buffer: Uint8Array, width: number, height: number) => Promise<Uint8Array>
 
-export interface OpenBlackmagicControllerOptions {
-	// For future use
-}
+export type OpenBlackmagicControllerOptions = Record<string, never> // For future use
 
 export interface OpenBlackmagicControllerOptionsInternal extends OpenBlackmagicControllerOptions {
 	nextAuthMaxDelay: number | null

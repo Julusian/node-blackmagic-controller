@@ -28,7 +28,7 @@ export const DEVICE_MODELS2: { [key in DeviceModelId]: Omit<DeviceModelSpec, 'id
 	[DeviceModelId.AtemMicroPanel]: {
 		productIds: [0xbef0],
 		factory: AtemMicroPanelFactory,
-		authenticate: (device) => authenticate(device, 5),
+		authenticate: async (device) => authenticate(device, 5),
 	},
 }
 

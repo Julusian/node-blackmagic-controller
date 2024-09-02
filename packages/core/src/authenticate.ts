@@ -1,5 +1,5 @@
-import type { HIDDevice } from './hid-device'
-import { uint8ArrayToDataView } from './util'
+import type { HIDDevice } from './hid-device.js'
+import { uint8ArrayToDataView } from './util.js'
 
 /*
  * This is based on the work from
@@ -86,7 +86,7 @@ const AUTH_ODD_TBL = [
 const MASK = 0xa79a63f585d37bf0n
 
 function bmd_kbd_auth(challenge: bigint) {
-	let n = Number(challenge & 7n)
+	const n = Number(challenge & 7n)
 	let v = rol8n(challenge, n)
 
 	let k

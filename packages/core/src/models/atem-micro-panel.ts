@@ -1,15 +1,11 @@
 import type { HIDDevice } from '../hid-device.js'
-import type {
-	OpenBlackmagicControllerOptions,
-	BlackmagicControllerProperties,
-	OpenBlackmagicControllerOptionsInternal,
-} from './base.js'
+import type { BlackmagicControllerProperties, OpenBlackmagicControllerOptionsInternal } from './base.js'
 import { BlackmagicControllerBase } from './base.js'
 import { DeviceModelId } from '../id.js'
 import { createRgbButtonDefinition, freezeDefinitions } from '../controlsGenerator.js'
 import type { BlackmagicControllerControlDefinition } from '../controlDefinition.js'
 import { CallbackHook } from '../services/callback-hook.js'
-import { BlackmagicControllerEvents } from '../types.js'
+import type { BlackmagicControllerEvents } from '../types.js'
 import { DefaultPropertiesService } from '../services/properties/default.js'
 import { DefaultInputService } from '../services/input/default.js'
 import { DefaultLedService } from '../services/led/default.js'

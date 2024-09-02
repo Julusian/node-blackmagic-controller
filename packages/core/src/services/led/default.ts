@@ -1,23 +1,23 @@
-import type { HIDDevice } from '../../hid-device'
+import type { HIDDevice } from '../../hid-device.js'
 import type {
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerControlDefinition,
 	BlackmagicControllerTBarControlDefinition,
-} from '../../controlDefinition'
-import type { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from './interface'
-import { uint8ArrayToDataView } from '../../util'
+} from '../../controlDefinition.js'
+import type { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from './interface.js'
+import { uint8ArrayToDataView } from '../../util.js'
 
 export class DefaultLedService implements BlackmagicControllerLedService {
 	readonly #device: HIDDevice
-	readonly #controls: readonly BlackmagicControllerControlDefinition[]
+	// readonly #controls: readonly BlackmagicControllerControlDefinition[]
 
 	readonly #bufferSize: number = 32 // Future: this may need to vary
 
 	#lastPrimaryBuffer: Uint8Array
 
-	constructor(device: HIDDevice, controls: readonly BlackmagicControllerControlDefinition[]) {
+	constructor(device: HIDDevice, _controls: readonly BlackmagicControllerControlDefinition[]) {
 		this.#device = device
-		this.#controls = controls
+		// this.#controls = controls
 
 		this.#lastPrimaryBuffer = this.#createBuffer(null)
 

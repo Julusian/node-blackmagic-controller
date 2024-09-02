@@ -2,6 +2,7 @@ import { generateEslintConfig } from '@companion-module/tools/eslint/config.mjs'
 
 const baseConfig = await generateEslintConfig({
 	enableTypescript: true,
+	ignores: ['packages/web-demo/**/*', 'packages/web/**/*'],
 })
 
 const customConfig = [
@@ -27,13 +28,13 @@ const customConfig = [
 			'n/no-extraneous-import': 'off',
 		},
 	},
-	{
-		files: ['packages/web-demo/src/**/*'],
-		rules: {
-			'@typescript-eslint/no-require-imports': 'off',
-			'n/no-missing-import': 'off',
-		},
-	},
+	// {
+	// 	files: ['packages/web-demo/src/**/*'],
+	// 	rules: {
+	// 		'@typescript-eslint/no-require-imports': 'off',
+	// 		'n/no-missing-import': 'off',
+	// 	},
+	// },
 ]
 
 export default customConfig
