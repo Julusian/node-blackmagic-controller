@@ -1,6 +1,6 @@
 {
 	"name": "@blackmagic-controller/web",
-	"version": "7.0.0-0",
+	"version": "0.1.0-0",
 	"description": "An npm module for interfacing with the Blackmagic usb/bluetooth controllers in the browser",
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",
@@ -32,7 +32,7 @@
 		"udev"
 	],
 	"dependencies": {
-		"@blackmagic-controller/core": "7.0.0-0",
+		"@blackmagic-controller/core": "0.1.0-0",
 		"@types/w3c-web-hid": "^1.0.6",
 		"eventemitter3": "^5.0.1",
 		"p-queue": "^6.6.2",

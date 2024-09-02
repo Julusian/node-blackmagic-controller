@@ -1,6 +1,6 @@
 {
 	"name": "@blackmagic-controller/web-demo",
-	"version": "7.0.0-0",
+	"version": "0.1.0-0",
 	"private": true,
 	"license": "MIT",
 	"homepage": "https://github.com/julusian/node-blackmagic-controller#readme",
@@ -20,7 +20,7 @@
 		"build": "run g:rimraf dist && cross-env NODE_ENV=production webpack --progress"
 	},
 	"dependencies": {
-		"@blackmagic-controller/web": "7.0.0-0",
+		"@blackmagic-controller/web": "0.1.0-0",
 		"html-to-image": "^1.11.11"
 	},
 	"devDependencies": {
