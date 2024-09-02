@@ -14,27 +14,6 @@ export class DefaultPropertiesService implements PropertiesService {
 		return val[2] / 100
 	}
 
-	public async setBrightness(percentage: number): Promise<void> {
-		if (percentage < 0 || percentage > 100) {
-			throw new RangeError('Expected brightness percentage to be between 0 and 100')
-		}
-
-		const maxBrightness = 0x3f800000
-		const minBrightness = 0x3c23d70a
-
-		// const brightness = minBrightness + (maxBrightness - minBrightness) * (percentage / 100)
-		const brightness = maxBrightness
-
-		const buffer = new Uint8Array(5)
-		const view = uint8ArrayToDataView(buffer)
-		view.setUint8(0, 0x00)
-		view.setUint32(1, brightness, true)
-
-		// TODO - this looks like how it should be formed, but it isn't right
-
-		// await this.#device.sendFeatureReport(buffer)
-	}
-
 	public async getFirmwareVersion(): Promise<string> {
 		const val = await this.#device.getFeatureReport(1, 9)
 		const view = uint8ArrayToDataView(val)

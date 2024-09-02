@@ -59,11 +59,6 @@ export class BlackmagicControllerProxy implements BlackmagicController {
 	): ReturnType<BlackmagicController['clearPanel']> {
 		return this.device.clearPanel(...args)
 	}
-	public async setBrightness(
-		...args: Parameters<BlackmagicController['setBrightness']>
-	): ReturnType<BlackmagicController['setBrightness']> {
-		return this.device.setBrightness(...args)
-	}
 	public async getBatteryLevel(): Promise<number | null> {
 		return this.device.getBatteryLevel()
 	}

@@ -75,9 +75,6 @@ async function openDevice(device: BlackmagicControllerWeb): Promise<void> {
 
 	await currentDemo.start(device)
 
-	// Sample actions
-	await device.setBrightness(70)
-
 	// device.fillColor(2, 255, 0, 0)
 	// device.fillColor(12, 0, 0, 255)
 }
@@ -96,16 +93,6 @@ if (consentButton) {
 	window.addEventListener('load', () => {
 		doLoad().catch((e) => console.error(e))
 	})
-
-	const brightnessRange = document.getElementById('brightness-range') as HTMLInputElement | undefined
-	if (brightnessRange) {
-		brightnessRange.addEventListener('input', (_e) => {
-			const value = brightnessRange.value as any as number
-			if (device) {
-				device.setBrightness(value).catch(console.error)
-			}
-		})
-	}
 
 	if (demoSelect) {
 		demoSelect.addEventListener('input', () => {

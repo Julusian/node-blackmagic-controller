@@ -24,7 +24,7 @@ export {
 export { BlackmagicControllerDeviceInfo }
 
 export interface OpenBlackmagicControllerOptionsNode extends OpenBlackmagicControllerOptions {
-	clearOnClose?: boolean // nocommit - implement this
+	clearOnClose?: boolean
 }
 
 /**

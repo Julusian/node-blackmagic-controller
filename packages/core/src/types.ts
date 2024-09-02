@@ -74,13 +74,6 @@ export interface BlackmagicController extends EventEmitter<BlackmagicControllerE
 	clearPanel(): Promise<void>
 
 	/**
-	 * Sets the brightness of the keys on the Stream Deck
-	 *
-	 * @param {number} percentage The percentage brightness
-	 */
-	setBrightness(percentage: number): Promise<void>
-
-	/**
 	 * Get firmware version of the controller
 	 */
 	getFirmwareVersion(): Promise<string>

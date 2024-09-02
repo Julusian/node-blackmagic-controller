@@ -162,10 +162,6 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 		return this.#propertiesService.getBatteryLevel()
 	}
 
-	public async setBrightness(percentage: number): Promise<void> {
-		return this.#propertiesService.setBrightness(percentage)
-	}
-
 	public async getFirmwareVersion(): Promise<string> {
 		return this.#propertiesService.getFirmwareVersion()
 	}
