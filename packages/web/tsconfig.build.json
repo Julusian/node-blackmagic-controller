@@ -7,7 +7,7 @@
 		"baseUrl": "./",
 		"paths": {
 			"*": ["./node_modules/*"],
-			"@elgato-stream-deck/webhid": ["./src/index.ts"]
+			"@blackmagic-controller/web": ["./src/index.ts"]
 		},
 		"lib": ["ES2023", "dom"],
 		"types": ["w3c-web-hid"]

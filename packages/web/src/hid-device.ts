@@ -1,10 +1,10 @@
-import type { HIDDevice as CoreHIDDevice, HIDDeviceEvents, HIDDeviceInfo } from '@elgato-stream-deck/core'
+import type { HIDDevice as CoreHIDDevice, HIDDeviceEvents, HIDDeviceInfo } from '@blackmagic-controller/core'
 import { EventEmitter } from 'eventemitter3'
 import Queue from 'p-queue'
 
 /**
  * The wrapped browser HIDDevice.
- * This translates it into the common format expected by @elgato-stream-deck/core
+ * This translates it into the common format expected by @blackmagic-controller/core
  */
 export class WebHIDDevice extends EventEmitter<HIDDeviceEvents> implements CoreHIDDevice {
 	private readonly device: HIDDevice
@@ -38,7 +38,9 @@ export class WebHIDDevice extends EventEmitter<HIDDeviceEvents> implements CoreH
 		return this.device.sendFeatureReport(data[0], data.subarray(1))
 	}
 	public async getFeatureReport(reportId: number, _reportLength: number): Promise<Uint8Array> {
+		console.log('try receive', reportId, _reportLength)
 		const view = await this.device.receiveFeatureReport(reportId)
+		console.log('got', view)
 		return new Uint8Array(view.buffer, view.byteOffset, view.byteLength)
 	}
 	public async sendReports(buffers: Uint8Array[]): Promise<void> {

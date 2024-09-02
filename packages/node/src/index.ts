@@ -1,5 +1,6 @@
 import type {
 	OpenBlackmagicControllerOptions,
+	OpenBlackmagicControllerOptionsInternal,
 	BlackmagicController,
 	DeviceModelSpec,
 } from '@blackmagic-controller/core'
@@ -7,7 +8,6 @@ import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-controller/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice, BlackmagicControllerDeviceInfo } from './hid-device.js'
 import { BlackmagicControllerNode } from './wrapper.js'
-import { OpenBlackmagicControllerOptionsInternal } from '@blackmagic-controller/core/dist/models/base.js'
 
 export {
 	VENDOR_ID,

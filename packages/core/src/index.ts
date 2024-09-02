@@ -1,7 +1,7 @@
 import type { HIDDevice } from './hid-device.js'
 import { DeviceModelId } from './id.js'
 import type { BlackmagicController } from './types.js'
-import type { OpenBlackmagicControllerOptions, OpenBlackmagicControllerOptionsInternal } from './models/base.js'
+import type { OpenBlackmagicControllerOptionsInternal } from './models/base.js'
 import { AtemMicroPanelFactory } from './models/atem-micro-panel.js'
 import { authenticate } from './authenticate.js'
 
@@ -9,7 +9,7 @@ export * from './types.js'
 export * from './id.js'
 export * from './controlDefinition.js'
 export { HIDDevice, HIDDeviceInfo, HIDDeviceEvents } from './hid-device.js'
-export { OpenBlackmagicControllerOptions } from './models/base.js'
+export { OpenBlackmagicControllerOptions, OpenBlackmagicControllerOptionsInternal } from './models/base.js'
 export { BlackmagicControllerProxy } from './proxy.js'
 
 /** Blackmagic vendor id */

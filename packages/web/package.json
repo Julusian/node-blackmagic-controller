@@ -1,29 +1,28 @@
 {
-	"name": "@elgato-stream-deck/webhid",
+	"name": "@blackmagic-controller/web",
 	"version": "7.0.0-0",
-	"description": "An npm module for interfacing with the Elgato Stream Deck in the browser",
+	"description": "An npm module for interfacing with the Blackmagic usb/bluetooth controllers in the browser",
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",
 	"license": "MIT",
-	"homepage": "https://github.com/julusian/node-elgato-stream-deck#readme",
+	"homepage": "https://github.com/julusian/node-blackmagic-controller#readme",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/julusian/node-elgato-stream-deck.git"
+		"url": "git+https://github.com/julusian/node-blackmagic-controller.git"
 	},
 	"bugs": {
-		"url": "https://github.com/julusian/node-elgato-stream-deck/issues"
+		"url": "https://github.com/julusian/node-blackmagic-controller/issues"
 	},
 	"author": {
 		"name": "Julian Waller",
 		"email": "git@julusian.co.uk"
 	},
 	"keywords": [
-		"elgato",
-		"stream",
-		"deck",
-		"streamdeck",
+		"blackmagic",
+		"atem",
 		"hid",
 		"usb",
+		"bluetooth",
 		"hardware",
 		"interface",
 		"controller"
@@ -33,7 +32,7 @@
 		"udev"
 	],
 	"dependencies": {
-		"@elgato-stream-deck/core": "7.0.0-0",
+		"@blackmagic-controller/core": "7.0.0-0",
 		"@types/w3c-web-hid": "^1.0.6",
 		"eventemitter3": "^5.0.1",
 		"p-queue": "^6.6.2",

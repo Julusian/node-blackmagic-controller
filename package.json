@@ -53,7 +53,9 @@
   },
   "workspaces": [
     "packages/core",
-    "packages/node"
+    "packages/node",
+    "packages/web",
+    "packages/web-demo"
   ],
   "packageManager": "yarn@4.4.1"
 }

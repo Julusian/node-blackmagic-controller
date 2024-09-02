@@ -7,7 +7,7 @@
 [![license](https://img.shields.io/npm/l/@blackmagic-controller/core.svg)](https://npm.im/@blackmagic-controller/core)
 
 [`@blackmagic-controller/core`](https://github.com/julusian/node-blackmagic-controller) is a shared library for interfacing
-with the various models of the [Elgato Stream Deck](https://www.elgato.com/en/gaming/stream-deck).
+with the various models of the [Blackmagic usb/bluetooth controllers](https://www.blackmagicdesign.com/products).
 
 You should not be importing this package directly, instead you will want to do so via one of the wrapper libraries to provide the appropriate HID bindings for your target platform:
 

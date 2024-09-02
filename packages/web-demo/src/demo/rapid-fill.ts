@@ -1,31 +1,37 @@
-import type { StreamDeck } from '@elgato-stream-deck/webhid'
+import type { BlackmagicController } from '@blackmagic-controller/web'
 import type { Demo } from './demo.js'
-
-function getRandomIntInclusive(min: number, max: number) {
-	min = Math.ceil(min)
-	max = Math.floor(max)
-	return Math.floor(Math.random() * (max - min + 1)) + min
-}
 
 export class RapidFillDemo implements Demo {
 	private interval: number | undefined
 	private running: Promise<void[]> | undefined
 
-	public async start(device: StreamDeck): Promise<void> {
+	public async start(device: BlackmagicController): Promise<void> {
 		if (!this.interval) {
 			const doThing = async () => {
 				if (!this.running) {
-					const r = getRandomIntInclusive(0, 255)
-					const g = getRandomIntInclusive(0, 255)
-					const b = getRandomIntInclusive(0, 255)
-					console.log('Filling with rgb(%d, %d, %d)', r, g, b)
+					const red = Math.random() >= 0.5
+					const green = Math.random() >= 0.5
+					const blue = Math.random() >= 0.5
+					console.log('Filling with rgb(%d, %d, %d)', red, green, blue)
 
-					const ps: Array<Promise<void>> = []
+					const values = []
+					const ps: Promise<void>[] = []
+
 					for (const control of device.CONTROLS) {
 						if (control.type === 'button') {
-							ps.push(device.fillKeyColor(control.index, r, g, b))
+							values.push({ keyId: control.id, red, green, blue })
+						} else if (control.type === 'tbar' && control.ledSegments > 0) {
+							const target = Math.random() * (control.ledSegments + 1)
+							const values = []
+							for (let i = 1; i <= control.ledSegments; i++) {
+								values.unshift(target >= i)
+							}
+							// TODO: it would be better to batch this, but this is good enough
+							ps.push(device.setTbarLeds(values))
 						}
 					}
+
+					ps.push(device.setButtonColors(values))
 
 					this.running = Promise.all(ps)
 					await this.running
@@ -37,7 +43,7 @@ export class RapidFillDemo implements Demo {
 			}, 1000 / 5)
 		}
 	}
-	public async stop(device: StreamDeck): Promise<void> {
+	public async stop(device: BlackmagicController): Promise<void> {
 		if (this.interval) {
 			window.clearInterval(this.interval)
 			this.interval = undefined
@@ -45,10 +51,10 @@ export class RapidFillDemo implements Demo {
 		await this.running
 		await device.clearPanel()
 	}
-	public async keyDown(_device: StreamDeck, _keyIndex: number): Promise<void> {
+	public async keyDown(_device: BlackmagicController, _keyId: string): Promise<void> {
 		// Nothing to do
 	}
-	public async keyUp(_device: StreamDeck, _keyIndex: number): Promise<void> {
+	public async keyUp(_device: BlackmagicController, _keyId: string): Promise<void> {
 		// Nothing to do
 	}
 }

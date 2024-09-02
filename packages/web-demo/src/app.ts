@@ -1,10 +1,9 @@
-import type { StreamDeckWeb, LcdPosition } from '@elgato-stream-deck/webhid'
-import { requestStreamDecks, getStreamDecks } from '@elgato-stream-deck/webhid'
+import type { BlackmagicControllerWeb } from '@blackmagic-controller/web'
+import { requestBlackmagicControllers, getBlackmagicControllers } from '@blackmagic-controller/web'
 import type { Demo } from './demo/demo'
-import { DomImageDemo } from './demo/dom'
 import { FillWhenPressedDemo } from './demo/fill-when-pressed'
 import { RapidFillDemo } from './demo/rapid-fill'
-import { ChaseDemo } from './demo/chase'
+import { RainbowDemo } from './demo/rainbow'
 
 declare const LIB_VERSION: any
 if (LIB_VERSION) {
@@ -24,7 +23,7 @@ function appendLog(str: string) {
 const demoSelect = document.getElementById('demo-select') as HTMLInputElement | undefined
 const consentButton = document.getElementById('consent-button')
 
-let device: StreamDeckWeb | null = null
+let device: BlackmagicControllerWeb | null = null
 let currentDemo: Demo = new FillWhenPressedDemo()
 async function demoChange() {
 	if (demoSelect) {
@@ -37,11 +36,8 @@ async function demoChange() {
 			case 'rapid-fill':
 				currentDemo = new RapidFillDemo()
 				break
-			case 'dom':
-				currentDemo = new DomImageDemo()
-				break
-			case 'chase':
-				currentDemo = new ChaseDemo()
+			case 'rainbow':
+				currentDemo = new RainbowDemo()
 				break
 			case 'fill-when-pressed':
 			default:
@@ -55,38 +51,26 @@ async function demoChange() {
 	}
 }
 
-async function openDevice(device: StreamDeckWeb): Promise<void> {
-	appendLog(`Device opened. Serial: ${await device.getSerialNumber()} Firmware: ${await device.getFirmwareVersion()}`)
+async function openDevice(device: BlackmagicControllerWeb): Promise<void> {
+	appendLog(`Device opened. Serial: ${await device.getSerialNumber()} `) //Firmware: ${await device.getFirmwareVersion()}`)
 
 	device.on('down', (control) => {
 		if (control.type === 'button') {
-			appendLog(`Key ${control.index} down`)
-			currentDemo.keyDown(device, control.index).catch(console.error)
-		} else {
-			appendLog(`Encoder ${control.index} down`)
+			appendLog(`Key ${control.id} down`)
+			currentDemo.keyDown(device, control.id).catch(console.error)
 		}
 	})
 	device.on('up', (control) => {
 		if (control.type === 'button') {
-			appendLog(`Key ${control.index} up`)
-			currentDemo.keyUp(device, control.index).catch(console.error)
-		} else {
-			appendLog(`Encoder ${control.index} down`)
+			appendLog(`Key ${control.id} up`)
+			currentDemo.keyUp(device, control.id).catch(console.error)
 		}
 	})
-	device.on('rotate', (control, amount) => {
-		appendLog(`Encoder ${control.index} rotate (${amount})`)
-	})
-	device.on('lcdShortPress', (control, position: LcdPosition) => {
-		appendLog(`LCD (${control.id}) short press (${position.x},${position.y})`)
-	})
-	device.on('lcdLongPress', (control, position: LcdPosition) => {
-		appendLog(`LCD (${control.id}) long press (${position.x},${position.y})`)
-	})
-	device.on('lcdSwipe', (control, fromPosition: LcdPosition, toPosition: LcdPosition) => {
-		appendLog(
-			`LCD (${control.id}) swipe (${fromPosition.x},${fromPosition.y}) -> (${toPosition.x},${toPosition.y})`,
-		)
+	device.on('tbar', (control, value) => {
+		// TODO
+		// appendLog(
+		// 	`LCD (${control.id}) swipe (${fromPosition.x},${fromPosition.y}) -> (${toPosition.x},${toPosition.y})`,
+		// )
 	})
 
 	await currentDemo.start(device)
@@ -101,7 +85,7 @@ async function openDevice(device: StreamDeckWeb): Promise<void> {
 if (consentButton) {
 	const doLoad = async () => {
 		// attempt to open a previously selected device.
-		const devices = await getStreamDecks()
+		const devices = await getBlackmagicControllers()
 		if (devices.length > 0) {
 			device = devices[0]
 			openDevice(device).catch(console.error)
@@ -138,7 +122,7 @@ if (consentButton) {
 		}
 		// Prompt for a device
 		try {
-			const devices = await requestStreamDecks()
+			const devices = await requestBlackmagicControllers()
 			device = devices[0]
 			if (devices.length === 0) {
 				appendLog('No device was selected')
@@ -146,6 +130,7 @@ if (consentButton) {
 			}
 		} catch (error) {
 			appendLog(`No device access granted: ${error as string}`)
+			console.log(error)
 			return
 		}
 

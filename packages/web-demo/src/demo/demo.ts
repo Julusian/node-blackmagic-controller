@@ -1,9 +1,9 @@
-import type { KeyIndex, StreamDeckWeb } from '@elgato-stream-deck/webhid'
+import type { KeyId, BlackmagicControllerWeb } from '@blackmagic-controller/web'
 
 export interface Demo {
-	start(device: StreamDeckWeb): Promise<void>
-	stop(device: StreamDeckWeb): Promise<void>
+	start(device: BlackmagicControllerWeb): Promise<void>
+	stop(device: BlackmagicControllerWeb): Promise<void>
 
-	keyDown(device: StreamDeckWeb, keyIndex: KeyIndex): Promise<void>
-	keyUp(device: StreamDeckWeb, keyIndex: KeyIndex): Promise<void>
+	keyDown(device: BlackmagicControllerWeb, keyId: KeyId): Promise<void>
+	keyUp(device: BlackmagicControllerWeb, keyId: KeyId): Promise<void>
 }

@@ -1,29 +1,34 @@
 /* eslint-disable n/no-unsupported-features/node-builtins */
 
-import type { OpenStreamDeckOptions, BlackmagicPanel } from '@elgato-stream-deck/core'
-import { DEVICE_MODELS, VENDOR_ID } from '@elgato-stream-deck/core'
+import type {
+	OpenBlackmagicControllerOptions,
+	BlackmagicController,
+	OpenBlackmagicControllerOptionsInternal,
+} from '@blackmagic-controller/core'
+import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-controller/core'
 import { WebHIDDevice } from './hid-device.js'
-import { encodeJPEG } from './jpeg.js'
-import { StreamDeckWeb } from './wrapper.js'
+import { BlackmagicControllerWeb } from './wrapper.js'
 
 export {
 	VENDOR_ID,
 	DeviceModelId,
 	KeyId,
-	BlackmagicPanel,
-	BlackmagicPanelControlDefinitionBase,
-	BlackmagicPanelButtonControlDefinition,
-	BlackmagicPanelTBarControlDefinition,
-	BlackmagicPanelControlDefinition,
-	OpenStreamDeckOptions,
-} from '@elgato-stream-deck/core'
-export { StreamDeckWeb } from './wrapper.js'
+	BlackmagicController,
+	BlackmagicControllerControlDefinitionBase,
+	BlackmagicControllerButtonControlDefinition,
+	BlackmagicControllerTBarControlDefinition,
+	BlackmagicControllerControlDefinition,
+	OpenBlackmagicControllerOptions,
+} from '@blackmagic-controller/core'
+export { BlackmagicControllerWeb } from './wrapper.js'
 
 /**
- * Request the user to select some streamdecks to open
+ * Request the user to select some blackmagiccontrollers to open
  * @param userOptions Options to customise the device behvaiour
  */
-export async function requestStreamDecks(options?: OpenStreamDeckOptions): Promise<StreamDeckWeb[]> {
+export async function requestBlackmagicControllers(
+	options?: OpenBlackmagicControllerOptions,
+): Promise<BlackmagicControllerWeb[]> {
 	// TODO - error handling
 	const browserDevices = await navigator.hid.requestDevice({
 		filters: [
@@ -37,11 +42,13 @@ export async function requestStreamDecks(options?: OpenStreamDeckOptions): Promi
 }
 
 /**
- * Reopen previously selected streamdecks.
+ * Reopen previously selected blackmagiccontrollers.
  * The browser remembers what the user previously allowed your site to access, and this will open those without the request dialog
  * @param options Options to customise the device behvaiour
  */
-export async function getStreamDecks(options?: OpenStreamDeckOptions): Promise<StreamDeckWeb[]> {
+export async function getBlackmagicControllers(
+	options?: OpenBlackmagicControllerOptions,
+): Promise<BlackmagicControllerWeb[]> {
 	const browserDevices = await navigator.hid.getDevices()
 	const validDevices = browserDevices.filter((d) => d.vendorId === VENDOR_ID)
 
@@ -49,18 +56,22 @@ export async function getStreamDecks(options?: OpenStreamDeckOptions): Promise<S
 		validDevices.map(async (dev) => openDevice(dev, options).catch((_) => null)), // Ignore failures
 	)
 
-	return resultDevices.filter((v): v is StreamDeckWeb => !!v)
+	return resultDevices.filter((v): v is BlackmagicControllerWeb => !!v)
 }
 
 /**
- * Open a StreamDeck from a manually selected HIDDevice handle
+ * Open a BlackmagicController from a manually selected HIDDevice handle
  * @param browserDevice The unopened browser HIDDevice
  * @param userOptions Options to customise the device behvaiour
  */
 export async function openDevice(
 	browserDevice: HIDDevice,
-	userOptions?: OpenStreamDeckOptions,
-): Promise<StreamDeckWeb> {
+	userOptions?: OpenBlackmagicControllerOptions,
+): Promise<BlackmagicControllerWeb> {
+	const options: Required<OpenBlackmagicControllerOptions> = {
+		...userOptions,
+	}
+
 	const model = DEVICE_MODELS.find(
 		(m) => browserDevice.vendorId === VENDOR_ID && m.productIds.includes(browserDevice.productId),
 	)
@@ -70,18 +81,27 @@ export async function openDevice(
 
 	await browserDevice.open()
 
+	let device: WebHIDDevice | undefined
 	try {
-		const options: Required<OpenStreamDeckOptions> = {
-			encodeJPEG: encodeJPEG,
-			...userOptions,
+		device = new WebHIDDevice(browserDevice)
+
+		// Perform authentication if requried by the model
+		let nextAuthMaxDelay: number | null = null
+		if (model.authenticate) {
+			nextAuthMaxDelay = await model.authenticate(device)
 		}
 
-		const browserHid = new WebHIDDevice(browserDevice)
-		const device: BlackmagicPanel = model.factory(browserHid, options || {})
-		return new StreamDeckWeb(device, browserHid)
-	} catch (e) {
-		await browserDevice.close().catch(() => null) // Suppress error
+		const fullOptions: Required<OpenBlackmagicControllerOptionsInternal> = {
+			...options,
+			nextAuthMaxDelay,
+			authenticate: model.authenticate ?? null,
+		}
 
+		const rawSteamdeck = model.factory(device, fullOptions)
+
+		return new BlackmagicControllerWeb(rawSteamdeck, device)
+	} catch (e) {
+		if (device) await device.close().catch(() => null) // Suppress error
 		throw e
 	}
 }
