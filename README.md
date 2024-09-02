@@ -10,7 +10,7 @@
 Check one of the installable packages for installation and usage instructions:
 
 -   [`@blackmagic-controller/node`](https://npm.im/@blackmagic-controller/node)
--   [`@blackmagic-controller/web`](https://npm.im/@blackmagic-controller/web)
+-   [`@blackmagic-controller/web`](https://npm.im/@blackmagic-controller/web) (Not yet ready for use)
 
 ### Have another hid target you wish to use?
 
