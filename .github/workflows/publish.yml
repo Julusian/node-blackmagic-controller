@@ -58,7 +58,8 @@ jobs:
         run: |
           yarn config set npmAuthToken $NPM_AUTH_TOKEN
 
-          yarn workspaces foreach --all -pt --exclude blackmagic-controller-packages --exclude @blackmagic-controller/web-demo npm publish --access=public --tag ${{ steps.do-publish.outputs.tag }}
+          # --exclude @blackmagic-controller/web-demo
+          yarn workspaces foreach --all -pt --exclude blackmagic-controller-packages  npm publish --access=public --tag ${{ steps.do-publish.outputs.tag }}
         env:
           NPM_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           CI: true

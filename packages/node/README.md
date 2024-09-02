@@ -30,12 +30,9 @@ Unplug and replug the device and it should be usable
 ## Features
 
 -   Multiplatform support: Windows, MacOS, Linux, and even Raspberry Pi!
--   Support for every BlackmagicController model (Original, Mini & XL)
--   Key `down` and key `up` events
--   Fill keys with images or solid RGB colors
--   Fill the entire panel with a single image, spread across all keys
--   Set the Stream Deck brightness
 -   TypeScript support
+-   Full hardware functionality support
+-   Supports Atem Micro Panel
 
 ## API
 
@@ -53,7 +50,7 @@ export function listBlackmagicControllers(): Promise<BlackmagicControllerDeviceI
 export function getBlackmagicControllerInfo(path: string): Promise<BlackmagicControllerDeviceInfo | undefined>
 
 /**
- * Open a blackmagiccontroller
+ * Open a blackmagic-controller
  * @param devicePath The path of the device to open.
  * @param userOptions Options to customise the device behvaiour
  */
@@ -94,8 +91,8 @@ myBlackmagicController.on('error', (error) => {
 })
 
 // Fill the first button form the left in the first row with a solid red color. This is asynchronous.
-await myBlackmagicController.fillKeyColor(4, 255, 0, 0)
-console.log('Successfully wrote a red square to key 4.')
+await myBlackmagicController.setButtonColor('preview4', true, false, false)
+console.log('Successfully wrote a red square to preview4.')
 ```
 
 Some more complex demos can be found in the [examples](examples/) folder.

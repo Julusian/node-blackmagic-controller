@@ -87,33 +87,33 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
-  publish-demo:
-    name: Publish demo to Github Pages
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    timeout-minutes: 15
+  # publish-demo:
+  #   name: Publish demo to Github Pages
+  #   runs-on: ubuntu-latest
+  #   continue-on-error: true
+  #   timeout-minutes: 15
 
-    # only run for main
-    if: github.ref == 'refs/heads/main'
+  #   # only run for main
+  #   if: github.ref == 'refs/heads/main'
 
-    needs:
-      - test
+  #   needs:
+  #     - test
 
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18.x
-      - name: Prepare build
-        run: |
-          corepack enable
-          yarn install
-          yarn build
-        env:
-          CI: true
-      - name: Publish
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./packages/web-demo/dist
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Setup Node.js
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 18.x
+  #     - name: Prepare build
+  #       run: |
+  #         corepack enable
+  #         yarn install
+  #         yarn build
+  #       env:
+  #         CI: true
+  #     - name: Publish
+  #       uses: peaceiris/actions-gh-pages@v4
+  #       with:
+  #         github_token: ${{ secrets.GITHUB_TOKEN }}
+  #         publish_dir: ./packages/web-demo/dist

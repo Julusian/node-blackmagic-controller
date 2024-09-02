@@ -12,4 +12,4 @@ with the various models of the [Blackmagic usb/bluetooth controllers](https://ww
 You should not be importing this package directly, instead you will want to do so via one of the wrapper libraries to provide the appropriate HID bindings for your target platform:
 
 -   [`@blackmagic-controller/node`](https://npm.im/@blackmagic-controller/node)
--   [`@blackmagic-controller/web`](https://npm.im/@blackmagic-controller/web)
+-   [`@blackmagic-controller/web`](https://npm.im/@blackmagic-controller/web) (Not yet ready for use)

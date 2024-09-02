@@ -1,3 +1,5 @@
+# This is incomplete, it does not currently work
+
 # @blackmagic-controller/web
 
 ![Node CI](https://github.com/Julusian/node-blackmagic-controller/workflows/Node%20CI/badge.svg)
@@ -12,10 +14,6 @@ with the various models of the [Blackmagic usb/bluetooth controllers](https://ww
 ## Install
 
 `$ npm install --save @blackmagic-controller/web`
-
-### Important
-
-Since v7.0.0, the `buffer` polyfill is no longer been necessary. If you find that it is still needed somewhere, please report it as that is a bug.
 
 ## Linux
 
