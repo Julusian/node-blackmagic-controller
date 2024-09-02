@@ -86,6 +86,7 @@ if (consentButton) {
 	const doLoad = async () => {
 		// attempt to open a previously selected device.
 		const devices = await getBlackmagicControllers()
+		console.log('load', devices)
 		if (devices.length > 0) {
 			device = devices[0]
 			openDevice(device).catch(console.error)

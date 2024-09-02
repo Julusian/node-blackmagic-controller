@@ -2,7 +2,6 @@
 
 import type {
 	OpenBlackmagicControllerOptions,
-	BlackmagicController,
 	OpenBlackmagicControllerOptionsInternal,
 } from '@blackmagic-controller/core'
 import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-controller/core'
@@ -34,6 +33,7 @@ export async function requestBlackmagicControllers(
 		filters: [
 			{
 				vendorId: VENDOR_ID,
+				// usagePage: 0xff01,
 			},
 		],
 	})
@@ -50,10 +50,15 @@ export async function getBlackmagicControllers(
 	options?: OpenBlackmagicControllerOptions,
 ): Promise<BlackmagicControllerWeb[]> {
 	const browserDevices = await navigator.hid.getDevices()
+	console.log('devs', browserDevices)
 	const validDevices = browserDevices.filter((d) => d.vendorId === VENDOR_ID)
 
 	const resultDevices = await Promise.all(
-		validDevices.map(async (dev) => openDevice(dev, options).catch((_) => null)), // Ignore failures
+		validDevices.map(async (dev) =>
+			openDevice(dev, options).catch((e) => {
+				console.log('Failed to open device2', e)
+			}),
+		), // Ignore failures
 	)
 
 	return resultDevices.filter((v): v is BlackmagicControllerWeb => !!v)
