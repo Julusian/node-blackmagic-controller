@@ -1,5 +1,4 @@
 import type {
-	OpenBlackmagicControllerOptions,
 	OpenBlackmagicControllerOptionsInternal,
 	BlackmagicController,
 	DeviceModelSpec,
@@ -23,7 +22,7 @@ export {
 
 export { BlackmagicControllerDeviceInfo }
 
-export interface OpenBlackmagicControllerOptionsNode extends OpenBlackmagicControllerOptions {
+export interface OpenBlackmagicControllerOptionsNode /* extends OpenBlackmagicControllerOptions*/ {
 	clearOnClose?: boolean
 }
 
@@ -75,9 +74,9 @@ export async function openBlackmagicController(
 	devicePath: string,
 	userOptions?: OpenBlackmagicControllerOptionsNode,
 ): Promise<BlackmagicController> {
-	const options: Required<OpenBlackmagicControllerOptions> = {
-		...userOptions,
-	}
+	// const options: Required<OpenBlackmagicControllerOptions> = {
+	// 	...userOptions,
+	// }
 
 	let hidDevice: HID.HIDAsync | undefined
 	let model: DeviceModelSpec | undefined
@@ -107,7 +106,7 @@ export async function openBlackmagicController(
 		}
 
 		const fullOptions: Required<OpenBlackmagicControllerOptionsInternal> = {
-			...options,
+			// ...options,
 			nextAuthMaxDelay,
 			authenticate: model.authenticate ?? null,
 		}

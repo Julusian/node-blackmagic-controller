@@ -20,7 +20,7 @@ export type EncodeJPEGHelper = (buffer: Uint8Array, width: number, height: numbe
 
 export type OpenBlackmagicControllerOptions = Record<string, never> // For future use
 
-export interface OpenBlackmagicControllerOptionsInternal extends OpenBlackmagicControllerOptions {
+export interface OpenBlackmagicControllerOptionsInternal /*extends OpenBlackmagicControllerOptions*/ {
 	nextAuthMaxDelay: number | null
 	authenticate: ((device: HIDDevice) => Promise<number>) | null
 }

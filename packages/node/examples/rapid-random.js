@@ -1,5 +1,5 @@
 // @ts-check
-const { openBlackmagicController, listBlackmagicControllers } = require('../dist/index')
+const { openBlackmagicController, listBlackmagicControllers } = require('../dist/index.js')
 
 listBlackmagicControllers().then(async (devices) => {
 	if (!devices[0]) throw new Error('No device found')
