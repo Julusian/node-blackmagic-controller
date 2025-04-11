@@ -4,6 +4,7 @@ import type { BlackmagicController } from './types.js'
 import type { OpenBlackmagicControllerOptionsInternal } from './models/base.js'
 import { AtemMicroPanelFactory } from './models/atem-micro-panel.js'
 import { authenticate } from './authenticate.js'
+import { ResolveReplayEditorFactory } from './models/resolve-replay-editor.js'
 
 export * from './types.js'
 export * from './id.js'
@@ -30,12 +31,14 @@ export const DEVICE_MODELS2: { [key in DeviceModelId]: Omit<DeviceModelSpec, 'id
 		factory: AtemMicroPanelFactory,
 		authenticate: async (device) => authenticate(device, 5),
 	},
+	[DeviceModelId.DaVinciResolveReplayEditor]: {
+		productIds: [0x0001], // TODO
+		factory: ResolveReplayEditorFactory,
+		authenticate: async (device) => authenticate(device, 5),
+	},
 }
 
 /** @deprecated maybe? */
 export const DEVICE_MODELS: DeviceModelSpec[] = Object.entries<Omit<DeviceModelSpec, 'id'>>(DEVICE_MODELS2).map(
-	([id, spec]) => ({
-		id: id as any as DeviceModelId,
-		...spec,
-	}),
+	([id, spec]) => ({ id: id as any as DeviceModelId, ...spec }),
 )

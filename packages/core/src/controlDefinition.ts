@@ -13,7 +13,7 @@ export interface BlackmagicControllerButtonControlDefinition extends BlackmagicC
 	id: KeyId
 	encodedIndex: number
 
-	feedbackType: 'rgb'
+	feedbackType: 'rgb' | 'on-off'
 }
 
 export interface BlackmagicControllerTBarControlDefinition extends BlackmagicControllerControlDefinitionBase {

@@ -21,3 +21,19 @@ export function createRgbButtonDefinition(
 		feedbackType: 'rgb',
 	}
 }
+
+export function createOnOffButtonDefinition(
+	row: number,
+	column: number,
+	id: string,
+	encodedIndex: number,
+): BlackmagicControllerControlDefinition {
+	return {
+		type: 'button',
+		row,
+		column,
+		id,
+		encodedIndex,
+		feedbackType: 'on-off',
+	}
+}

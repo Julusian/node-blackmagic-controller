@@ -70,7 +70,7 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 		view.setUint16(buttonOffset + firstByteIndex, uint16Value, true)
 	}
 
-	#setTBarValue(control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {
+	#setTBarValue(_control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {
 		let value = 0
 		values.forEach((v, i) => {
 			if (v) value |= 1 << i
