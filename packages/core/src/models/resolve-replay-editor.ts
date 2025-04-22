@@ -91,11 +91,11 @@ class HackInputService implements BlackmagicControllerInputService {
 		const view = uint8ArrayToDataView(data)
 
 		switch (view.getUint8(0)) {
-			case 0x03:
-				console.log('button presses', Buffer.from(data))
+			// case 0x03:
+			// 	console.log('button presses', Buffer.from(data))
 
-				this.#handleButtonInput(view)
-				break
+			// 	this.#handleButtonInput(view)
+			// 	break
 			case 0x08:
 				this.#handleTBarInput(view)
 				break

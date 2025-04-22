@@ -32,9 +32,9 @@ export const DEVICE_MODELS2: { [key in DeviceModelId]: Omit<DeviceModelSpec, 'id
 		authenticate: async (device) => authenticate(device, 5),
 	},
 	[DeviceModelId.DaVinciResolveReplayEditor]: {
-		productIds: [0x0001], // TODO
+		productIds: [0xda11],
 		factory: ResolveReplayEditorFactory,
-		authenticate: async (device) => authenticate(device, 5),
+		authenticate: async (device) => authenticate(device, 6),
 	},
 }
 
