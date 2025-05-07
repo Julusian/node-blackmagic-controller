@@ -10,11 +10,12 @@ import type {
 } from '../controlDefinition.js'
 import { CallbackHook } from '../services/callback-hook.js'
 import type { BlackmagicControllerEvents } from '../types.js'
-import { DefaultPropertiesService } from '../services/properties/default.js'
+// import { DefaultPropertiesService } from '../services/properties/default.js'
 // import { DefaultInputService } from '../services/input/default.js'
 import { DefaultLedService } from '../services/led/default.js'
 import type { BlackmagicControllerInputService } from '../services/input/interface.js'
 import { uint8ArrayToDataView } from '../util.js'
+import type { PropertiesService } from '../services/properties/interface.js'
 
 const resolveReplayEditorControls: BlackmagicControllerControlDefinition[] = [
 	createOnOffButtonDefinition(0, 1, 'test1', 0x01),
@@ -51,7 +52,7 @@ export function ResolveReplayEditorFactory(
 	return new BlackmagicControllerBase(device, options, {
 		deviceProperties: resolveReplayEditorProperties,
 		events,
-		properties: new DefaultPropertiesService(device),
+		properties: new ReplayEditorPropertiesService(device),
 		inputService: new HackInputService(resolveReplayEditorProperties, events),
 		led: new DefaultLedService(device, resolveReplayEditorProperties.CONTROLS),
 	})
@@ -153,5 +154,31 @@ class HackInputService implements BlackmagicControllerInputService {
 		const value = view.getUint8(2) // TODO - test this
 
 		this.#eventSource.emit('batteryLevel', value / 100)
+	}
+}
+
+class ReplayEditorPropertiesService implements PropertiesService {
+	readonly #device: HIDDevice
+
+	constructor(device: HIDDevice) {
+		this.#device = device
+	}
+
+	public async getBatteryLevel(): Promise<number | null> {
+		const val = await this.#device.getFeatureReport(7, 3)
+		return val[2] / 100
+	}
+
+	public async getFirmwareVersion(): Promise<string> {
+		const val = await this.#device.getFeatureReport(1, 9)
+		const view = uint8ArrayToDataView(val)
+
+		// Generate a semver format string
+		return `${view.getUint8(5)}.${view.getUint8(6)}.${view.getUint8(7)}+${view.getUint32(1, true).toString(16)}`
+	}
+
+	public async getSerialNumber(): Promise<string> {
+		const val = await this.#device.getFeatureReport(8, 33)
+		return new TextDecoder('ascii').decode(val.subarray(1))
 	}
 }

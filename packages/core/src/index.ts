@@ -34,7 +34,11 @@ export const DEVICE_MODELS2: { [key in DeviceModelId]: Omit<DeviceModelSpec, 'id
 	[DeviceModelId.DaVinciResolveReplayEditor]: {
 		productIds: [0xda11],
 		factory: ResolveReplayEditorFactory,
-		authenticate: async (device) => authenticate(device, 6),
+		authenticate: async (device) => {
+			// Perform twice because thats what resolve appears to do
+			await authenticate(device, 6)
+			return authenticate(device, 6)
+		},
 	},
 }
 

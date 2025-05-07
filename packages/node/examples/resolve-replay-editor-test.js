@@ -9,8 +9,8 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 	await panel.clearPanel()
 
 	console.log(`opened panel ${panel.MODEL}`)
-	console.log('battery level', await panel.getBatteryLevel())
-	console.log('serial', await panel.getSerialNumber())
+	// console.log('battery level', await panel.getBatteryLevel())
+	// console.log('serial', await panel.getSerialNumber())
 	// console.log('firmware', await panel.getFirmwareVersion())
 
 	let on = false
@@ -30,7 +30,7 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 			.catch((e) => {
 				console.error('Error setting button color:', e)
 			})
-	}, 1000)
+	}, 500)
 
 	let nextColor = 0
 

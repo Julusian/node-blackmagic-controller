@@ -11,7 +11,7 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 	readonly #device: HIDDevice
 	// readonly #controls: readonly BlackmagicControllerControlDefinition[]
 
-	readonly #bufferSize: number = 32 // Future: this may need to vary
+	readonly #bufferSize: number = 33 // Future: this may need to vary
 
 	#lastPrimaryBuffer: Uint8Array
 
@@ -29,7 +29,7 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 		if (copyExisting) {
 			buffer.set(this.#lastPrimaryBuffer)
 		} else {
-			buffer[0] = 0x02
+			buffer[0] = 0x09 // nocommit - hack
 		}
 
 		return buffer
