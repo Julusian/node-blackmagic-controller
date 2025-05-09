@@ -1,7 +1,7 @@
 import type { KeyId } from './id.js'
 
 export interface BlackmagicControllerControlDefinitionBase {
-	type: 'button' | 'tbar'
+	type: 'button' | 'tbar' | 'jog'
 
 	row: number
 	column: number
@@ -18,7 +18,7 @@ export interface BlackmagicControllerButtonControlDefinition extends BlackmagicC
 
 export interface BlackmagicControllerTBarControlDefinition extends BlackmagicControllerControlDefinitionBase {
 	type: 'tbar'
-	id: 0 // Future: Maybe there will be more than one LCD segment
+	id: 0 // Future: Maybe there will be more than one TBar
 
 	columnSpan: number
 	rowSpan: number
@@ -26,6 +26,15 @@ export interface BlackmagicControllerTBarControlDefinition extends BlackmagicCon
 	ledSegments: number
 }
 
+export interface BlackmagicControllerJogControlDefinition extends BlackmagicControllerControlDefinitionBase {
+	type: 'jog'
+	id: 0 // Future: Maybe there will be more than one Jog wheel
+
+	columnSpan: number
+	rowSpan: number
+}
+
 export type BlackmagicControllerControlDefinition =
 	| BlackmagicControllerButtonControlDefinition
 	| BlackmagicControllerTBarControlDefinition
+	| BlackmagicControllerJogControlDefinition

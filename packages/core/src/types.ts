@@ -4,6 +4,7 @@ import type { HIDDeviceInfo } from './hid-device.js'
 import type {
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerControlDefinition,
+	BlackmagicControllerJogControlDefinition,
 	BlackmagicControllerTBarControlDefinition,
 } from './controlDefinition.js'
 
@@ -11,6 +12,7 @@ export type BlackmagicControllerEvents = {
 	down: [control: BlackmagicControllerButtonControlDefinition]
 	up: [control: BlackmagicControllerButtonControlDefinition]
 	tbar: [control: BlackmagicControllerTBarControlDefinition, percent: number]
+	jog: [control: BlackmagicControllerJogControlDefinition, velocity: number]
 	batteryLevel: [percent: number]
 	error: [err: unknown]
 }

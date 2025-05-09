@@ -11,13 +11,21 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 	readonly #device: HIDDevice
 	// readonly #controls: readonly BlackmagicControllerControlDefinition[]
 
-	readonly #bufferSize: number = 33 // Future: this may need to vary
+	readonly #reportId: number
+	readonly #bufferSize: number
 
 	#lastPrimaryBuffer: Uint8Array
 
-	constructor(device: HIDDevice, _controls: readonly BlackmagicControllerControlDefinition[]) {
+	constructor(
+		device: HIDDevice,
+		_controls: readonly BlackmagicControllerControlDefinition[],
+		reportId: number,
+		bufferSize: number,
+	) {
 		this.#device = device
 		// this.#controls = controls
+		this.#reportId = reportId
+		this.#bufferSize = bufferSize
 
 		this.#lastPrimaryBuffer = this.#createBuffer(null)
 
@@ -29,7 +37,7 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 		if (copyExisting) {
 			buffer.set(this.#lastPrimaryBuffer)
 		} else {
-			buffer[0] = 0x09 // nocommit - hack
+			buffer[0] = this.#reportId
 		}
 
 		return buffer

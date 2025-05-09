@@ -59,6 +59,10 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 		console.log(`T-bar "${control.id}" moved to ${percent * 100}%`)
 	})
 
+	panel.on('jog', (control, velocity) => {
+		console.log(`Jog "${control.id}" velocity ${velocity}`)
+	})
+
 	panel.on('batteryLevel', (percent) => {
 		console.log(`Battery level ${percent * 100}%`)
 	})

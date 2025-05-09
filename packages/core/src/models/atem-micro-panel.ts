@@ -104,6 +104,6 @@ export function AtemMicroPanelFactory(
 		events,
 		properties: new DefaultPropertiesService(device),
 		inputService: new DefaultInputService(atemMicroPanelProperties, events),
-		led: new DefaultLedService(device, atemMicroPanelProperties.CONTROLS),
+		led: new DefaultLedService(device, atemMicroPanelProperties.CONTROLS, 0x02, 32),
 	})
 }

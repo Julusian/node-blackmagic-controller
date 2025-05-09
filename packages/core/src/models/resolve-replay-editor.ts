@@ -6,6 +6,7 @@ import { createOnOffButtonDefinition, freezeDefinitions } from '../controlsGener
 import type {
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerControlDefinition,
+	BlackmagicControllerJogControlDefinition,
 	BlackmagicControllerTBarControlDefinition,
 } from '../controlDefinition.js'
 import { CallbackHook } from '../services/callback-hook.js'
@@ -54,7 +55,7 @@ export function ResolveReplayEditorFactory(
 		events,
 		properties: new ReplayEditorPropertiesService(device),
 		inputService: new HackInputService(resolveReplayEditorProperties, events),
-		led: new DefaultLedService(device, resolveReplayEditorProperties.CONTROLS),
+		led: new DefaultLedService(device, resolveReplayEditorProperties.CONTROLS, 0x09, 33),
 	})
 }
 
@@ -67,6 +68,7 @@ class HackInputService implements BlackmagicControllerInputService {
 	readonly #buttonControlsByEncoded: Record<number, BlackmagicControllerButtonControlDefinition | undefined>
 	readonly #buttonControlsById: Record<string, BlackmagicControllerButtonControlDefinition | undefined>
 	readonly #tbarControl: BlackmagicControllerTBarControlDefinition | undefined
+	readonly #jogControl: BlackmagicControllerJogControlDefinition | undefined
 
 	constructor(
 		deviceProperties: Readonly<BlackmagicControllerProperties>,
@@ -80,6 +82,9 @@ class HackInputService implements BlackmagicControllerInputService {
 		for (const control of deviceProperties.CONTROLS) {
 			if (control.type === 'tbar' && !this.#tbarControl) {
 				this.#tbarControl = control
+			}
+			if (control.type === 'jog' && !this.#jogControl) {
+				this.#jogControl = control
 			}
 			if (control.type === 'button') {
 				this.#buttonControlsByEncoded[control.encodedIndex] = control
@@ -99,6 +104,9 @@ class HackInputService implements BlackmagicControllerInputService {
 				break
 			case 0x0a:
 				this.#handleTBarInput(view)
+				break
+			case 0x03:
+				this.#handleJogInput(view)
 				break
 			case 0x06:
 				this.#handleBatteryLevel(view)
@@ -148,6 +156,13 @@ class HackInputService implements BlackmagicControllerInputService {
 		const value = view.getUint16(1, true)
 
 		this.#eventSource.emit('tbar', this.#tbarControl, value / 4096)
+	}
+
+	#handleJogInput(view: DataView): void {
+		if (!this.#jogControl) return
+		const value = view.getInt32(2, true)
+
+		this.#eventSource.emit('jog', this.#jogControl, value) // TODO - some scaling
 	}
 
 	#handleBatteryLevel(view: DataView): void {
