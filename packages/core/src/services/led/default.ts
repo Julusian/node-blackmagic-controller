@@ -63,19 +63,41 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 		green: boolean,
 		blue: boolean,
 	): void {
-		const buttonOffset = 3
-		const firstBitIndex = (control.encodedIndex - 1) * 3
-		const firstByteIndex = Math.floor(firstBitIndex / 8)
-		const firstBitIndexInValue = firstBitIndex % 8
+		// TODO - this needs a rework to handle both types on the same panel
+		const buttonOffset = 3 // TODO - this should be based on whether there is a tbar?
 
-		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
+		switch (control.feedbackType) {
+			case 'rgb': {
+				const firstBitIndex = (control.encodedIndex - 1) * 3
+				const firstByteIndex = Math.floor(firstBitIndex / 8)
+				const firstBitIndexInValue = firstBitIndex % 8
 
-		let uint16Value = view.getUint16(buttonOffset + firstByteIndex, true)
-		uint16Value = maskValue(uint16Value, 1 << firstBitIndexInValue, red)
-		uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 1), green)
-		uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 2), blue)
+				const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
 
-		view.setUint16(buttonOffset + firstByteIndex, uint16Value, true)
+				let uint16Value = view.getUint16(buttonOffset + firstByteIndex, true)
+				uint16Value = maskValue(uint16Value, 1 << firstBitIndexInValue, red)
+				uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 1), green)
+				uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 2), blue)
+
+				view.setUint16(buttonOffset + firstByteIndex, uint16Value, true)
+				break
+			}
+			case 'on-off': {
+				const bitIndex = (control.encodedIndex - 1) * 3
+				const byteIndex = Math.floor(bitIndex / 8)
+				const bitIndexInValue = bitIndex % 8
+
+				const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
+
+				let uint8Value = view.getUint8(buttonOffset + byteIndex)
+				uint8Value = maskValue(uint8Value, 1 << bitIndexInValue, red || green || blue)
+
+				view.setUint8(buttonOffset + byteIndex, uint8Value)
+				break
+			}
+			default:
+				throw new Error(`Unknown feedback type: ${control.feedbackType}`)
+		}
 	}
 
 	#setTBarValue(_control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {

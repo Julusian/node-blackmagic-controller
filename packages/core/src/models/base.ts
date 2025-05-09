@@ -187,6 +187,20 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 		await this.#ledService.setControlColors(translated)
 	}
 
+	public async setButtonOnOff(values: BlackmagicControllerSetButtonColorValue[]): Promise<void> {
+		const translated: BlackmagicControllerLedServiceValue[] = values.map((value) => {
+			// TODO - avoid iterating over all controls inside `checkValidKeyId`
+
+			return {
+				...value,
+				type: 'button',
+				control: this.checkValidKeyId(value.keyId, null),
+			}
+		})
+
+		await this.#ledService.setControlColors(translated)
+	}
+
 	public async setTbarLeds(leds: boolean[]): Promise<void> {
 		const control = this.checkValidTbarIndex(0)
 
