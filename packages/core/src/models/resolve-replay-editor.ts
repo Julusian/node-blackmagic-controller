@@ -2,7 +2,7 @@ import type { HIDDevice } from '../hid-device.js'
 import type { BlackmagicControllerProperties, OpenBlackmagicControllerOptionsInternal } from './base.js'
 import { BlackmagicControllerBase } from './base.js'
 import { DeviceModelId } from '../id.js'
-import { createOnOffButtonDefinition, freezeDefinitions } from '../controlsGenerator.js'
+import { createBasicButtonDefinition, freezeDefinitions } from '../controlsGenerator.js'
 import type {
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerControlDefinition,
@@ -19,10 +19,10 @@ import { uint8ArrayToDataView } from '../util.js'
 import type { PropertiesService } from '../services/properties/interface.js'
 
 const resolveReplayEditorControls: BlackmagicControllerControlDefinition[] = [
-	createOnOffButtonDefinition(0, 1, 'test1', 0x01),
-	createOnOffButtonDefinition(0, 2, 'test2', 0x02),
-	createOnOffButtonDefinition(0, 3, 'test3', 0x03),
-	createOnOffButtonDefinition(0, 4, 'test4', 0x04),
+	createBasicButtonDefinition(0, 1, 'test1', 0x01, true),
+	createBasicButtonDefinition(0, 2, 'test2', 0x02, true),
+	createBasicButtonDefinition(0, 3, 'test3', 0x03, true),
+	createBasicButtonDefinition(0, 4, 'test4', 0x04, true),
 
 	{
 		type: 'tbar',

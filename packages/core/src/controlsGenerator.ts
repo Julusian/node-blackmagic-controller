@@ -22,11 +22,12 @@ export function createRgbButtonDefinition(
 	}
 }
 
-export function createOnOffButtonDefinition(
+export function createBasicButtonDefinition(
 	row: number,
 	column: number,
 	id: string,
 	encodedIndex: number,
+	hasLed: boolean,
 ): BlackmagicControllerControlDefinition {
 	return {
 		type: 'button',
@@ -34,6 +35,6 @@ export function createOnOffButtonDefinition(
 		column,
 		id,
 		encodedIndex,
-		feedbackType: 'on-off',
+		feedbackType: hasLed ? 'on-off' : 'none',
 	}
 }
