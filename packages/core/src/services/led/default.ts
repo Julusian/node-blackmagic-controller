@@ -69,21 +69,18 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 			throw new TypeError(`Control ${control.encodedIndex} is not a rgb control`)
 		}
 
-		// TODO - this needs a rework to handle both types on the same panel
-		const buttonOffset = 3 // TODO - this should be based on whether there is a tbar?
-
-		const firstBitIndex = (control.encodedIndex - 1) * 3
+		const firstBitIndex = control.ledBitIndex
 		const firstByteIndex = Math.floor(firstBitIndex / 8)
 		const firstBitIndexInValue = firstBitIndex % 8
 
 		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
 
-		let uint16Value = view.getUint16(buttonOffset + firstByteIndex, true)
+		let uint16Value = view.getUint16(1 + firstByteIndex, true)
 		uint16Value = maskValue(uint16Value, 1 << firstBitIndexInValue, red)
 		uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 1), green)
 		uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 2), blue)
 
-		view.setUint16(buttonOffset + firstByteIndex, uint16Value, true)
+		view.setUint16(1 + firstByteIndex, uint16Value, true)
 	}
 
 	#setButtonOnOffValue(control: BlackmagicControllerButtonControlDefinition, on: boolean): void {
@@ -91,29 +88,26 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 			throw new TypeError(`Control ${control.encodedIndex} is not an on-off control`)
 		}
 
-		// TODO - this needs a rework to handle both types on the same panel
-		const buttonOffset = 1 // TODO - this should be based on whether there is a tbar?
-
-		const bitIndex = (control.encodedIndex - 1) * 3
+		const bitIndex = control.ledBitIndex
 		const byteIndex = Math.floor(bitIndex / 8)
 		const bitIndexInValue = bitIndex % 8
 
 		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
 
-		let uint8Value = view.getUint8(buttonOffset + byteIndex)
+		let uint8Value = view.getUint8(1 + byteIndex)
 		uint8Value = maskValue(uint8Value, 1 << bitIndexInValue, on)
 
-		view.setUint8(buttonOffset + byteIndex, uint8Value)
+		view.setUint8(1 + byteIndex, uint8Value)
 	}
 
-	#setTBarValue(_control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {
+	#setTBarValue(control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {
 		let value = 0
 		values.forEach((v, i) => {
 			if (v) value |= 1 << i
 		})
 
 		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
-		view.setUint16(7, value, true) // TODO - dynamic offset
+		view.setUint16(1 + control.ledByteIndex, value, true)
 	}
 
 	async clearPanel(): Promise<void> {

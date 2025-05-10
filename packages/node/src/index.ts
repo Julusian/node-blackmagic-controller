@@ -18,6 +18,8 @@ export {
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerTBarControlDefinition,
 	BlackmagicControllerSetButtonColorValue,
+	BlackmagicControllerSetButtonOnOffValue,
+	BlackmagicControllerSetButtonSomeValue,
 	BlackmagicControllerControlDefinition,
 	OpenBlackmagicControllerOptions,
 } from '@blackmagic-controller/core'

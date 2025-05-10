@@ -29,6 +29,7 @@ listBlackmagicControllers().then(async (devices) => {
 
 			Promise.resolve().then(async () => {
 				try {
+					/** @type {import('../dist/index').BlackmagicControllerSetButtonSomeValue[]} */
 					const values = []
 
 					for (const control of panel.CONTROLS) {
@@ -36,7 +37,11 @@ listBlackmagicControllers().then(async (devices) => {
 							const colorIndex = (colors.length + control.column + control.row - offset) % colors.length
 							const color = colors[colorIndex]
 
-							values.push({ keyId: control.id, ...color })
+							if (control.feedbackType === 'rgb') {
+								values.push({ keyId: control.id, type: 'rgb', ...color })
+							} else if (control.feedbackType === 'on-off') {
+								values.push({ keyId: control.id, type: 'on-off', on: colorIndex % 2 === 0 })
+							}
 						} else if (control.type === 'tbar' && control.ledSegments > 0) {
 							const values = new Array(control.ledSegments).fill(false)
 							values[tbarProgress] = true

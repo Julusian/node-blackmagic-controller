@@ -35,7 +35,7 @@ export interface BlackmagicControllerTBarControlDefinition extends BlackmagicCon
 	 * This is an internal value, and should not be used outside of the library.
 	 * The bit index of the leds in the encoded buffer.
 	 */
-	ledBitIndex: number
+	ledByteIndex: number
 }
 
 export interface BlackmagicControllerJogControlDefinition extends BlackmagicControllerControlDefinitionBase {

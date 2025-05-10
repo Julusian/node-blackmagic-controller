@@ -103,7 +103,7 @@ const resolveReplayEditorControls: BlackmagicControllerControlDefinition[] = [
 		rowSpan: 5,
 
 		ledSegments: 16,
-		ledBitIndex: 6 * 8,
+		ledByteIndex: 6,
 	},
 	{
 		type: 'jog',

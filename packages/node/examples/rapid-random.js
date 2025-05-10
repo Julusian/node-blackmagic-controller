@@ -16,6 +16,7 @@ listBlackmagicControllers().then(async (devices) => {
 
 			Promise.resolve().then(async () => {
 				try {
+					/** @type {import('../dist/index').BlackmagicControllerSetButtonSomeValue[]} */
 					const values = []
 
 					for (const control of panel.CONTROLS) {
@@ -23,7 +24,12 @@ listBlackmagicControllers().then(async (devices) => {
 							const red = Math.random() >= 0.5
 							const green = Math.random() >= 0.5
 							const blue = Math.random() >= 0.5
-							values.push({ keyId: control.id, red, green, blue })
+
+							if (control.feedbackType === 'rgb') {
+								values.push({ keyId: control.id, type: 'rgb', red, green, blue })
+							} else if (control.feedbackType === 'on-off') {
+								values.push({ keyId: control.id, type: 'on-off', on: red })
+							}
 						} else if (control.type === 'tbar' && control.ledSegments > 0) {
 							const values = []
 							for (let i = 0; i < control.ledSegments; i++) {
