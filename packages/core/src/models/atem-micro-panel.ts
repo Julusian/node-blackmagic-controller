@@ -103,8 +103,16 @@ export function AtemMicroPanelFactory(
 	return new BlackmagicControllerBase(device, options, {
 		deviceProperties: atemMicroPanelProperties,
 		events,
-		properties: new DefaultPropertiesService(device),
-		inputService: new DefaultInputService(atemMicroPanelProperties, events),
+		properties: new DefaultPropertiesService(device, {
+			batteryReportId: 6,
+			firmwareReportId: 1,
+			serialReportId: 7,
+		}),
+		inputService: new DefaultInputService(atemMicroPanelProperties, events, {
+			buttonReportId: 0x03,
+			tbarReportId: 0x08,
+			batteryReportId: 0x06,
+		}),
 		led: new DefaultLedService(device, atemMicroPanelProperties.CONTROLS, 0x02, 32),
 	})
 }
