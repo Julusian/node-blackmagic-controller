@@ -9,13 +9,19 @@ export interface BlackmagicControllerLedService {
 	clearPanel(): Promise<void>
 }
 
-export interface BlackmagicControllerLedServiceValueButton {
-	type: 'button'
+export interface BlackmagicControllerLedServiceValueButtonRgb {
+	type: 'button-rgb'
 	control: BlackmagicControllerButtonControlDefinition
 
 	red: boolean
 	green: boolean
 	blue: boolean
+}
+export interface BlackmagicControllerLedServiceValueButtonOnOff {
+	type: 'button-on-off'
+	control: BlackmagicControllerButtonControlDefinition
+
+	on: boolean
 }
 export interface BlackmagicControllerLedServiceValueTBar {
 	type: 'tbar'
@@ -25,5 +31,6 @@ export interface BlackmagicControllerLedServiceValueTBar {
 }
 
 export type BlackmagicControllerLedServiceValue =
-	| BlackmagicControllerLedServiceValueButton
+	| BlackmagicControllerLedServiceValueButtonRgb
+	| BlackmagicControllerLedServiceValueButtonOnOff
 	| BlackmagicControllerLedServiceValueTBar

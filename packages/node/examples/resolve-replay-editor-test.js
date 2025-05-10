@@ -23,9 +23,9 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 		})
 
 		panel
-			.setButtonColors([
-				{ keyId: 'test1', red: on, green: on, blue: on },
-				{ keyId: 'test3', red: on, green: on, blue: on },
+			.setButtonStates([
+				{ type: 'on-off', keyId: '2sec', on: on },
+				{ type: 'on-off', keyId: '3sec', on: on },
 			])
 			.catch((e) => {
 				console.error('Error setting button color:', e)
@@ -35,7 +35,7 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 	let nextColor = 0
 
 	panel.on('down', (control) => {
-		if (control.type !== 'button') return
+		if (control.type !== 'button' || control.feedbackType === 'none') return
 
 		const color = nextColor++
 		if (nextColor >= 3) nextColor = 0
@@ -43,12 +43,26 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 		// Fill the pressed key
 		console.log(`Filling button "${control.id}"`)
 		panel
-			.setButtonColor(control.id, color == 0, color == 1, color == 2)
+			.setButtonStates([
+				control.feedbackType === 'rgb'
+					? {
+							type: 'rgb',
+							keyId: control.id,
+							red: color == 0,
+							green: color == 1,
+							blue: color == 2,
+						}
+					: {
+							type: 'on-off',
+							keyId: control.id,
+							on: true,
+						},
+			])
 			.catch((e) => console.error('Fill failed:', e))
 	})
 
 	panel.on('up', (control) => {
-		if (control.type !== 'button') return
+		if (control.type !== 'button' || control.feedbackType === 'none') return
 
 		// Clear the key when it is released.
 		console.log(`clearing button "${control.id}"`)

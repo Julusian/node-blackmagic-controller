@@ -39,10 +39,15 @@ export class BlackmagicControllerProxy implements BlackmagicController {
 	): ReturnType<BlackmagicController['setButtonColor']> {
 		return this.device.setButtonColor(...args)
 	}
-	public async setButtonColors(
-		...args: Parameters<BlackmagicController['setButtonColors']>
-	): ReturnType<BlackmagicController['setButtonColors']> {
-		return this.device.setButtonColors(...args)
+	public async setButtonOnOff(
+		...args: Parameters<BlackmagicController['setButtonOnOff']>
+	): ReturnType<BlackmagicController['setButtonOnOff']> {
+		return this.device.setButtonOnOff(...args)
+	}
+	public async setButtonStates(
+		...args: Parameters<BlackmagicController['setButtonStates']>
+	): ReturnType<BlackmagicController['setButtonStates']> {
+		return this.device.setButtonStates(...args)
 	}
 	public async setTbarLeds(
 		...args: Parameters<BlackmagicController['setTbarLeds']>

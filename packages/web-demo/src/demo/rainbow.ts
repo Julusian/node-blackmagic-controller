@@ -40,7 +40,7 @@ export class RainbowDemo implements Demo {
 			}
 		}
 
-		ps.push(device.setButtonColors(values))
+		ps.push(device.setButtonStates(values))
 
 		this.counter++
 		if (this.counter >= colors.length) this.counter = 0

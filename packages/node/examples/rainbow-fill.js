@@ -49,7 +49,7 @@ listBlackmagicControllers().then(async (devices) => {
 						}
 					}
 
-					await panel.setButtonColors(values)
+					await panel.setButtonStates(values)
 				} catch (e) {
 					console.error('Fill failed:', e)
 				} finally {

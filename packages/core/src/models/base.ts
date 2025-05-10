@@ -4,7 +4,7 @@ import type { DeviceModelId, KeyId } from '../id.js'
 import type {
 	BlackmagicController,
 	BlackmagicControllerEvents,
-	BlackmagicControllerSetButtonColorValue,
+	BlackmagicControllerSetButtonSomeValue,
 } from '../types.js'
 import type {
 	BlackmagicControllerButtonControlDefinition,
@@ -170,31 +170,41 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 	public async setButtonColor(keyId: KeyId, red: boolean, green: boolean, blue: boolean): Promise<void> {
 		const control = this.checkValidKeyId(keyId, 'rgb')
 
-		await this.#ledService.setControlColors([{ type: 'button', control, red, green, blue }])
+		await this.#ledService.setControlColors([{ type: 'button-rgb', control, red, green, blue }])
 	}
 
-	public async setButtonColors(values: BlackmagicControllerSetButtonColorValue[]): Promise<void> {
-		const translated: BlackmagicControllerLedServiceValue[] = values.map((value) => {
-			// TODO - avoid iterating over all controls inside `checkValidKeyId`
+	public async setButtonOnOff(keyId: KeyId, on: boolean): Promise<void> {
+		const control = this.checkValidKeyId(keyId, 'on-off')
 
-			return {
-				...value,
-				type: 'button',
-				control: this.checkValidKeyId(value.keyId, 'rgb'),
-			}
-		})
-
-		await this.#ledService.setControlColors(translated)
+		await this.#ledService.setControlColors([{ type: 'button-on-off', control, on }])
 	}
 
-	public async setButtonOnOff(values: BlackmagicControllerSetButtonColorValue[]): Promise<void> {
+	public async setButtonStates(values: BlackmagicControllerSetButtonSomeValue[]): Promise<void> {
 		const translated: BlackmagicControllerLedServiceValue[] = values.map((value) => {
 			// TODO - avoid iterating over all controls inside `checkValidKeyId`
+			const control = this.checkValidKeyId(value.keyId, null)
 
-			return {
-				...value,
-				type: 'button',
-				control: this.checkValidKeyId(value.keyId, null),
+			switch (control.feedbackType) {
+				case 'rgb':
+					if (value.type !== 'rgb') {
+						throw new TypeError(`Expected a keyId with feedbackType 'rgb'`)
+					}
+					return {
+						...value,
+						type: 'button-rgb',
+						control: control,
+					}
+				case 'on-off':
+					if (value.type !== 'on-off') {
+						throw new TypeError(`Expected a keyId with feedbackType 'on-off'`)
+					}
+					return {
+						...value,
+						type: 'button-on-off',
+						control: control,
+					}
+				default:
+					throw new TypeError(`Cannot set state of button ${value.keyId}`)
 			}
 		})
 
@@ -212,9 +222,23 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 	}
 
 	public async clearKey(keyId: KeyId): Promise<void> {
-		const control = this.checkValidKeyId(keyId, 'rgb')
+		const control = this.checkValidKeyId(keyId, null)
 
-		await this.#ledService.setControlColors([{ type: 'button', control, red: false, green: false, blue: false }])
+		switch (control.feedbackType) {
+			case 'rgb':
+				await this.#ledService.setControlColors([
+					{ type: 'button-rgb', control, red: false, green: false, blue: false },
+				])
+				break
+			case 'on-off':
+				await this.#ledService.setControlColors([{ type: 'button-on-off', control, on: false }])
+				break
+			case 'none':
+				// No action needed
+				break
+			default:
+				throw new TypeError(`Cannot clear button ${keyId}`)
+		}
 	}
 
 	public async clearPanel(): Promise<void> {

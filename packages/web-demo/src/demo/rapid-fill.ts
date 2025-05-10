@@ -31,7 +31,7 @@ export class RapidFillDemo implements Demo {
 						}
 					}
 
-					ps.push(device.setButtonColors(values))
+					ps.push(device.setButtonStates(values))
 
 					this.running = Promise.all(ps)
 					await this.running
