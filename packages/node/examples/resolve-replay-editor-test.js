@@ -21,15 +21,6 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 		panel.setTbarLeds([on, on, on, on, on, on, on, on, on, on, on, on, on, on, on, on]).catch((e) => {
 			console.error('Error setting T-bar LEDs:', e)
 		})
-
-		panel
-			.setButtonStates([
-				{ type: 'on-off', keyId: '2sec', on: on },
-				{ type: 'on-off', keyId: '3sec', on: on },
-			])
-			.catch((e) => {
-				console.error('Error setting button color:', e)
-			})
 	}, 500)
 
 	let nextColor = 0
