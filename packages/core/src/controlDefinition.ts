@@ -14,6 +14,12 @@ export interface BlackmagicControllerButtonControlDefinition extends BlackmagicC
 	encodedIndex: number
 
 	feedbackType: 'rgb' | 'on-off' | 'none'
+
+	/**
+	 * This is an internal value, and should not be used outside of the library.
+	 * The bit index of the leds in the encoded buffer.
+	 */
+	ledBitIndex: number
 }
 
 export interface BlackmagicControllerTBarControlDefinition extends BlackmagicControllerControlDefinitionBase {
@@ -24,6 +30,12 @@ export interface BlackmagicControllerTBarControlDefinition extends BlackmagicCon
 	rowSpan: number
 
 	ledSegments: number
+
+	/**
+	 * This is an internal value, and should not be used outside of the library.
+	 * The bit index of the leds in the encoded buffer.
+	 */
+	ledBitIndex: number
 }
 
 export interface BlackmagicControllerJogControlDefinition extends BlackmagicControllerControlDefinitionBase {

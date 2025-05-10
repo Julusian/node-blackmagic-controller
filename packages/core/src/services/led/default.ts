@@ -92,7 +92,7 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 		}
 
 		// TODO - this needs a rework to handle both types on the same panel
-		const buttonOffset = 3 // TODO - this should be based on whether there is a tbar?
+		const buttonOffset = 1 // TODO - this should be based on whether there is a tbar?
 
 		const bitIndex = (control.encodedIndex - 1) * 3
 		const byteIndex = Math.floor(bitIndex / 8)
@@ -113,7 +113,7 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 		})
 
 		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
-		view.setUint16(1, value, true)
+		view.setUint16(7, value, true) // TODO - dynamic offset
 	}
 
 	async clearPanel(): Promise<void> {

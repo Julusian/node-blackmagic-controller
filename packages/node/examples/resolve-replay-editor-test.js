@@ -10,7 +10,7 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 
 	console.log(`opened panel ${panel.MODEL}`)
 	// console.log('battery level', await panel.getBatteryLevel())
-	// console.log('serial', await panel.getSerialNumber())
+	console.log('serial', await panel.getSerialNumber())
 	// console.log('firmware', await panel.getFirmwareVersion())
 
 	let on = false
