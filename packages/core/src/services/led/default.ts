@@ -101,13 +101,18 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 	}
 
 	#setTBarValue(control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {
-		let value = 0
-		values.forEach((v, i) => {
-			if (v) value |= 1 << i
-		})
-
 		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
-		view.setUint16(1 + control.ledByteIndex, value, true)
+
+		for (let i = 0; i < control.ledSegments; i++) {
+			// Note: This is not particularly efficient, but it isn't done that often
+			const byteIndex = Math.floor((control.ledBitIndex + i) / 8)
+			const bitIndexInValue = i % 8
+
+			let uint8Value = view.getUint8(1 + byteIndex)
+			uint8Value = maskValue(uint8Value, 1 << bitIndexInValue, !!values[i])
+
+			view.setUint8(1 + byteIndex, uint8Value)
+		}
 	}
 
 	async clearPanel(): Promise<void> {

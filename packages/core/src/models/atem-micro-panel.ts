@@ -76,7 +76,7 @@ const microPanelControls: BlackmagicControllerControlDefinition[] = [
 		rowSpan: 4,
 
 		ledSegments: 16,
-		ledByteIndex: 0,
+		ledBitIndex: 0,
 	},
 
 	createRgbButtonDefinition(1, 15, 'dsk1-tie', 0x2d, 148),
