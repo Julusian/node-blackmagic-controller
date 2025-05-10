@@ -23,7 +23,7 @@ export class DefaultPropertiesService implements PropertiesService {
 	}
 
 	public async getFirmwareVersion(): Promise<string> {
-		const val = await this.#device.getFeatureReport(this.#options.firmwareReportId, 9)
+		const val = await this.#device.getFeatureReport(this.#options.firmwareReportId, 8)
 		const view = uint8ArrayToDataView(val)
 
 		// Generate a semver format string
