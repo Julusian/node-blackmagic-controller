@@ -54,9 +54,9 @@ const resolveReplayEditorControls: BlackmagicControllerControlDefinition[] = [
 	createBasicButtonDefinition(4, 9, '5sec', 0x60, 21),
 	createBasicButtonDefinition(4, 10, '6sec', 0x61, 22),
 	createBasicButtonDefinition(4, 11, '7sec', 0x62, 23),
-	createBasicButtonDefinition(4, 12, 'slow-jog', 0x69, -1), // cant get this led id
-	createBasicButtonDefinition(4, 13, 'jog-jog', 0x1d, -3), // cant get this led id
-	createBasicButtonDefinition(4, 14, 'scrl-jog', 0x1e, -4), // cant get this led id
+	createBasicButtonDefinition(4, 12, 'slow-jog', 0x69, -4), // this negative is a hack, to differentiate them to the special command
+	createBasicButtonDefinition(4, 13, 'jog-jog', 0x1d, -1), // this negative is a hack, to differentiate them to the special command
+	createBasicButtonDefinition(4, 14, 'scrl-jog', 0x1e, -3), // this negative is a hack, to differentiate them to the special command
 	createBasicButtonDefinition(5, 1, 'in', 0x07, null),
 	createBasicButtonDefinition(5, 3, 'out', 0x08, null),
 	createBasicButtonDefinition(5, 4, 'all-cams', 0x64, 24),
@@ -135,15 +135,21 @@ export function ResolveReplayEditorFactory(
 			jogReportId: 0x03,
 			batteryReportId: 0x06,
 		}),
-		led: new ResolveReplayLedService(),
+		led: new ResolveReplayLedService(device),
 	})
 }
 
 class ResolveReplayLedService implements BlackmagicControllerLedService {
+	readonly #device: HIDDevice
+
 	#primaryBuffer = new LedBuffer(0x09, 33)
 	#jobBuffer = new LedBuffer(0x04, 2)
 
-	setControlColors(values: BlackmagicControllerLedServiceValue[]): Uint8Array[] {
+	constructor(device: HIDDevice) {
+		this.#device = device
+	}
+
+	async setControlColors(values: BlackmagicControllerLedServiceValue[]): Promise<void> {
 		this.#primaryBuffer.prepareNewBuffers()
 		this.#jobBuffer.prepareNewBuffers()
 
@@ -163,13 +169,13 @@ class ResolveReplayLedService implements BlackmagicControllerLedService {
 		const result: Uint8Array[] = []
 		if (changedJob) result.push(...this.#jobBuffer.getBuffers())
 		if (changedPrimary) result.push(...this.#primaryBuffer.getBuffers())
-		return result
+		await this.#device.sendReports(result)
 	}
 
-	clearPanel(): Uint8Array[] {
+	async clearPanel(): Promise<void> {
 		this.#jobBuffer.clearBuffers()
 		this.#primaryBuffer.clearBuffers()
 
-		return [...this.#jobBuffer.getBuffers(), ...this.#primaryBuffer.getBuffers()]
+		await this.#device.sendReports([...this.#jobBuffer.getBuffers(), ...this.#primaryBuffer.getBuffers()])
 	}
 }

@@ -1,28 +1,33 @@
+import type { HIDDevice } from '../../hid-device.js'
 import type { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from './interface.js'
 import { LedBuffer } from './ledBuffer.js'
 
 export class DefaultLedService implements BlackmagicControllerLedService {
+	readonly #device: HIDDevice
+
 	#primaryBuffer: LedBuffer
 
-	constructor(reportId: number, bufferSize: number) {
+	constructor(device: HIDDevice, reportId: number, bufferSize: number) {
+		this.#device = device
+
 		this.#primaryBuffer = new LedBuffer(reportId, bufferSize)
 
 		// TODO - flashing buffers?
 	}
 
-	setControlColors(values: BlackmagicControllerLedServiceValue[]): Uint8Array[] {
+	async setControlColors(values: BlackmagicControllerLedServiceValue[]): Promise<void> {
 		this.#primaryBuffer.prepareNewBuffers()
 
 		for (const value of values) {
 			this.#primaryBuffer.setControlColor(value)
 		}
 
-		return this.#primaryBuffer.getBuffers()
+		await this.#device.sendReports(this.#primaryBuffer.getBuffers())
 	}
 
-	clearPanel(): Uint8Array[] {
+	async clearPanel(): Promise<void> {
 		this.#primaryBuffer.clearBuffers()
 
-		return this.#primaryBuffer.getBuffers()
+		await this.#device.sendReports(this.#primaryBuffer.getBuffers())
 	}
 }

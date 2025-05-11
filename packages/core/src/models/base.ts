@@ -170,15 +170,13 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 	public async setButtonColor(keyId: KeyId, red: boolean, green: boolean, blue: boolean): Promise<void> {
 		const control = this.checkValidKeyId(keyId, 'rgb')
 
-		await this.device.sendReports(
-			this.#ledService.setControlColors([{ type: 'button-rgb', control, red, green, blue }]),
-		)
+		await this.#ledService.setControlColors([{ type: 'button-rgb', control, red, green, blue }])
 	}
 
 	public async setButtonOnOff(keyId: KeyId, on: boolean): Promise<void> {
 		const control = this.checkValidKeyId(keyId, 'on-off')
 
-		await this.device.sendReports(this.#ledService.setControlColors([{ type: 'button-on-off', control, on }]))
+		await this.#ledService.setControlColors([{ type: 'button-on-off', control, on }])
 	}
 
 	public async setButtonStates(values: BlackmagicControllerSetButtonSomeValue[]): Promise<void> {
@@ -210,7 +208,7 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 			}
 		})
 
-		await this.device.sendReports(this.#ledService.setControlColors(translated))
+		await this.#ledService.setControlColors(translated)
 	}
 
 	public async setTbarLeds(leds: boolean[]): Promise<void> {
@@ -220,7 +218,7 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 
 		if (leds.length !== control.ledSegments) throw new Error(`Expected ${control.ledSegments} led values`)
 
-		await this.device.sendReports(this.#ledService.setControlColors([{ type: 'tbar', control, leds }]))
+		await this.#ledService.setControlColors([{ type: 'tbar', control, leds }])
 	}
 
 	public async clearKey(keyId: KeyId): Promise<void> {
@@ -228,16 +226,12 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 
 		switch (control.feedbackType) {
 			case 'rgb':
-				await this.device.sendReports(
-					this.#ledService.setControlColors([
-						{ type: 'button-rgb', control, red: false, green: false, blue: false },
-					]),
-				)
+				await this.#ledService.setControlColors([
+					{ type: 'button-rgb', control, red: false, green: false, blue: false },
+				])
 				break
 			case 'on-off':
-				await this.device.sendReports(
-					this.#ledService.setControlColors([{ type: 'button-on-off', control, on: false }]),
-				)
+				await this.#ledService.setControlColors([{ type: 'button-on-off', control, on: false }])
 				break
 			case 'none':
 				// No action needed
@@ -248,6 +242,6 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 	}
 
 	public async clearPanel(): Promise<void> {
-		await this.device.sendReports(this.#ledService.clearPanel())
+		await this.#ledService.clearPanel()
 	}
 }
