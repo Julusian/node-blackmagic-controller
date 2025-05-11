@@ -106,7 +106,7 @@ export class DefaultLedService implements BlackmagicControllerLedService {
 		for (let i = 0; i < control.ledSegments; i++) {
 			// Note: This is not particularly efficient, but it isn't done that often
 			const byteIndex = Math.floor((control.ledBitIndex + i) / 8)
-			const bitIndexInValue = i % 8
+			const bitIndexInValue = (control.ledBitIndex + i) % 8
 
 			let uint8Value = view.getUint8(1 + byteIndex)
 			uint8Value = maskValue(uint8Value, 1 << bitIndexInValue, !!values[i])
