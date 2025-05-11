@@ -8,7 +8,8 @@ import { CallbackHook } from '../services/callback-hook.js'
 import type { BlackmagicControllerEvents } from '../types.js'
 import { DefaultPropertiesService } from '../services/properties/default.js'
 import { DefaultInputService } from '../services/input/default.js'
-import { DefaultLedService } from '../services/led/default.js'
+import { LedBuffer } from '../services/led/ledBuffer.js'
+import type { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from '../services/led/interface.js'
 
 const resolveReplayEditorControls: BlackmagicControllerControlDefinition[] = [
 	createBasicButtonDefinition(0, 0, 'undo', 0x65, null),
@@ -53,9 +54,9 @@ const resolveReplayEditorControls: BlackmagicControllerControlDefinition[] = [
 	createBasicButtonDefinition(4, 9, '5sec', 0x60, 21),
 	createBasicButtonDefinition(4, 10, '6sec', 0x61, 22),
 	createBasicButtonDefinition(4, 11, '7sec', 0x62, 23),
-	createBasicButtonDefinition(4, 12, 'slow-jog', 0x69, 99), // cant get this led id
-	createBasicButtonDefinition(4, 13, 'jog-jog', 0x1d, 99), // cant get this led id
-	createBasicButtonDefinition(4, 14, 'scrl-jog', 0x1e, 99), // cant get this led id
+	createBasicButtonDefinition(4, 12, 'slow-jog', 0x69, -1), // cant get this led id
+	createBasicButtonDefinition(4, 13, 'jog-jog', 0x1d, -3), // cant get this led id
+	createBasicButtonDefinition(4, 14, 'scrl-jog', 0x1e, -4), // cant get this led id
 	createBasicButtonDefinition(5, 1, 'in', 0x07, null),
 	createBasicButtonDefinition(5, 3, 'out', 0x08, null),
 	createBasicButtonDefinition(5, 4, 'all-cams', 0x64, 24),
@@ -134,6 +135,41 @@ export function ResolveReplayEditorFactory(
 			jogReportId: 0x03,
 			batteryReportId: 0x06,
 		}),
-		led: new DefaultLedService(device, resolveReplayEditorProperties.CONTROLS, 0x09, 33),
+		led: new ResolveReplayLedService(),
 	})
+}
+
+class ResolveReplayLedService implements BlackmagicControllerLedService {
+	#primaryBuffer = new LedBuffer(0x09, 33)
+	#jobBuffer = new LedBuffer(0x04, 2)
+
+	setControlColors(values: BlackmagicControllerLedServiceValue[]): Uint8Array[] {
+		this.#primaryBuffer.prepareNewBuffers()
+		this.#jobBuffer.prepareNewBuffers()
+
+		let changedPrimary = false
+		let changedJob = false
+
+		for (const value of values) {
+			if (value.type === 'button-on-off' && value.control.ledBitIndex < 0) {
+				changedJob = true
+				this.#jobBuffer.maskControlBits(-value.control.ledBitIndex - 1, [value.on])
+			} else {
+				changedPrimary = true
+				this.#primaryBuffer.setControlColor(value)
+			}
+		}
+
+		const result: Uint8Array[] = []
+		if (changedJob) result.push(...this.#jobBuffer.getBuffers())
+		if (changedPrimary) result.push(...this.#primaryBuffer.getBuffers())
+		return result
+	}
+
+	clearPanel(): Uint8Array[] {
+		this.#jobBuffer.clearBuffers()
+		this.#primaryBuffer.clearBuffers()
+
+		return [...this.#jobBuffer.getBuffers(), ...this.#primaryBuffer.getBuffers()]
+	}
 }

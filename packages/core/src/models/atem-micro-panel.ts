@@ -113,6 +113,6 @@ export function AtemMicroPanelFactory(
 			tbarReportId: 0x08,
 			batteryReportId: 0x06,
 		}),
-		led: new DefaultLedService(device, atemMicroPanelProperties.CONTROLS, 0x02, 32),
+		led: new DefaultLedService(0x02, 32),
 	})
 }

@@ -4,9 +4,9 @@ import type {
 } from '../../controlDefinition.js'
 
 export interface BlackmagicControllerLedService {
-	setControlColors(values: BlackmagicControllerLedServiceValue[]): Promise<void>
+	setControlColors(values: BlackmagicControllerLedServiceValue[]): Uint8Array[]
 
-	clearPanel(): Promise<void>
+	clearPanel(): Uint8Array[]
 }
 
 export interface BlackmagicControllerLedServiceValueButtonRgb {

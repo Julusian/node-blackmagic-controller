@@ -1,132 +1,28 @@
-import type { HIDDevice } from '../../hid-device.js'
-import type {
-	BlackmagicControllerButtonControlDefinition,
-	BlackmagicControllerControlDefinition,
-	BlackmagicControllerTBarControlDefinition,
-} from '../../controlDefinition.js'
 import type { BlackmagicControllerLedService, BlackmagicControllerLedServiceValue } from './interface.js'
-import { uint8ArrayToDataView } from '../../util.js'
+import { LedBuffer } from './ledBuffer.js'
 
 export class DefaultLedService implements BlackmagicControllerLedService {
-	readonly #device: HIDDevice
-	// readonly #controls: readonly BlackmagicControllerControlDefinition[]
+	#primaryBuffer: LedBuffer
 
-	readonly #reportId: number
-	readonly #bufferSize: number
-
-	#lastPrimaryBuffer: Uint8Array
-
-	constructor(
-		device: HIDDevice,
-		_controls: readonly BlackmagicControllerControlDefinition[],
-		reportId: number,
-		bufferSize: number,
-	) {
-		this.#device = device
-		// this.#controls = controls
-		this.#reportId = reportId
-		this.#bufferSize = bufferSize
-
-		this.#lastPrimaryBuffer = this.#createBuffer(null)
+	constructor(reportId: number, bufferSize: number) {
+		this.#primaryBuffer = new LedBuffer(reportId, bufferSize)
 
 		// TODO - flashing buffers?
 	}
 
-	#createBuffer(copyExisting: Uint8Array | null): Uint8Array {
-		const buffer = new Uint8Array(this.#bufferSize)
-		if (copyExisting) {
-			buffer.set(this.#lastPrimaryBuffer)
-		} else {
-			buffer[0] = this.#reportId
-		}
-
-		return buffer
-	}
-
-	async setControlColors(values: BlackmagicControllerLedServiceValue[]): Promise<void> {
-		this.#lastPrimaryBuffer = this.#createBuffer(this.#lastPrimaryBuffer)
+	setControlColors(values: BlackmagicControllerLedServiceValue[]): Uint8Array[] {
+		this.#primaryBuffer.prepareNewBuffers()
 
 		for (const value of values) {
-			if (value.type === 'button-rgb') {
-				this.#setButtonRgbValue(value.control, value.red, value.green, value.blue)
-			} else if (value.type === 'button-on-off') {
-				this.#setButtonOnOffValue(value.control, value.on)
-			} else {
-				this.#setTBarValue(value.control, value.leds)
-			}
+			this.#primaryBuffer.setControlColor(value)
 		}
 
-		await this.#device.sendReports([this.#lastPrimaryBuffer])
+		return this.#primaryBuffer.getBuffers()
 	}
 
-	#setButtonRgbValue(
-		control: BlackmagicControllerButtonControlDefinition,
-		red: boolean,
-		green: boolean,
-		blue: boolean,
-	): void {
-		if (control.feedbackType !== 'rgb') {
-			throw new TypeError(`Control ${control.encodedIndex} is not a rgb control`)
-		}
+	clearPanel(): Uint8Array[] {
+		this.#primaryBuffer.clearBuffers()
 
-		const firstBitIndex = control.ledBitIndex
-		const firstByteIndex = Math.floor(firstBitIndex / 8)
-		const firstBitIndexInValue = firstBitIndex % 8
-
-		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
-
-		let uint16Value = view.getUint16(1 + firstByteIndex, true)
-		uint16Value = maskValue(uint16Value, 1 << firstBitIndexInValue, red)
-		uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 1), green)
-		uint16Value = maskValue(uint16Value, 1 << (firstBitIndexInValue + 2), blue)
-
-		view.setUint16(1 + firstByteIndex, uint16Value, true)
-	}
-
-	#setButtonOnOffValue(control: BlackmagicControllerButtonControlDefinition, on: boolean): void {
-		if (control.feedbackType !== 'on-off') {
-			throw new TypeError(`Control ${control.encodedIndex} is not an on-off control`)
-		}
-
-		const bitIndex = control.ledBitIndex
-		const byteIndex = Math.floor(bitIndex / 8)
-		const bitIndexInValue = bitIndex % 8
-
-		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
-
-		let uint8Value = view.getUint8(1 + byteIndex)
-		uint8Value = maskValue(uint8Value, 1 << bitIndexInValue, on)
-
-		view.setUint8(1 + byteIndex, uint8Value)
-	}
-
-	#setTBarValue(control: BlackmagicControllerTBarControlDefinition, values: boolean[]) {
-		const view = uint8ArrayToDataView(this.#lastPrimaryBuffer)
-
-		for (let i = 0; i < control.ledSegments; i++) {
-			// Note: This is not particularly efficient, but it isn't done that often
-			const byteIndex = Math.floor((control.ledBitIndex + i) / 8)
-			const bitIndexInValue = (control.ledBitIndex + i) % 8
-
-			let uint8Value = view.getUint8(1 + byteIndex)
-			uint8Value = maskValue(uint8Value, 1 << bitIndexInValue, !!values[i])
-
-			view.setUint8(1 + byteIndex, uint8Value)
-		}
-	}
-
-	async clearPanel(): Promise<void> {
-		this.#lastPrimaryBuffer = this.#createBuffer(null)
-
-		await this.#device.sendReports([this.#lastPrimaryBuffer])
-		// TODO - flashing buffers?
-	}
-}
-
-function maskValue(value: number, mask: number, set: boolean): number {
-	if (set) {
-		return value | mask
-	} else {
-		return value & ~mask
+		return this.#primaryBuffer.getBuffers()
 	}
 }
