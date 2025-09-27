@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/Julusian/node-blackmagic-controller/compare/v1.0.0...v1.0.1) (2025-09-27)
+
+
+### Bug Fixes
+
+* repository url ([8c27e2a](https://github.com/Julusian/node-blackmagic-controller/commit/8c27e2a114334cd31373d53504c1a25066524191))
+
 ## [1.0.0](https://github.com/Julusian/node-blackmagic-controller/compare/v0.2.2...v1.0.0) (2025-09-27)
 
 
