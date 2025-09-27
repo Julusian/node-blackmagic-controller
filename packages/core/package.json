@@ -1,6 +1,6 @@
 {
 	"name": "@blackmagic-controller/core",
-	"version": "0.2.2",
+	"version": "1.0.0",
 	"description": "An npm module for interfacing with the Blackmagic usb/bluetooth controllers",
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",

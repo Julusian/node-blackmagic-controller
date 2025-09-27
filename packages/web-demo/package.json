@@ -1,6 +1,6 @@
 {
 	"name": "@blackmagic-controller/web-demo",
-	"version": "0.2.2",
+	"version": "1.0.0",
 	"private": true,
 	"type": "module",
 	"license": "MIT",
@@ -21,7 +21,7 @@
 		"build": "run -BT rimraf dist && NODE_ENV=production vite build"
 	},
 	"dependencies": {
-		"@blackmagic-controller/web": "0.2.2",
+		"@blackmagic-controller/web": "1.0.0",
 		"html-to-image": "^1.11.13"
 	},
 	"devDependencies": {

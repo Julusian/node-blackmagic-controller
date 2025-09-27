@@ -5,7 +5,7 @@ __metadata:
   version: 8
   cacheKey: 10c0
 
-"@blackmagic-controller/core@npm:0.2.2, @blackmagic-controller/core@workspace:packages/core":
+"@blackmagic-controller/core@npm:1.0.0, @blackmagic-controller/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@blackmagic-controller/core@workspace:packages/core"
   dependencies:
@@ -18,7 +18,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@blackmagic-controller/node@workspace:packages/node"
   dependencies:
-    "@blackmagic-controller/core": "npm:0.2.2"
+    "@blackmagic-controller/core": "npm:1.0.0"
     eventemitter3: "npm:^5.0.1"
     node-hid: "npm:^3.2.0"
     tslib: "npm:^2.8.1"
@@ -29,17 +29,17 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@blackmagic-controller/web-demo@workspace:packages/web-demo"
   dependencies:
-    "@blackmagic-controller/web": "npm:0.2.2"
+    "@blackmagic-controller/web": "npm:1.0.0"
     html-to-image: "npm:^1.11.13"
     vite: "npm:^7.1.7"
   languageName: unknown
   linkType: soft
 
-"@blackmagic-controller/web@npm:0.2.2, @blackmagic-controller/web@workspace:packages/web":
+"@blackmagic-controller/web@npm:1.0.0, @blackmagic-controller/web@workspace:packages/web":
   version: 0.0.0-use.local
   resolution: "@blackmagic-controller/web@workspace:packages/web"
   dependencies:
-    "@blackmagic-controller/core": "npm:0.2.2"
+    "@blackmagic-controller/core": "npm:1.0.0"
     "@types/w3c-web-hid": "npm:^1.0.6"
     eventemitter3: "npm:^5.0.1"
     p-queue: "npm:^8.1.1"
