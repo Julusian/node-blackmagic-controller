@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.3](https://github.com/Julusian/node-blackmagic-controller/compare/v1.0.2...v1.0.3) (2025-12-22)
+
+
+### Bug Fixes
+
+* replay editor over bluetooth on macos (hopefully) ([7e50cde](https://github.com/Julusian/node-blackmagic-controller/commit/7e50cdeafdbc77583fa61e9e301120bce70120c6))
+* speed editor over bluetooth on macos ([95093f3](https://github.com/Julusian/node-blackmagic-controller/commit/95093f3cda6a93bee500f72fc0853cd6cb330a5e))
+
 ## [1.0.2](https://github.com/Julusian/node-blackmagic-controller/compare/v1.0.1...v1.0.2) (2025-09-27)
 
 
