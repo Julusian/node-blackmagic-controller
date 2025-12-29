@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/Julusian/node-blackmagic-controller/compare/v1.0.3...v1.1.0) (2025-12-29)
+
+
+### Features
+
+* add getBlackmagicControllerName method ([840d524](https://github.com/Julusian/node-blackmagic-controller/commit/840d524508583482eecc75467c2517537964aadf))
+
 ## [1.0.3](https://github.com/Julusian/node-blackmagic-controller/compare/v1.0.2...v1.0.3) (2025-12-22)
 
 
