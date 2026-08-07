@@ -159,6 +159,10 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 		return this.#propertiesService.getBatteryLevel()
 	}
 
+	public async getBatteryCharging(): Promise<boolean | null> {
+		return this.#propertiesService.getBatteryCharging()
+	}
+
 	public async getFirmwareVersion(): Promise<string> {
 		return this.#propertiesService.getFirmwareVersion()
 	}
@@ -242,5 +246,9 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 
 	public async clearPanel(): Promise<void> {
 		await this.#ledService.clearPanel()
+	}
+
+	public async setJogMode(mode: number): Promise<void> {
+		return this.#propertiesService.setJogMode(mode)
 	}
 }

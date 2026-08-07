@@ -67,11 +67,19 @@ export class BlackmagicControllerProxy implements BlackmagicController {
 	public async getBatteryLevel(): Promise<number | null> {
 		return this.device.getBatteryLevel()
 	}
+	public async getBatteryCharging(): Promise<boolean | null> {
+		return this.device.getBatteryCharging()
+	}
 	public async getFirmwareVersion(): Promise<string> {
 		return this.device.getFirmwareVersion()
 	}
 	public async getSerialNumber(): Promise<string> {
 		return this.device.getSerialNumber()
+	}
+	public async setJogMode(
+		...args: Parameters<BlackmagicController['setJogMode']>
+	): ReturnType<BlackmagicController['setJogMode']> {
+		return this.device.setJogMode(...args)
 	}
 
 	/**

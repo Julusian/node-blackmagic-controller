@@ -27,6 +27,7 @@ export class DefaultInputService implements BlackmagicControllerInputService {
 	readonly #buttonControlsById: Record<string, BlackmagicControllerButtonControlDefinition | undefined>
 	readonly #tbarControl: BlackmagicControllerTBarControlDefinition | undefined
 	readonly #jogControl: BlackmagicControllerJogControlDefinition | undefined
+	#jogResetTimeout: NodeJS.Timeout | null = null
 
 	constructor(
 		deviceProperties: Readonly<BlackmagicControllerProperties>,
@@ -115,15 +116,23 @@ export class DefaultInputService implements BlackmagicControllerInputService {
 	}
 
 	#handleJogInput(view: DataView): void {
+		clearTimeout(this.#jogResetTimeout!)
+		this.#jogResetTimeout = setTimeout(() => {
+			// Reset jog wheel to 0 after a short delay of no input - stops zero-drift
+			this.#eventSource.emit('jogVelocity', this.#jogControl!, 0)
+		}, 100)
 		if (!this.#jogControl) return
-		const value = view.getInt32(2, true)
-
-		this.#eventSource.emit('jog', this.#jogControl, value) // TODO - some scaling
+		let jogValue = view.getInt32(2, true)
+		//limit to ±350000 to avoid extreme values (this is really fast spinning
+		if (jogValue > 350000) jogValue = 350000
+		if (jogValue < -350000) jogValue = -350000
+		const scaleFactor = 1024 / 350000 //scale to ±1024 steps of velocity
+		jogValue = Math.round(jogValue * scaleFactor)
+		this.#eventSource.emit('jogVelocity', this.#jogControl, jogValue) //Fastest speed is about ±350000
 	}
 
 	#handleBatteryLevel(view: DataView): void {
-		const value = view.getUint8(2) // TODO - test this
-
+		const value = view.getUint8(2)
 		this.#eventSource.emit('batteryLevel', value / 100)
 	}
 }

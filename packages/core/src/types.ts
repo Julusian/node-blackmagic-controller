@@ -12,7 +12,8 @@ export type BlackmagicControllerEvents = {
 	down: [control: BlackmagicControllerButtonControlDefinition]
 	up: [control: BlackmagicControllerButtonControlDefinition]
 	tbar: [control: BlackmagicControllerTBarControlDefinition, percent: number]
-	jog: [control: BlackmagicControllerJogControlDefinition, velocity: number]
+	jogVelocity: [control: BlackmagicControllerJogControlDefinition, velocity: number]
+	jogMode: [control: BlackmagicControllerJogControlDefinition, mode: number]
 	batteryLevel: [percent: number]
 	error: [err: unknown]
 }
@@ -40,6 +41,11 @@ export interface BlackmagicController extends EventEmitter<BlackmagicControllerE
 	 * Get the current battery level of the controller, if supported
 	 */
 	getBatteryLevel(): Promise<number | null>
+
+	/**
+	 * Get the battery charging state of the controller, if supported
+	 */
+	getBatteryCharging(): Promise<boolean | null>
 
 	/**
 	 * Fills a rgb button with a solid color.
@@ -92,6 +98,13 @@ export interface BlackmagicController extends EventEmitter<BlackmagicControllerE
 	 * Get serial number of the controller
 	 */
 	getSerialNumber(): Promise<string>
+
+	/**
+	 * 	Set the jog wheel mode
+	 *
+	 * @param {number} mode Jog mode
+	 */
+	setJogMode(mode: number): Promise<void>
 }
 
 export interface BlackmagicControllerSetButtonColorValue {

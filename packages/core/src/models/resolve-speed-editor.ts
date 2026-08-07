@@ -87,20 +87,21 @@ export function ResolveSpeedEditorFactory(
 		deviceProperties: resolveSpeedEditorProperties,
 		events,
 		properties: new DefaultPropertiesService(device, {
-			batteryReportId: null,
-			firmwareReportId: 1,
-			serialReportId: 8,
+			batteryReportId: 0x07,
+			firmwareReportId: 0x01,
+			jogReportId: 0x03,
+			serialReportId: 0x08,
 		}),
 		inputService: new DefaultInputService(resolveSpeedEditorProperties, events, {
 			buttonReportId: 0x04,
 			jogReportId: 0x03,
-			batteryReportId: 0x06,
+			batteryReportId: 0x07, //not used but provided for completeness
 		}),
-		led: new ResolveShuttleLedService(device),
+		led: new ResolveSpeedEditorLedService(device),
 	})
 }
 
-class ResolveShuttleLedService implements BlackmagicControllerLedService {
+class ResolveSpeedEditorLedService implements BlackmagicControllerLedService {
 	readonly #device: HIDDevice
 
 	#primaryBuffer = new LedBuffer(0x02, 5)
