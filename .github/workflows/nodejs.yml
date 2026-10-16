@@ -26,6 +26,9 @@ jobs:
       - run: yarn lint
         env:
           CI: true
+      - run: yarn unit
+        env:
+          CI: true
 
   audit:
     name: audit
