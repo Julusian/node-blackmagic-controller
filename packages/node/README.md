@@ -116,7 +116,7 @@ const devices = await listBlackmagicControllers()
 console.log(devices[0]?.modelInfo.name)
 ```
 
-The `bounds` are in millimetres and are approximate. The ATEM Micro Panel and the Replay Editor are measured from photos, while the Speed Editor is currently estimated from the layout of its keys.
+The `bounds` are in millimetres, measured from product photos, so are approximate.
 
 ## Contributing
 
