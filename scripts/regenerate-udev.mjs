@@ -10,7 +10,7 @@ const generator = new UdevRuleGenerator()
 
 for (const model of Object.values(DEVICE_MODEL_INFO)) {
 	for (const match of model.usb) {
-		generator.addDevice(match.vendorId, match.productId)
+		generator.addDevice(match.vendorId, match.productId, model.transports.includes('bluetooth'))
 	}
 }
 

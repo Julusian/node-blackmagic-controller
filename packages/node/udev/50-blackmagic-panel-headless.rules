@@ -1,5 +1,8 @@
 SUBSYSTEM=="input", GROUP="input", MODE="0660"
 
 KERNEL=="hidraw*", ATTRS{idVendor}=="1edb", ATTRS{idProduct}=="bef0", MODE:="660", GROUP="plugdev"
+KERNEL=="hidraw*", KERNELS=="*:1EDB:BEF0.*", MODE:="660", GROUP="plugdev"
 KERNEL=="hidraw*", ATTRS{idVendor}=="1edb", ATTRS{idProduct}=="da0e", MODE:="660", GROUP="plugdev"
+KERNEL=="hidraw*", KERNELS=="*:1EDB:DA0E.*", MODE:="660", GROUP="plugdev"
 KERNEL=="hidraw*", ATTRS{idVendor}=="1edb", ATTRS{idProduct}=="da11", MODE:="660", GROUP="plugdev"
+KERNEL=="hidraw*", KERNELS=="*:1EDB:DA11.*", MODE:="660", GROUP="plugdev"
