@@ -1,11 +1,5 @@
-import type { HIDDevice } from './hid-device.js'
-import { BlackmagicControllerModelId } from './info.js'
-import type { BlackmagicController } from './types.js'
-import type { OpenBlackmagicControllerOptionsInternal } from './models/base.js'
-import { AtemMicroPanelFactory } from './models/atem-micro-panel.js'
-import { authenticate } from './authenticate.js'
-import { ResolveReplayEditorFactory } from './models/resolve-replay-editor.js'
-import { ResolveSpeedEditorFactory } from './models/resolve-speed-editor.js'
+import type { BlackmagicControllerModelId } from './info.js'
+import { DEVICE_MODEL_INFO } from './modelInfo.js'
 
 export * from './types.js'
 export * from './info.js'
@@ -14,41 +8,26 @@ export { HIDDevice, HIDDeviceInfo, HIDDeviceEvents } from './hid-device.js'
 export { OpenBlackmagicControllerOptions, OpenBlackmagicControllerOptionsInternal } from './models/base.js'
 export { BlackmagicControllerProxy } from './proxy.js'
 
-/** Blackmagic vendor id */
-export const VENDOR_ID = 0x1edb
+export {
+	VENDOR_ID,
+	BlackmagicControllerModelType,
+	DEVICE_MODEL_INFO,
+	getModelInfo,
+	findModelByUsb,
+} from './modelInfo.js'
+export type {
+	BlackmagicControllerModelInfo,
+	BlackmagicControllerModelFeatures,
+	BlackmagicControllerTransport,
+	UsbMatch,
+} from './modelInfo.js'
 
-export interface DeviceModelSpec {
-	id: BlackmagicControllerModelId
-	productIds: number[]
-	factory: (device: HIDDevice, options: Required<OpenBlackmagicControllerOptionsInternal>) => BlackmagicController
+export { DEVICE_MODELS, DEVICE_MODELS2, getDriver } from './registry.js'
+export type { DeviceModelSpec, BlackmagicControllerDriver } from './registry.js'
 
-	authenticate?: (device: HIDDevice) => Promise<number>
+/**
+ * @deprecated Use `getModelInfo(id)?.name` instead
+ */
+export function getBlackmagicControllerName(modelId: BlackmagicControllerModelId): string {
+	return DEVICE_MODEL_INFO[modelId]?.name || 'Unknown Blackmagic Controller'
 }
-
-/** List of all the known models, and the classes to use them */
-export const DEVICE_MODELS2: { [key in BlackmagicControllerModelId]: Omit<DeviceModelSpec, 'id'> } = {
-	[BlackmagicControllerModelId.AtemMicroPanel]: {
-		productIds: [0xbef0],
-		factory: AtemMicroPanelFactory,
-		authenticate: async (device) => authenticate(device, 5),
-	},
-	[BlackmagicControllerModelId.DaVinciResolveReplayEditor]: {
-		productIds: [0xda11],
-		factory: ResolveReplayEditorFactory,
-		authenticate: async (device) => {
-			// Perform twice because thats what resolve appears to do
-			await authenticate(device, 6)
-			return authenticate(device, 6)
-		},
-	},
-	[BlackmagicControllerModelId.DaVinciResolveSpeedEditor]: {
-		productIds: [0xda0e],
-		factory: ResolveSpeedEditorFactory,
-		authenticate: async (device) => authenticate(device, 6),
-	},
-}
-
-/** @deprecated maybe? */
-export const DEVICE_MODELS: DeviceModelSpec[] = Object.entries<Omit<DeviceModelSpec, 'id'>>(DEVICE_MODELS2).map(
-	([id, spec]) => ({ id: id as any as BlackmagicControllerModelId, ...spec }),
-)

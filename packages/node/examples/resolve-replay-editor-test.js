@@ -6,12 +6,12 @@ if (!devices[0]) throw new Error('No device found')
 
 const panel = await openBlackmagicController(devices[0].path)
 
-if (panel.MODEL !== BlackmagicControllerModelId.DaVinciResolveReplayEditor)
+if (panel.modelInfo.id !== BlackmagicControllerModelId.DaVinciResolveReplayEditor)
 	throw new Error('This test is for the DaVinci Resolve Speed Editor only')
 
 await panel.clearPanel()
 
-console.log(`opened panel ${panel.MODEL}`)
+console.log(`opened panel ${panel.modelInfo.id}`)
 // console.log('battery level', await panel.getBatteryLevel())
 console.log('serial', await panel.getSerialNumber())
 // console.log('firmware', await panel.getFirmwareVersion())

@@ -1,6 +1,7 @@
 import { EventEmitter } from 'eventemitter3'
 import type { HIDDevice, HIDDeviceInfo } from '../hid-device.js'
-import { getBlackmagicControllerName, type BlackmagicControllerModelId, type KeyId } from '../info.js'
+import type { BlackmagicControllerModelId, Dimension, KeyId } from '../info.js'
+import type { BlackmagicControllerModelInfo } from '../modelInfo.js'
 import type {
 	BlackmagicController,
 	BlackmagicControllerEvents,
@@ -26,12 +27,25 @@ export interface OpenBlackmagicControllerOptionsInternal /*extends OpenBlackmagi
 }
 
 export type BlackmagicControllerProperties = Readonly<{
-	MODEL: BlackmagicControllerModelId
+	model: BlackmagicControllerModelId
+	productName: string
 
-	CONTROLS: Readonly<BlackmagicControllerControlDefinition[]>
+	controls: Readonly<BlackmagicControllerControlDefinition[]>
+
+	/** The extent of the face, which every control's `bounds` is within */
+	faceSize: Dimension
+
+	hasBattery: boolean
 }>
 
+/**
+ * The properties of a model which are known without a device present.
+ * The identity of the model is applied when its `BlackmagicControllerModelDefinition` is built
+ */
+export type BlackmagicControllerStaticProperties = Omit<BlackmagicControllerProperties, 'model' | 'productName'>
+
 export interface BlackmagicControllerServicesDefinition {
+	modelInfo: BlackmagicControllerModelInfo
 	deviceProperties: BlackmagicControllerProperties
 	events: CallbackHook<BlackmagicControllerEvents>
 	properties: PropertiesService
@@ -40,19 +54,27 @@ export interface BlackmagicControllerServicesDefinition {
 }
 
 export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerEvents> implements BlackmagicController {
-	get CONTROLS(): Readonly<BlackmagicControllerControlDefinition[]> {
-		return this.deviceProperties.CONTROLS
+	get modelInfo(): BlackmagicControllerModelInfo {
+		return this.#modelInfo
 	}
 
-	get MODEL(): BlackmagicControllerModelId {
-		return this.deviceProperties.MODEL
+	/** @deprecated Use `modelInfo.controls` instead */
+	get CONTROLS(): Readonly<BlackmagicControllerControlDefinition[]> {
+		return this.deviceProperties.controls
 	}
+
+	/** @deprecated Use `modelInfo.id` instead */
+	get MODEL(): BlackmagicControllerModelId {
+		return this.deviceProperties.model
+	}
+	/** @deprecated Use `modelInfo.name` instead */
 	get PRODUCT_NAME(): string {
-		return getBlackmagicControllerName(this.deviceProperties.MODEL)
+		return this.deviceProperties.productName
 	}
 
 	protected readonly device: HIDDevice
 	protected readonly deviceProperties: Readonly<BlackmagicControllerProperties>
+	readonly #modelInfo: BlackmagicControllerModelInfo
 	readonly #options: Readonly<OpenBlackmagicControllerOptionsInternal>
 	readonly #propertiesService: PropertiesService
 	readonly #inputService: BlackmagicControllerInputService
@@ -68,6 +90,7 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 		super()
 
 		this.device = device
+		this.#modelInfo = services.modelInfo
 		this.deviceProperties = services.deviceProperties
 		this.#options = options
 		this.#propertiesService = services.properties
@@ -116,7 +139,7 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 		keyId: KeyId,
 		feedbackType: BlackmagicControllerButtonControlDefinition['feedbackType'] | null,
 	): BlackmagicControllerButtonControlDefinition {
-		const buttonControl = this.deviceProperties.CONTROLS.find(
+		const buttonControl = this.deviceProperties.controls.find(
 			(control): control is BlackmagicControllerButtonControlDefinition =>
 				control.type === 'button' && control.id === keyId,
 		)
@@ -133,7 +156,7 @@ export class BlackmagicControllerBase extends EventEmitter<BlackmagicControllerE
 	}
 
 	protected checkValidTbarIndex(id: number): BlackmagicControllerTBarControlDefinition {
-		const tbarControl = this.deviceProperties.CONTROLS.find(
+		const tbarControl = this.deviceProperties.controls.find(
 			(control): control is BlackmagicControllerTBarControlDefinition =>
 				control.type === 'tbar' && control.id === id,
 		)

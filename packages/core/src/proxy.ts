@@ -2,6 +2,7 @@ import type { EventEmitter } from 'eventemitter3'
 import type { BlackmagicControllerModelId } from './info.js'
 import type { BlackmagicController, BlackmagicControllerEvents } from './types.js'
 import type { BlackmagicControllerControlDefinition } from './controlDefinition.js'
+import type { BlackmagicControllerModelInfo } from './modelInfo.js'
 
 /**
  * A minimal proxy around a BlackmagicController instance.
@@ -15,13 +16,20 @@ export class BlackmagicControllerProxy implements BlackmagicController {
 		this.device = device
 	}
 
+	public get modelInfo(): BlackmagicControllerModelInfo {
+		return this.device.modelInfo
+	}
+
+	/** @deprecated Use `modelInfo.controls` instead */
 	public get CONTROLS(): Readonly<BlackmagicControllerControlDefinition[]> {
 		return this.device.CONTROLS
 	}
 
+	/** @deprecated Use `modelInfo.id` instead */
 	public get MODEL(): BlackmagicControllerModelId {
 		return this.device.MODEL
 	}
+	/** @deprecated Use `modelInfo.name` instead */
 	public get PRODUCT_NAME(): string {
 		return this.device.PRODUCT_NAME
 	}

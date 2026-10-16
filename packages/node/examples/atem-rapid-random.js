@@ -19,7 +19,7 @@ listBlackmagicControllers().then(async (devices) => {
 					/** @type {import('../dist/index').BlackmagicControllerSetButtonSomeValue[]} */
 					const values = []
 
-					for (const control of panel.CONTROLS) {
+					for (const control of panel.modelInfo.controls) {
 						if (control.type === 'button') {
 							const red = Math.random() >= 0.5
 							const green = Math.random() >= 0.5

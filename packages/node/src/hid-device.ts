@@ -1,5 +1,6 @@
 import type {
 	BlackmagicControllerModelId,
+	BlackmagicControllerModelInfo,
 	HIDDevice,
 	HIDDeviceEvents,
 	HIDDeviceInfo,
@@ -11,6 +12,8 @@ import type { HIDAsync, Device as NodeHIDDeviceInfo } from 'node-hid'
  * Information about a found controller
  */
 export interface BlackmagicControllerDeviceInfo {
+	/** Static information about the model of the device */
+	modelInfo: BlackmagicControllerModelInfo
 	/** The model of the device */
 	model: BlackmagicControllerModelId
 	/** The connected path of the device in the usb tree */

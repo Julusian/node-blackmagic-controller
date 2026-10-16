@@ -1,10 +1,7 @@
 /* eslint-disable n/no-unsupported-features/node-builtins */
 
-import type {
-	OpenBlackmagicControllerOptions,
-	OpenBlackmagicControllerOptionsInternal,
-} from '@blackmagic-controller/core'
-import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-controller/core'
+import type { OpenBlackmagicControllerOptions } from '@blackmagic-controller/core'
+import { DEVICE_MODEL_INFO, findModelByUsb, getDriver } from '@blackmagic-controller/core'
 import { WebHIDDevice } from './hid-device.js'
 import { BlackmagicControllerWeb } from './wrapper.js'
 
@@ -16,8 +13,19 @@ export {
 	BlackmagicControllerControlDefinitionBase,
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerTBarControlDefinition,
+	BlackmagicControllerJogControlDefinition,
+	BlackmagicControllerControlBounds,
 	BlackmagicControllerControlDefinition,
 	OpenBlackmagicControllerOptions,
+	Dimension,
+	BlackmagicControllerModelType,
+	BlackmagicControllerModelInfo,
+	BlackmagicControllerModelFeatures,
+	BlackmagicControllerTransport,
+	UsbMatch,
+	DEVICE_MODEL_INFO,
+	getModelInfo,
+	findModelByUsb,
 } from '@blackmagic-controller/core'
 export { BlackmagicControllerWeb } from './wrapper.js'
 
@@ -30,12 +38,9 @@ export async function requestBlackmagicControllers(
 ): Promise<BlackmagicControllerWeb[]> {
 	// TODO - error handling
 	const browserDevices = await navigator.hid.requestDevice({
-		filters: [
-			{
-				vendorId: VENDOR_ID,
-				// usagePage: 0xff01,
-			},
-		],
+		filters: Object.values(DEVICE_MODEL_INFO).flatMap((model) =>
+			model.usb.map((match) => ({ vendorId: match.vendorId, productId: match.productId })),
+		),
 	})
 
 	return Promise.all(browserDevices.map(async (dev) => openDevice(dev, options)))
@@ -51,7 +56,7 @@ export async function getBlackmagicControllers(
 ): Promise<BlackmagicControllerWeb[]> {
 	const browserDevices = await navigator.hid.getDevices()
 	console.log('devs', browserDevices)
-	const validDevices = browserDevices.filter((d) => d.vendorId === VENDOR_ID)
+	const validDevices = browserDevices.filter((d) => !!findModelByUsb(d.vendorId, d.productId))
 
 	const resultDevices = await Promise.all(
 		validDevices.map(async (dev) =>
@@ -73,15 +78,10 @@ export async function openDevice(
 	browserDevice: HIDDevice,
 	userOptions?: OpenBlackmagicControllerOptions,
 ): Promise<BlackmagicControllerWeb> {
-	const options: Required<OpenBlackmagicControllerOptions> = {
-		...userOptions,
-	}
-
-	const model = DEVICE_MODELS.find(
-		(m) => browserDevice.vendorId === VENDOR_ID && m.productIds.includes(browserDevice.productId),
-	)
-	if (!model) {
-		throw new Error('Stream Deck is of unexpected type.')
+	const model = findModelByUsb(browserDevice.vendorId, browserDevice.productId)
+	const driver = model && getDriver(model.id)
+	if (!driver) {
+		throw new Error('Device is not a supported Blackmagic controller.')
 	}
 
 	await browserDevice.open()
@@ -90,21 +90,9 @@ export async function openDevice(
 	try {
 		device = new WebHIDDevice(browserDevice)
 
-		// Perform authentication if requried by the model
-		let nextAuthMaxDelay: number | null = null
-		if (model.authenticate) {
-			nextAuthMaxDelay = await model.authenticate(device)
-		}
+		const rawController = await driver(device, userOptions)
 
-		const fullOptions: Required<OpenBlackmagicControllerOptionsInternal> = {
-			...options,
-			nextAuthMaxDelay,
-			authenticate: model.authenticate ?? null,
-		}
-
-		const rawSteamdeck = model.factory(device, fullOptions)
-
-		return new BlackmagicControllerWeb(rawSteamdeck, device)
+		return new BlackmagicControllerWeb(rawController, device)
 	} catch (e) {
 		if (device) await device.close().catch(() => null) // Suppress error
 		throw e

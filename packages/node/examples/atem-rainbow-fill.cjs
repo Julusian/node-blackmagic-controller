@@ -33,7 +33,7 @@ listBlackmagicControllers().then(async (devices) => {
 					/** @type {import('../dist/index').BlackmagicControllerSetButtonSomeValue[]} */
 					const values = []
 
-					for (const control of panel.CONTROLS) {
+					for (const control of panel.modelInfo.controls) {
 						if (control.type === 'button') {
 							const colorIndex = (colors.length + control.column + control.row - offset) % colors.length
 							const color = colors[colorIndex]

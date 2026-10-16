@@ -8,7 +8,7 @@ const { listBlackmagicControllers, openBlackmagicController } = require('../dist
 	const panel = await openBlackmagicController(devices[0].path)
 	await panel.clearPanel()
 
-	console.log(`opened panel ${panel.MODEL}`)
+	console.log(`opened panel ${panel.modelInfo.id}`)
 	console.log('battery level', await panel.getBatteryLevel())
 	console.log('serial', await panel.getSerialNumber())
 	console.log('firmware', await panel.getFirmwareVersion())

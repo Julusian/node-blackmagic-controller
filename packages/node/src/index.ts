@@ -1,9 +1,5 @@
-import type {
-	OpenBlackmagicControllerOptionsInternal,
-	BlackmagicController,
-	DeviceModelSpec,
-} from '@blackmagic-controller/core'
-import { DEVICE_MODELS, VENDOR_ID } from '@blackmagic-controller/core'
+import type { BlackmagicController, BlackmagicControllerDriver } from '@blackmagic-controller/core'
+import { findModelByUsb, getDriver } from '@blackmagic-controller/core'
 import * as HID from 'node-hid'
 import { NodeHIDDevice, BlackmagicControllerDeviceInfo } from './hid-device.js'
 import { BlackmagicControllerNode } from './wrapper.js'
@@ -18,11 +14,22 @@ export {
 	BlackmagicControllerControlDefinitionBase,
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerTBarControlDefinition,
+	BlackmagicControllerJogControlDefinition,
+	BlackmagicControllerControlBounds,
 	BlackmagicControllerSetButtonColorValue,
 	BlackmagicControllerSetButtonOnOffValue,
 	BlackmagicControllerSetButtonSomeValue,
 	BlackmagicControllerControlDefinition,
 	OpenBlackmagicControllerOptions,
+	Dimension,
+	BlackmagicControllerModelType,
+	BlackmagicControllerModelInfo,
+	BlackmagicControllerModelFeatures,
+	BlackmagicControllerTransport,
+	UsbMatch,
+	DEVICE_MODEL_INFO,
+	getModelInfo,
+	findModelByUsb,
 } from '@blackmagic-controller/core'
 
 export { BlackmagicControllerDeviceInfo }
@@ -49,16 +56,14 @@ export async function listBlackmagicControllers(): Promise<BlackmagicControllerD
  * If the provided device is a supported blackmagic controller, get the info about it
  */
 export function getBlackmagicControllerDeviceInfo(dev: HID.Device): BlackmagicControllerDeviceInfo | null {
-	const model = DEVICE_MODELS.find((m) => m.productIds.includes(dev.productId))
+	const model = findModelByUsb(dev.vendorId, dev.productId, dev.usage, dev.interface)
+	if (!model || !dev.path) return null
 
-	if (model && dev.vendorId === VENDOR_ID && dev.path) {
-		return {
-			model: model.id,
-			path: dev.path,
-			serialNumber: dev.serialNumber,
-		}
-	} else {
-		return null
+	return {
+		modelInfo: model,
+		model: model.id,
+		path: dev.path,
+		serialNumber: dev.serialNumber,
 	}
 }
 
@@ -84,15 +89,14 @@ export async function openBlackmagicController(
 	// }
 
 	let hidDevice: HID.HIDAsync | undefined
-	let model: DeviceModelSpec | undefined
+	let driver: BlackmagicControllerDriver | undefined
 	try {
 		hidDevice = await HID.HIDAsync.open(devicePath)
 
 		const deviceInfo = await hidDevice.getDeviceInfo()
-		model = DEVICE_MODELS.find(
-			(m) => deviceInfo.vendorId === VENDOR_ID && m.productIds.includes(deviceInfo.productId),
-		)
-		if (!model) {
+		const model = findModelByUsb(deviceInfo.vendorId, deviceInfo.productId)
+		driver = model && getDriver(model.id)
+		if (!driver) {
 			throw new Error(`Device path at "${devicePath}" is not a supported Blackmagic controller.`)
 		}
 	} catch (e) {
@@ -104,21 +108,9 @@ export async function openBlackmagicController(
 	try {
 		device = new NodeHIDDevice(hidDevice)
 
-		// Perform authentication if requried by the model
-		let nextAuthMaxDelay: number | null = null
-		if (model.authenticate) {
-			nextAuthMaxDelay = await model.authenticate(device)
-		}
+		const rawController = await driver(device)
 
-		const fullOptions: Required<OpenBlackmagicControllerOptionsInternal> = {
-			// ...options,
-			nextAuthMaxDelay,
-			authenticate: model.authenticate ?? null,
-		}
-
-		const rawSteamdeck = model.factory(device, fullOptions)
-
-		return new BlackmagicControllerNode(rawSteamdeck, userOptions?.clearOnClose ?? false)
+		return new BlackmagicControllerNode(rawController, userOptions?.clearOnClose ?? false)
 	} catch (e) {
 		if (device) await device.close().catch(() => null) // Suppress error
 		throw e

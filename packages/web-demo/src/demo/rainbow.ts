@@ -22,7 +22,7 @@ export class RainbowDemo implements Demo {
 
 		const values = []
 
-		for (const control of device.CONTROLS) {
+		for (const control of device.modelInfo.controls) {
 			if (control.type === 'button') {
 				const colorIndex = (colors.length + control.column + control.row - this.counter) % colors.length
 				const color = colors[colorIndex]

@@ -39,7 +39,7 @@ export class DefaultInputService implements BlackmagicControllerInputService {
 
 		this.#buttonControlsByEncoded = {}
 		this.#buttonControlsById = {}
-		for (const control of deviceProperties.CONTROLS) {
+		for (const control of deviceProperties.controls) {
 			if (control.type === 'tbar' && !this.#tbarControl) {
 				this.#tbarControl = control
 			}

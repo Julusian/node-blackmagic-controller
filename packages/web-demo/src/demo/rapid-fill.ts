@@ -17,7 +17,7 @@ export class RapidFillDemo implements Demo {
 					const values = []
 					const ps: Promise<void>[] = []
 
-					for (const control of device.CONTROLS) {
+					for (const control of device.modelInfo.controls) {
 						if (control.type === 'button') {
 							values.push({ keyId: control.id, red, green, blue })
 						} else if (control.type === 'tbar' && control.ledSegments > 0) {

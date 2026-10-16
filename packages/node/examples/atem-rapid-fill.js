@@ -24,7 +24,7 @@ listBlackmagicControllers().then(async (devices) => {
 					/** @type {import('../dist/index').BlackmagicControllerSetButtonSomeValue[]} */
 					const values = []
 
-					for (const control of panel.CONTROLS) {
+					for (const control of panel.modelInfo.controls) {
 						if (control.type === 'button') {
 							if (control.feedbackType === 'rgb') {
 								values.push({ keyId: control.id, type: 'rgb', red, green, blue })

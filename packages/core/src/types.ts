@@ -1,6 +1,7 @@
 import type { EventEmitter } from 'eventemitter3'
 import type { BlackmagicControllerModelId, KeyId } from './info.js'
 import type { HIDDeviceInfo } from './hid-device.js'
+import type { BlackmagicControllerModelInfo } from './modelInfo.js'
 import type {
 	BlackmagicControllerButtonControlDefinition,
 	BlackmagicControllerControlDefinition,
@@ -18,12 +19,24 @@ export type BlackmagicControllerEvents = {
 }
 
 export interface BlackmagicController extends EventEmitter<BlackmagicControllerEvents> {
-	/** List of the controls on this controller */
+	/** Static information about the model of this device */
+	readonly modelInfo: BlackmagicControllerModelInfo
+
+	/**
+	 * List of the controls on this controller
+	 * @deprecated Use `modelInfo.controls` instead
+	 */
 	readonly CONTROLS: Readonly<BlackmagicControllerControlDefinition[]>
 
-	/** The model of this device */
+	/**
+	 * The model of this device
+	 * @deprecated Use `modelInfo.id` instead
+	 */
 	readonly MODEL: BlackmagicControllerModelId
-	/** The name of the product/model */
+	/**
+	 * The name of the product/model
+	 * @deprecated Use `modelInfo.name` instead
+	 */
 	readonly PRODUCT_NAME: string
 
 	/**
@@ -108,5 +121,4 @@ export interface BlackmagicControllerSetButtonOnOffValue {
 }
 
 export type BlackmagicControllerSetButtonSomeValue =
-	| BlackmagicControllerSetButtonColorValue
-	| BlackmagicControllerSetButtonOnOffValue
+	BlackmagicControllerSetButtonColorValue | BlackmagicControllerSetButtonOnOffValue

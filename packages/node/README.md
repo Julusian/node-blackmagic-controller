@@ -22,17 +22,17 @@ All of this library's native dependencies ship with prebuilt binaries, so having
 On linux, the udev subsystem blocks access to the BlackmagicController without some special configuration.
 Copy one of the following files into `/etc/udev/rules.d/` and reload the rules with `sudo udevadm control --reload-rules`
 
--   Use the [headless server](./udev/50-blackmagic-controller-headless.rules) version when your software will be running as a system service, and is not related to a logged in user
--   Use the [desktop user](./udev/50-blackmagic-controller-user.rules) version when your software is run by a user session on a distribution using systemd
+- Use the [headless server](./udev/50-blackmagic-controller-headless.rules) version when your software will be running as a system service, and is not related to a logged in user
+- Use the [desktop user](./udev/50-blackmagic-controller-user.rules) version when your software is run by a user session on a distribution using systemd
 
 Unplug and replug the device and it should be usable
 
 ## Features
 
--   Multiplatform support: Windows, MacOS, Linux, and even Raspberry Pi!
--   TypeScript support
--   Full hardware functionality support
--   Supports Atem Micro Panel
+- Multiplatform support: Windows, MacOS, Linux, and even Raspberry Pi!
+- TypeScript support
+- Full hardware functionality support
+- Supports Atem Micro Panel
 
 ## API
 
@@ -96,6 +96,27 @@ console.log('Successfully wrote a red square to preview4.')
 ```
 
 Some more complex demos can be found in the [examples](examples/) folder.
+
+## Model information
+
+Every supported model is described as plain data in `DEVICE_MODEL_INFO`, so a UI can be built for a device without opening it. Each model lists its controls, along with where each control sits on the face of the device, and its usb identifiers.
+
+```typescript
+import { DEVICE_MODEL_INFO, listBlackmagicControllers } from '@blackmagic-controller/node'
+
+for (const model of Object.values(DEVICE_MODEL_INFO)) {
+	console.log(`${model.name} is ${model.faceSize.width}x${model.faceSize.height}mm`)
+	for (const control of model.controls) {
+		console.log(`  ${control.type} ${control.id} at`, control.bounds)
+	}
+}
+
+// Discovered devices carry the same info, as does `modelInfo` on an opened device
+const devices = await listBlackmagicControllers()
+console.log(devices[0]?.modelInfo.name)
+```
+
+The `bounds` are currently estimates, derived from the layout of the panel rather than measured.
 
 ## Contributing
 
