@@ -22,7 +22,6 @@ export {
 	BlackmagicControllerControlDefinition,
 	OpenBlackmagicControllerOptions,
 	Dimension,
-	BlackmagicControllerModelType,
 	BlackmagicControllerModelInfo,
 	BlackmagicControllerModelFeatures,
 	BlackmagicControllerTransport,

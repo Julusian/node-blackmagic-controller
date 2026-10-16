@@ -8,13 +8,7 @@ export { HIDDevice, HIDDeviceInfo, HIDDeviceEvents } from './hid-device.js'
 export { OpenBlackmagicControllerOptions, OpenBlackmagicControllerOptionsInternal } from './models/base.js'
 export { BlackmagicControllerProxy } from './proxy.js'
 
-export {
-	VENDOR_ID,
-	BlackmagicControllerModelType,
-	DEVICE_MODEL_INFO,
-	getModelInfo,
-	findModelByUsb,
-} from './modelInfo.js'
+export { VENDOR_ID, DEVICE_MODEL_INFO, getModelInfo, findModelByUsb } from './modelInfo.js'
 export type {
 	BlackmagicControllerModelInfo,
 	BlackmagicControllerModelFeatures,

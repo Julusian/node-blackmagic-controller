@@ -13,13 +13,6 @@ export const VENDOR_ID = 0x1edb
 
 const MANUFACTURER_BLACKMAGIC = 'Blackmagic Design'
 
-export enum BlackmagicControllerModelType {
-	/** A panel for controlling an ATEM switcher */
-	ATEM_PANEL = 'atem-panel',
-	/** A panel for editing in DaVinci Resolve */
-	RESOLVE_EDITOR = 'resolve-editor',
-}
-
 /** A transport which a device can be connected over */
 export type BlackmagicControllerTransport = 'usb' | 'bluetooth'
 
@@ -51,7 +44,6 @@ export interface BlackmagicControllerModelInfo {
 	id: BlackmagicControllerModelId
 	name: string
 	manufacturer: string
-	category: BlackmagicControllerModelType
 
 	/**
 	 * The usb devices which identify as this model. Empty for models which are not connected over usb.
@@ -83,7 +75,6 @@ export interface BlackmagicControllerModelDefinition {
 }
 
 interface ModelInfoOptions {
-	category: BlackmagicControllerModelType
 	usb: UsbMatch[]
 	/** Whether the device can be connected to over bluetooth */
 	bluetooth: boolean
@@ -103,7 +94,6 @@ function createModelDefinition(
 		id,
 		name,
 		manufacturer: MANUFACTURER_BLACKMAGIC,
-		category: options.category,
 
 		usb: Object.freeze(options.usb.map((match) => Object.freeze(match))),
 		transports: Object.freeze(transports),
@@ -134,7 +124,6 @@ export const DEVICE_MODEL_DEFINITIONS: Readonly<{
 		'ATEM Micro Panel',
 		atemMicroPanelProperties,
 		{
-			category: BlackmagicControllerModelType.ATEM_PANEL,
 			usb: [{ vendorId: VENDOR_ID, productId: 0xbef0 }],
 			bluetooth: true,
 		},
@@ -144,7 +133,6 @@ export const DEVICE_MODEL_DEFINITIONS: Readonly<{
 		'DaVinci Resolve Replay Editor',
 		resolveReplayEditorProperties,
 		{
-			category: BlackmagicControllerModelType.RESOLVE_EDITOR,
 			usb: [{ vendorId: VENDOR_ID, productId: 0xda11 }],
 			bluetooth: true,
 		},
@@ -154,7 +142,6 @@ export const DEVICE_MODEL_DEFINITIONS: Readonly<{
 		'DaVinci Resolve Speed Editor',
 		resolveSpeedEditorProperties,
 		{
-			category: BlackmagicControllerModelType.RESOLVE_EDITOR,
 			usb: [{ vendorId: VENDOR_ID, productId: 0xda0e }],
 			bluetooth: true,
 		},
