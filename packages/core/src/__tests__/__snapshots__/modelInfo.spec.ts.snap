@@ -6,10 +6,10 @@ exports[`model info > snapshot 1`] = `
     "controls": [
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 123,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 106,
+          "y": 23,
         },
         "column": 5,
         "encodedIndex": 1,
@@ -21,10 +21,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 143,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 123.2,
+          "y": 23,
         },
         "column": 6,
         "encodedIndex": 2,
@@ -36,10 +36,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 163,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 140.4,
+          "y": 23,
         },
         "column": 7,
         "encodedIndex": 3,
@@ -51,10 +51,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 183,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 157.2,
+          "y": 23,
         },
         "column": 8,
         "encodedIndex": 4,
@@ -66,10 +66,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 203,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 174.5,
+          "y": 23,
         },
         "column": 9,
         "encodedIndex": 5,
@@ -81,10 +81,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 123,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 106,
+          "y": 40.2,
         },
         "column": 5,
         "encodedIndex": 6,
@@ -96,10 +96,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 143,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 123.2,
+          "y": 40.2,
         },
         "column": 6,
         "encodedIndex": 7,
@@ -111,10 +111,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 163,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 140.4,
+          "y": 40.2,
         },
         "column": 7,
         "encodedIndex": 8,
@@ -126,10 +126,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 183,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 157.2,
+          "y": 40.2,
         },
         "column": 8,
         "encodedIndex": 9,
@@ -141,10 +141,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 203,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 174.5,
+          "y": 40.2,
         },
         "column": 9,
         "encodedIndex": 10,
@@ -156,9 +156,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 23,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 20.7,
           "y": 68,
         },
         "column": 0,
@@ -171,9 +171,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 43,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 37.8,
           "y": 68,
         },
         "column": 1,
@@ -186,9 +186,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 63,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 55.1,
           "y": 68,
         },
         "column": 2,
@@ -201,9 +201,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 83,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 72,
           "y": 68,
         },
         "column": 3,
@@ -216,9 +216,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 103,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 89.1,
           "y": 68,
         },
         "column": 4,
@@ -231,9 +231,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 123,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 106,
           "y": 68,
         },
         "column": 5,
@@ -246,9 +246,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 143,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 123.2,
           "y": 68,
         },
         "column": 6,
@@ -261,9 +261,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 163,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 140.4,
           "y": 68,
         },
         "column": 7,
@@ -276,9 +276,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 183,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 157.2,
           "y": 68,
         },
         "column": 8,
@@ -291,9 +291,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 203,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 174.5,
           "y": 68,
         },
         "column": 9,
@@ -306,10 +306,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 23,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 20.7,
+          "y": 96.2,
         },
         "column": 0,
         "encodedIndex": 21,
@@ -321,10 +321,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 43,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 37.8,
+          "y": 96.2,
         },
         "column": 1,
         "encodedIndex": 22,
@@ -336,10 +336,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 63,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 55.1,
+          "y": 96.2,
         },
         "column": 2,
         "encodedIndex": 23,
@@ -351,10 +351,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 83,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 72,
+          "y": 96.2,
         },
         "column": 3,
         "encodedIndex": 24,
@@ -366,10 +366,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 103,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 89.1,
+          "y": 96.2,
         },
         "column": 4,
         "encodedIndex": 25,
@@ -381,10 +381,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 123,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 106,
+          "y": 96.2,
         },
         "column": 5,
         "encodedIndex": 26,
@@ -396,10 +396,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 143,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 123.2,
+          "y": 96.2,
         },
         "column": 6,
         "encodedIndex": 27,
@@ -411,10 +411,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 163,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 140.4,
+          "y": 96.2,
         },
         "column": 7,
         "encodedIndex": 28,
@@ -426,10 +426,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 183,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 157.2,
+          "y": 96.2,
         },
         "column": 8,
         "encodedIndex": 29,
@@ -441,10 +441,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 203,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 174.5,
+          "y": 96.2,
         },
         "column": 9,
         "encodedIndex": 30,
@@ -456,10 +456,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 231,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 224.5,
+          "y": 23,
         },
         "column": 10,
         "encodedIndex": 31,
@@ -471,10 +471,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 251,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 241.8,
+          "y": 23,
         },
         "column": 11,
         "encodedIndex": 32,
@@ -486,10 +486,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 271,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 259,
+          "y": 23,
         },
         "column": 12,
         "encodedIndex": 33,
@@ -501,10 +501,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 291,
-          "y": 28,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 275.8,
+          "y": 23,
         },
         "column": 13,
         "encodedIndex": 34,
@@ -516,10 +516,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 251,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 241.8,
+          "y": 50.9,
         },
         "column": 11,
         "encodedIndex": 35,
@@ -531,10 +531,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 271,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 259,
+          "y": 50.9,
         },
         "column": 12,
         "encodedIndex": 36,
@@ -546,10 +546,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 291,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 275.8,
+          "y": 50.9,
         },
         "column": 13,
         "encodedIndex": 37,
@@ -561,9 +561,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 251,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 241.8,
           "y": 68,
         },
         "column": 11,
@@ -576,9 +576,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 271,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 259,
           "y": 68,
         },
         "column": 12,
@@ -591,9 +591,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 291,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 275.8,
           "y": 68,
         },
         "column": 13,
@@ -606,9 +606,9 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 231,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 208.5,
           "y": 68,
         },
         "column": 10,
@@ -621,10 +621,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 231,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 208.5,
+          "y": 96.2,
         },
         "column": 10,
         "encodedIndex": 42,
@@ -636,10 +636,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 27,
-          "x": 251,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 241.8,
+          "y": 96.2,
         },
         "column": 11,
         "encodedIndex": 43,
@@ -651,10 +651,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 27,
-          "x": 281,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 275.8,
+          "y": 96.2,
         },
         "column": 13,
         "encodedIndex": 44,
@@ -666,10 +666,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 77,
-          "width": 17,
-          "x": 319,
-          "y": 28,
+          "height": 82.5,
+          "width": 30,
+          "x": 309,
+          "y": 30,
         },
         "column": 14,
         "columnSpan": 1,
@@ -682,10 +682,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 347,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 355.4,
+          "y": 50.9,
         },
         "column": 15,
         "encodedIndex": 45,
@@ -697,10 +697,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 367,
-          "y": 48,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 372.5,
+          "y": 50.9,
         },
         "column": 16,
         "encodedIndex": 46,
@@ -712,10 +712,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 347,
-          "y": 68,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 355.4,
+          "y": 79.1,
         },
         "column": 15,
         "encodedIndex": 47,
@@ -727,10 +727,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 367,
-          "y": 68,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 372.5,
+          "y": 79.1,
         },
         "column": 16,
         "encodedIndex": 48,
@@ -742,10 +742,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 347,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 355.4,
+          "y": 96.2,
         },
         "column": 15,
         "encodedIndex": 49,
@@ -757,10 +757,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 17,
-          "width": 17,
-          "x": 367,
-          "y": 88,
+          "height": 16.2,
+          "width": 16.2,
+          "x": 372.5,
+          "y": 96.2,
         },
         "column": 16,
         "encodedIndex": 50,
@@ -796,10 +796,10 @@ exports[`model info > snapshot 1`] = `
     "controls": [
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 25,
-          "y": 24,
+          "x": 17.8,
+          "y": 26,
         },
         "column": 0,
         "encodedIndex": 101,
@@ -811,10 +811,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 52,
-          "y": 24,
+          "x": 60.5,
+          "y": 26,
         },
         "column": 1,
         "encodedIndex": 62,
@@ -826,10 +826,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 163,
-          "y": 24,
+          "x": 181.9,
+          "y": 26,
         },
         "column": 6,
         "encodedIndex": 63,
@@ -841,10 +841,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 184,
-          "y": 24,
+          "x": 201.5,
+          "y": 26,
         },
         "column": 7,
         "encodedIndex": 64,
@@ -856,10 +856,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 205,
-          "y": 24,
+          "x": 221,
+          "y": 26,
         },
         "column": 8,
         "encodedIndex": 65,
@@ -871,10 +871,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 247,
-          "y": 24,
+          "x": 259.1,
+          "y": 26,
         },
         "column": 10,
         "encodedIndex": 107,
@@ -886,10 +886,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 268,
-          "y": 24,
+          "x": 278.3,
+          "y": 26,
         },
         "column": 11,
         "encodedIndex": 66,
@@ -901,10 +901,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 295,
-          "y": 24,
+          "x": 310.2,
+          "y": 26,
         },
         "column": 12,
         "encodedIndex": 67,
@@ -916,10 +916,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 337,
-          "y": 24,
+          "x": 348.6,
+          "y": 26,
         },
         "column": 14,
         "encodedIndex": 68,
@@ -931,10 +931,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 52,
-          "y": 43,
+          "x": 60.5,
+          "y": 52.7,
         },
         "column": 1,
         "encodedIndex": 61,
@@ -946,10 +946,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 94,
-          "y": 43,
+          "x": 99.5,
+          "y": 52.7,
         },
         "column": 3,
         "encodedIndex": 43,
@@ -961,10 +961,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 121,
-          "y": 43,
+          "x": 131.2,
+          "y": 52.7,
         },
         "column": 4,
         "encodedIndex": 37,
@@ -976,10 +976,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 142,
-          "y": 43,
+          "x": 151,
+          "y": 52.7,
         },
         "column": 5,
         "encodedIndex": 69,
@@ -991,10 +991,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 163,
-          "y": 43,
+          "x": 181.9,
+          "y": 52.7,
         },
         "column": 6,
         "encodedIndex": 70,
@@ -1006,10 +1006,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 184,
-          "y": 43,
+          "x": 201.5,
+          "y": 52.7,
         },
         "column": 7,
         "encodedIndex": 71,
@@ -1021,10 +1021,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 226,
-          "y": 43,
+          "x": 239.8,
+          "y": 52.7,
         },
         "column": 9,
         "encodedIndex": 31,
@@ -1036,10 +1036,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 247,
-          "y": 43,
+          "x": 259.1,
+          "y": 52.7,
         },
         "column": 10,
         "encodedIndex": 104,
@@ -1051,10 +1051,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 268,
-          "y": 43,
+          "x": 278.3,
+          "y": 52.7,
         },
         "column": 11,
         "encodedIndex": 45,
@@ -1066,10 +1066,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 121,
-          "y": 62,
+          "x": 131.2,
+          "y": 72.1,
         },
         "column": 4,
         "encodedIndex": 38,
@@ -1081,10 +1081,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 142,
-          "y": 62,
+          "x": 151,
+          "y": 72.1,
         },
         "column": 5,
         "encodedIndex": 72,
@@ -1096,10 +1096,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 163,
-          "y": 62,
+          "x": 181.9,
+          "y": 72.1,
         },
         "column": 6,
         "encodedIndex": 73,
@@ -1111,10 +1111,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 184,
-          "y": 62,
+          "x": 201.5,
+          "y": 72.1,
         },
         "column": 7,
         "encodedIndex": 74,
@@ -1126,10 +1126,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 226,
-          "y": 62,
+          "x": 239.8,
+          "y": 72.1,
         },
         "column": 9,
         "encodedIndex": 47,
@@ -1141,10 +1141,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 247,
-          "y": 62,
+          "x": 259.1,
+          "y": 72.1,
         },
         "column": 10,
         "encodedIndex": 46,
@@ -1156,10 +1156,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 268,
-          "y": 62,
+          "x": 278.3,
+          "y": 72.1,
         },
         "column": 11,
         "encodedIndex": 75,
@@ -1171,10 +1171,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
-          "width": 18,
-          "x": 295,
-          "y": 62,
+          "height": 18,
+          "width": 27.4,
+          "x": 310.8,
+          "y": 72.1,
         },
         "column": 12,
         "encodedIndex": 26,
@@ -1186,10 +1186,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
-          "width": 18,
-          "x": 337,
-          "y": 62,
+          "height": 18,
+          "width": 27.4,
+          "x": 339.2,
+          "y": 72.1,
         },
         "column": 14,
         "encodedIndex": 27,
@@ -1201,10 +1201,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
-          "width": 18,
-          "x": 25,
-          "y": 81,
+          "height": 18,
+          "width": 27.4,
+          "x": 18.9,
+          "y": 80.1,
         },
         "column": 0,
         "encodedIndex": 99,
@@ -1216,10 +1216,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 52,
-          "y": 81,
+          "x": 60.5,
+          "y": 80.1,
         },
         "column": 1,
         "encodedIndex": 1,
@@ -1231,10 +1231,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 73,
-          "y": 81,
+          "x": 80.1,
+          "y": 80.1,
         },
         "column": 2,
         "encodedIndex": 2,
@@ -1246,10 +1246,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 94,
-          "y": 81,
+          "x": 99.5,
+          "y": 80.1,
         },
         "column": 3,
         "encodedIndex": 3,
@@ -1261,10 +1261,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 52,
-          "y": 100,
+          "x": 60.5,
+          "y": 99.1,
         },
         "column": 1,
         "encodedIndex": 4,
@@ -1276,10 +1276,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 73,
-          "y": 100,
+          "x": 80.1,
+          "y": 99.1,
         },
         "column": 2,
         "encodedIndex": 5,
@@ -1291,10 +1291,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 94,
-          "y": 100,
+          "x": 99.5,
+          "y": 99.1,
         },
         "column": 3,
         "encodedIndex": 6,
@@ -1306,10 +1306,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 121,
-          "y": 100,
+          "x": 131.2,
+          "y": 99.1,
         },
         "column": 4,
         "encodedIndex": 77,
@@ -1321,10 +1321,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 142,
-          "y": 100,
+          "x": 151,
+          "y": 99.1,
         },
         "column": 5,
         "encodedIndex": 76,
@@ -1336,10 +1336,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 163,
-          "y": 100,
+          "x": 181.9,
+          "y": 99.1,
         },
         "column": 6,
         "encodedIndex": 93,
@@ -1351,10 +1351,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 184,
-          "y": 100,
+          "x": 201.5,
+          "y": 99.1,
         },
         "column": 7,
         "encodedIndex": 94,
@@ -1366,10 +1366,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 205,
-          "y": 100,
+          "x": 221,
+          "y": 99.1,
         },
         "column": 8,
         "encodedIndex": 95,
@@ -1381,10 +1381,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 226,
-          "y": 100,
+          "x": 239.8,
+          "y": 99.1,
         },
         "column": 9,
         "encodedIndex": 96,
@@ -1396,10 +1396,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 247,
-          "y": 100,
+          "x": 259.1,
+          "y": 99.1,
         },
         "column": 10,
         "encodedIndex": 97,
@@ -1411,10 +1411,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 268,
-          "y": 100,
+          "x": 278.3,
+          "y": 99.1,
         },
         "column": 11,
         "encodedIndex": 98,
@@ -1426,10 +1426,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 295,
-          "y": 100,
+          "x": 310.2,
+          "y": 99.1,
         },
         "column": 12,
         "encodedIndex": 105,
@@ -1441,10 +1441,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 316,
-          "y": 100,
+          "x": 329.5,
+          "y": 99.1,
         },
         "column": 13,
         "encodedIndex": 29,
@@ -1456,10 +1456,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 337,
-          "y": 100,
+          "x": 348.6,
+          "y": 99.1,
         },
         "column": 14,
         "encodedIndex": 30,
@@ -1471,10 +1471,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
-          "width": 28.5,
-          "x": 52,
-          "y": 119,
+          "height": 18,
+          "width": 27.4,
+          "x": 61.4,
+          "y": 125,
         },
         "column": 1,
         "encodedIndex": 7,
@@ -1486,10 +1486,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
-          "width": 28.5,
-          "x": 83.5,
-          "y": 119,
+          "height": 18,
+          "width": 27.4,
+          "x": 90.1,
+          "y": 125,
         },
         "column": 3,
         "encodedIndex": 8,
@@ -1501,10 +1501,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 121,
-          "y": 119,
+          "x": 131.2,
+          "y": 125,
         },
         "column": 4,
         "encodedIndex": 100,
@@ -1516,10 +1516,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 142,
-          "y": 119,
+          "x": 151,
+          "y": 125,
         },
         "column": 5,
         "encodedIndex": 92,
@@ -1531,10 +1531,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 163,
-          "y": 119,
+          "x": 181.9,
+          "y": 125,
         },
         "column": 6,
         "encodedIndex": 78,
@@ -1546,10 +1546,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 184,
-          "y": 119,
+          "x": 201.5,
+          "y": 125,
         },
         "column": 7,
         "encodedIndex": 79,
@@ -1561,10 +1561,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 205,
-          "y": 119,
+          "x": 221,
+          "y": 125,
         },
         "column": 8,
         "encodedIndex": 80,
@@ -1576,10 +1576,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 226,
-          "y": 119,
+          "x": 239.8,
+          "y": 125,
         },
         "column": 9,
         "encodedIndex": 81,
@@ -1591,10 +1591,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 247,
-          "y": 119,
+          "x": 259.1,
+          "y": 125,
         },
         "column": 10,
         "encodedIndex": 82,
@@ -1606,10 +1606,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 268,
-          "y": 119,
+          "x": 278.3,
+          "y": 125,
         },
         "column": 11,
         "encodedIndex": 83,
@@ -1621,10 +1621,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 52,
-          "y": 138,
+          "x": 60.5,
+          "y": 143.9,
         },
         "column": 1,
         "encodedIndex": 9,
@@ -1636,10 +1636,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 73,
-          "y": 138,
+          "x": 80.1,
+          "y": 143.9,
         },
         "column": 2,
         "encodedIndex": 10,
@@ -1651,10 +1651,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 94,
-          "y": 138,
+          "x": 99.5,
+          "y": 143.9,
         },
         "column": 3,
         "encodedIndex": 11,
@@ -1666,10 +1666,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 52,
-          "y": 157,
+          "x": 60.5,
+          "y": 163,
         },
         "column": 1,
         "encodedIndex": 103,
@@ -1681,10 +1681,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 73,
-          "y": 157,
+          "x": 80.1,
+          "y": 163,
         },
         "column": 2,
         "encodedIndex": 102,
@@ -1696,10 +1696,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 94,
-          "y": 157,
+          "x": 99.5,
+          "y": 163,
         },
         "column": 3,
         "encodedIndex": 14,
@@ -1711,10 +1711,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 121,
-          "y": 157,
+          "x": 131.2,
+          "y": 153.2,
         },
         "column": 4,
         "encodedIndex": 84,
@@ -1726,10 +1726,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 142,
-          "y": 157,
+          "x": 150.9,
+          "y": 153.2,
         },
         "column": 5,
         "encodedIndex": 85,
@@ -1741,10 +1741,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 163,
-          "y": 157,
+          "x": 170.6,
+          "y": 153.2,
         },
         "column": 6,
         "encodedIndex": 86,
@@ -1756,10 +1756,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 184,
-          "y": 157,
+          "x": 190,
+          "y": 153.2,
         },
         "column": 7,
         "encodedIndex": 87,
@@ -1771,10 +1771,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 205,
-          "y": 157,
+          "x": 221,
+          "y": 153.2,
         },
         "column": 8,
         "encodedIndex": 88,
@@ -1786,10 +1786,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 226,
-          "y": 157,
+          "x": 239.8,
+          "y": 153.2,
         },
         "column": 9,
         "encodedIndex": 89,
@@ -1801,10 +1801,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 247,
-          "y": 157,
+          "x": 259.1,
+          "y": 153.2,
         },
         "column": 10,
         "encodedIndex": 90,
@@ -1816,10 +1816,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 268,
-          "y": 157,
+          "x": 278.3,
+          "y": 153.2,
         },
         "column": 11,
         "encodedIndex": 91,
@@ -1831,10 +1831,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 52,
-          "y": 176,
+          "x": 60.5,
+          "y": 182.5,
         },
         "column": 1,
         "encodedIndex": 15,
@@ -1846,10 +1846,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 73,
-          "y": 176,
+          "x": 80.1,
+          "y": 182.5,
         },
         "column": 2,
         "encodedIndex": 16,
@@ -1861,10 +1861,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
+          "height": 18,
           "width": 18,
-          "x": 94,
-          "y": 176,
+          "x": 99.5,
+          "y": 182.5,
         },
         "column": 3,
         "encodedIndex": 34,
@@ -1876,10 +1876,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 16,
-          "width": 18,
-          "x": 121,
-          "y": 176,
+          "height": 18,
+          "width": 163.2,
+          "x": 131.8,
+          "y": 182.5,
         },
         "column": 4,
         "encodedIndex": 60,
@@ -1891,10 +1891,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 92,
-          "width": 18,
-          "x": 25,
-          "y": 100,
+          "height": 81.5,
+          "width": 28.6,
+          "x": 18.6,
+          "y": 108,
         },
         "column": 0,
         "columnSpan": 1,
@@ -1907,10 +1907,10 @@ exports[`model info > snapshot 1`] = `
       },
       {
         "bounds": {
-          "height": 73,
-          "width": 60,
-          "x": 295,
-          "y": 119,
+          "height": 59,
+          "width": 59,
+          "x": 311.9,
+          "y": 133.9,
         },
         "column": 12,
         "columnSpan": 3,
