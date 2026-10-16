@@ -21,7 +21,7 @@ export enum BlackmagicControllerModelType {
 }
 
 /** A transport which a device can be connected over */
-export type BlackmagicControllerTransport = 'usb'
+export type BlackmagicControllerTransport = 'usb' | 'bluetooth'
 
 /** The properties of a usb device which identify it as a model */
 export interface UsbMatch {
@@ -53,7 +53,10 @@ export interface BlackmagicControllerModelInfo {
 	manufacturer: string
 	category: BlackmagicControllerModelType
 
-	/** The usb devices which identify as this model. Empty for models which are not connected over usb */
+	/**
+	 * The usb devices which identify as this model. Empty for models which are not connected over usb.
+	 * Over bluetooth these models report the same ids as a HID device, so these identify them there too
+	 */
 	usb: readonly UsbMatch[]
 	/** The transports this model can be connected over */
 	transports: readonly BlackmagicControllerTransport[]
@@ -82,6 +85,8 @@ export interface BlackmagicControllerModelDefinition {
 interface ModelInfoOptions {
 	category: BlackmagicControllerModelType
 	usb: UsbMatch[]
+	/** Whether the device can be connected to over bluetooth */
+	bluetooth: boolean
 }
 
 function createModelDefinition(
@@ -92,6 +97,7 @@ function createModelDefinition(
 ): BlackmagicControllerModelDefinition {
 	const transports: BlackmagicControllerTransport[] = []
 	if (options.usb.length > 0) transports.push('usb')
+	if (options.bluetooth) transports.push('bluetooth')
 
 	const info: BlackmagicControllerModelInfo = Object.freeze({
 		id,
@@ -130,6 +136,7 @@ export const DEVICE_MODEL_DEFINITIONS: Readonly<{
 		{
 			category: BlackmagicControllerModelType.ATEM_PANEL,
 			usb: [{ vendorId: VENDOR_ID, productId: 0xbef0 }],
+			bluetooth: true,
 		},
 	),
 	[BlackmagicControllerModelId.DaVinciResolveReplayEditor]: createModelDefinition(
@@ -139,6 +146,7 @@ export const DEVICE_MODEL_DEFINITIONS: Readonly<{
 		{
 			category: BlackmagicControllerModelType.RESOLVE_EDITOR,
 			usb: [{ vendorId: VENDOR_ID, productId: 0xda11 }],
+			bluetooth: true,
 		},
 	),
 	[BlackmagicControllerModelId.DaVinciResolveSpeedEditor]: createModelDefinition(
@@ -148,6 +156,7 @@ export const DEVICE_MODEL_DEFINITIONS: Readonly<{
 		{
 			category: BlackmagicControllerModelType.RESOLVE_EDITOR,
 			usb: [{ vendorId: VENDOR_ID, productId: 0xda0e }],
+			bluetooth: true,
 		},
 	),
 })

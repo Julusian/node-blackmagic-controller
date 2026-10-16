@@ -784,6 +784,7 @@ exports[`model info > snapshot 1`] = `
     "name": "ATEM Micro Panel",
     "transports": [
       "usb",
+      "bluetooth",
     ],
     "usb": [
       {
@@ -1933,6 +1934,7 @@ exports[`model info > snapshot 1`] = `
     "name": "DaVinci Resolve Replay Editor",
     "transports": [
       "usb",
+      "bluetooth",
     ],
     "usb": [
       {
@@ -2616,6 +2618,7 @@ exports[`model info > snapshot 1`] = `
     "name": "DaVinci Resolve Speed Editor",
     "transports": [
       "usb",
+      "bluetooth",
     ],
     "usb": [
       {
