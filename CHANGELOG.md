@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/Julusian/node-blackmagic-controller/compare/v1.1.0...v1.2.0) (2026-10-16)
+
+
+### Features
+
+* add bluetooth transport to model info ([7880e76](https://github.com/Julusian/node-blackmagic-controller/commit/7880e76bfa5f27d9e8b46e8f1482d2c06bbf6898))
+* generate udev rules for bluetooth connections ([832eccd](https://github.com/Julusian/node-blackmagic-controller/commit/832eccd410ae4446aa6e3edf2b47f2a43762df6c))
+* measure atem micro panel and replay editor bounds from photos ([f932b59](https://github.com/Julusian/node-blackmagic-controller/commit/f932b594d2960bfe3260cb7c5b5fb125f78798ed))
+* measure speed editor bounds, and even out key pitch ([87e1eeb](https://github.com/Julusian/node-blackmagic-controller/commit/87e1eeb298b62fd8f3eb0bf63265c224bca880c3))
+* unified model info and control bounds ([b650db0](https://github.com/Julusian/node-blackmagic-controller/commit/b650db028ee238c7b1e9fe25eda38801d687820b))
+
 ## [1.1.0](https://github.com/Julusian/node-blackmagic-controller/compare/v1.0.3...v1.1.0) (2025-12-29)
 
 
